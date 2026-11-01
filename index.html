@@ -16,6 +16,12 @@
   <meta property="og:description" content="You are cordially invited to our wedding celebration this December! Tap to view the invitation & RSVP." />
   <meta property="og:image" content="assets/images/couple-december.jpg" />
 
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Udari & Prabath — Wedding Invitation" />
+  <meta property="twitter:description" content="Join us this December to celebrate the wedding of Udari & Prabath." />
+  <meta property="twitter:image" content="assets/images/couple-december.jpg" />
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌹</text></svg>" />
 
@@ -118,23 +124,69 @@
   </div>
 
   <!-- =================================================================
-       MAIN CARD CONTAINER (PORTRAIT CARD FORMAT LIKE REFERENCE SITE)
+       LEFT NAVIGATION DRAWER (Slide-out menu like Reference Photo 1)
+       ================================================================= -->
+  <div class="side-drawer-backdrop" id="side-drawer-backdrop"></div>
+  
+  <aside class="side-nav-drawer" id="side-nav-drawer" aria-label="Side Navigation Menu">
+    <div class="drawer-header">
+      <h2 class="drawer-couple-names">Udari &amp; Prabath</h2>
+      <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close Navigation">✕</button>
+    </div>
+
+    <div class="drawer-divider"></div>
+
+    <nav class="drawer-menu-list">
+      <a href="#hero" class="drawer-item active">
+        <span class="drawer-icon">♡</span>
+        <span class="drawer-label">Welcome</span>
+      </a>
+      <a href="#story" class="drawer-item">
+        <span class="drawer-icon">📖</span>
+        <span class="drawer-label">Our Story</span>
+      </a>
+      <a href="#ceremony" class="drawer-item">
+        <span class="drawer-icon">📅</span>
+        <span class="drawer-label">The Ceremony</span>
+      </a>
+      <a href="#venue" class="drawer-item">
+        <span class="drawer-icon">✈</span>
+        <span class="drawer-label">Venue &amp; Travel</span>
+      </a>
+      <a href="#rsvp" class="drawer-item">
+        <span class="drawer-icon">▷</span>
+        <span class="drawer-label">RSVP</span>
+      </a>
+      <a href="#contact" class="drawer-item">
+        <span class="drawer-icon">📞</span>
+        <span class="drawer-label">Contact</span>
+      </a>
+    </nav>
+
+    <div class="drawer-footer">
+      <p class="drawer-date-tag">Saturday, 12th December 2026</p>
+      <p class="drawer-sinhala-tag">|| ශුභ මංගලම් ||</p>
+    </div>
+  </aside>
+
+  <!-- =================================================================
+       MAIN CARD CONTAINER (Wider Portrait Card with Floral Backdrop)
        ================================================================= -->
   <div class="card-viewport-wrapper">
     
-    <!-- Centered Card Device -->
+    <!-- Centered Card Device (Wider 540px Layout) -->
     <div class="wedding-card-container" id="wedding-card">
       
       <!-- Live Falling White Petals & Snow Canvas Inside the Card -->
       <canvas id="snow-petal-canvas"></canvas>
 
       <!-- -------------------------------------------------------------
-           CARD TOP BAR: Menu Icon | Monogram "U & P" | Heart / Music
+           CARD TOP BAR: Menu Icon [☰] | Monogram [U & P] | Heart [♥]
            ------------------------------------------------------------- -->
       <header class="card-top-bar">
-        <a href="#ceremony" class="top-bar-icon-btn" aria-label="View Schedule">
+        <button class="top-bar-icon-btn" id="top-bar-menu-btn" aria-label="Open Navigation Menu">
           <span class="bar-icon">☰</span>
-        </a>
+        </button>
         <div class="top-bar-center-monogram">
           <span>U &amp; P</span>
         </div>
@@ -144,7 +196,7 @@
       </header>
 
       <!-- -------------------------------------------------------------
-           HERO SECTION: ANIMATED PHOTO CENTERPIECE & INVITATION
+           HERO SECTION: BACKGROUND IMAGE LIKE REFERENCE PHOTO 2
            ------------------------------------------------------------- -->
       <section class="card-section hero-card-section" id="hero">
         

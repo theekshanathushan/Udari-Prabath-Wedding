@@ -1,7 +1,7 @@
 /**
  * ==============================================================================
  * UDARI & PRABATH — WEDDING INVITATION CARD
- * Curtains & Satin Bow Unlock, Falling White Petals & Snowflakes, WhatsApp RSVP
+ * Side Navigation Drawer, Curtain Reveal, Falling Petals & Snow, Audio & RSVP
  * ==============================================================================
  */
 
@@ -38,17 +38,63 @@ const toastText = document.getElementById("toast-text");
 const canvas = document.getElementById("snow-petal-canvas");
 const weddingCard = document.getElementById("wedding-card");
 
+// Side Navigation Drawer Elements
+const topBarMenuBtn = document.getElementById("top-bar-menu-btn");
+const sideNavDrawer = document.getElementById("side-nav-drawer");
+const sideDrawerBackdrop = document.getElementById("side-drawer-backdrop");
+const drawerCloseBtn = document.getElementById("drawer-close-btn");
+const drawerItems = document.querySelectorAll(".drawer-item");
+
 // Lock scroll initially
 document.body.classList.add("locked");
 
 // ------------------------------------------------------------------------------
-// 3. FALLING WHITE FLOWER PETALS & SNOW CANVAS ENGINE
+// 3. SIDE NAVIGATION DRAWER (Slide-out menu like Reference Photo 1)
+// ------------------------------------------------------------------------------
+function initSideNavDrawer() {
+  function openDrawer() {
+    if (sideNavDrawer && sideDrawerBackdrop) {
+      sideNavDrawer.classList.add("open");
+      sideDrawerBackdrop.classList.add("open");
+    }
+  }
+
+  function closeDrawer() {
+    if (sideNavDrawer && sideDrawerBackdrop) {
+      sideNavDrawer.classList.remove("open");
+      sideDrawerBackdrop.classList.remove("open");
+    }
+  }
+
+  if (topBarMenuBtn) {
+    topBarMenuBtn.addEventListener("click", openDrawer);
+  }
+
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener("click", closeDrawer);
+  }
+
+  if (sideDrawerBackdrop) {
+    sideDrawerBackdrop.addEventListener("click", closeDrawer);
+  }
+
+  drawerItems.forEach(item => {
+    item.addEventListener("click", () => {
+      drawerItems.forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+      closeDrawer();
+    });
+  });
+}
+
+// ------------------------------------------------------------------------------
+// 4. FALLING WHITE FLOWER PETALS & SNOW CANVAS ENGINE
 // ------------------------------------------------------------------------------
 let ctx = null;
 let particles = [];
 let burstParticles = [];
-let canvasWidth = 440;
-let canvasHeight = 800;
+let canvasWidth = 550;
+let canvasHeight = 850;
 
 function initSnowPetalCanvas() {
   if (!canvas) return;
@@ -56,7 +102,7 @@ function initSnowPetalCanvas() {
 
   function resizeCanvas() {
     if (weddingCard) {
-      canvasWidth = canvas.width = weddingCard.offsetWidth || 440;
+      canvasWidth = canvas.width = weddingCard.offsetWidth || 550;
       canvasHeight = canvas.height = weddingCard.offsetHeight || window.innerHeight;
     } else {
       canvasWidth = canvas.width = window.innerWidth;
@@ -66,7 +112,7 @@ function initSnowPetalCanvas() {
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  const particleCount = 45;
+  const particleCount = 50;
   for (let i = 0; i < particleCount; i++) {
     particles.push(createWhitePetalOrSnow());
   }
@@ -103,7 +149,7 @@ function createWhitePetalOrSnow() {
     type: isPetal ? "petal" : "snow",
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    size: isPetal ? Math.random() * 5 + 4 : Math.random() * 3 + 1.2,
+    size: isPetal ? Math.random() * 5.5 + 4 : Math.random() * 3 + 1.2,
     speedY: isPetal ? Math.random() * 1.1 + 0.6 : Math.random() * 0.8 + 0.4,
     speedX: (Math.random() - 0.5) * 0.6,
     sway: Math.random() * Math.PI * 2,
@@ -245,7 +291,7 @@ function drawFrostSnowflake(ctx, x, y, size) {
 }
 
 // ------------------------------------------------------------------------------
-// 4. ROYAL CURTAIN REVEAL & AUDIO
+// 5. ROYAL CURTAIN REVEAL & AUDIO
 // ------------------------------------------------------------------------------
 let isCurtainOpened = false;
 let isAudioPlaying = false;
@@ -362,7 +408,7 @@ if (audioToggleBtn) {
 }
 
 // ------------------------------------------------------------------------------
-// 5. LIVE COUNTDOWN TIMER (DECEMBER 2026)
+// 6. LIVE COUNTDOWN TIMER (DECEMBER 2026)
 // ------------------------------------------------------------------------------
 function initCountdown() {
   const targetTime = new Date(WEDDING_CONFIG.weddingDateISO).getTime();
@@ -403,7 +449,7 @@ function initCountdown() {
 }
 
 // ------------------------------------------------------------------------------
-// 6. CALENDAR INTEGRATION (.ICS & GOOGLE CALENDAR)
+// 7. CALENDAR INTEGRATION (.ICS & GOOGLE CALENDAR)
 // ------------------------------------------------------------------------------
 function setupCalendarButtons() {
   const btnIcs = document.getElementById("btn-add-calendar");
@@ -466,7 +512,7 @@ function setupCalendarButtons() {
 }
 
 // ------------------------------------------------------------------------------
-// 7. INTERACTIVE RSVP FORM & WHATSAPP
+// 8. INTERACTIVE RSVP FORM & WHATSAPP
 // ------------------------------------------------------------------------------
 function setupRSVPForm() {
   const radioCards = document.querySelectorAll(".attendance-btn-row .radio-pill");
@@ -539,7 +585,7 @@ window.sendWhatsAppRSVP = function () {
 };
 
 // ------------------------------------------------------------------------------
-// 8. CLIPBOARD HELPER & TOAST NOTIFICATION
+// 9. CLIPBOARD HELPER & TOAST NOTIFICATION
 // ------------------------------------------------------------------------------
 window.copyContact = function (text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -580,7 +626,7 @@ function showToast(message) {
 }
 
 // ------------------------------------------------------------------------------
-// 9. ACTIVE DOCKED BOTTOM NAVIGATION
+// 10. ACTIVE DOCKED BOTTOM NAVIGATION
 // ------------------------------------------------------------------------------
 function initBottomNav() {
   const sections = document.querySelectorAll(".card-section[id]");
@@ -611,6 +657,7 @@ function initBottomNav() {
 // INITIALIZE
 // ------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
+  initSideNavDrawer();
   initSnowPetalCanvas();
   initCountdown();
   setupCalendarButtons();
