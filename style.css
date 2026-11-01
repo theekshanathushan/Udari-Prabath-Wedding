@@ -263,7 +263,7 @@ button {
 
 .curtain-stage-overlay.curtains-open {
   pointer-events: none;
-  z-index: 15;
+  z-index: 85; /* Stays above card (z-index: 25) during opening sweep, parting smoothly across mobile */
 }
 
 /* Top Theatrical Valance */
@@ -307,7 +307,7 @@ button {
   width: 50.8%;
   z-index: 10;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
-  transition: transform 2.2s cubic-bezier(0.77, 0, 0.175, 1), border-radius 2s ease;
+  transition: transform 2.2s cubic-bezier(0.22, 1, 0.36, 1), border-radius 2s ease;
   overflow: hidden;
 }
 
@@ -712,21 +712,29 @@ button {
     letter-spacing: 4px;
   }
 
-  /* Curtains Open Positioning on Mobile */
+  /* Curtains Open Positioning on Mobile — Visible, Majestic Parting Sweep */
   .curtain-stage-overlay.curtains-open .curtain-left {
-    transform: translate3d(-92%, 0, 0) scaleX(0.45);
+    transform: translate3d(-78%, 0, 0) scaleX(0.68) rotate(-2.5deg);
+    border-radius: 0 100px 100px 0 / 0 50% 50% 0;
+    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.92), inset -8px 0 20px rgba(255, 215, 0, 0.45);
+    pointer-events: none;
   }
   .curtain-stage-overlay.curtains-open .curtain-right {
-    transform: translate3d(92%, 0, 0) scaleX(0.45);
+    transform: translate3d(78%, 0, 0) scaleX(0.68) rotate(2.5deg);
+    border-radius: 100px 0 0 100px / 50% 0 0 50%;
+    box-shadow: -15px 0 35px rgba(0, 0, 0, 0.92), inset 8px 0 20px rgba(255, 215, 0, 0.45);
+    pointer-events: none;
   }
   .curtain-stage-overlay.curtains-open .curtain-top-valance {
-    opacity: 0;
+    transform: translateY(-80%);
+    opacity: 0.25;
     pointer-events: none;
-    transition: opacity 0.5s ease;
+    transition: transform 1.8s ease, opacity 1.8s ease;
   }
   .curtain-stage-overlay.curtains-open .curtain-tieback-cord {
-    opacity: 0;
+    opacity: 0.85;
     pointer-events: none;
+    transition: opacity 1.5s ease;
   }
 
   /* Sections Padding */
@@ -1179,25 +1187,260 @@ button {
   100% { transform: scale(1.06); opacity: 1; }
 }
 
-/* Wreath Frame containing the user's couple photo */
+/* Wreath Frame containing the user's couple photo with Kiss Animation */
 .wreath-frame-box {
   width: 100%;
   height: 100%;
   border-radius: var(--radius-full);
   padding: 7px;
   background: linear-gradient(135deg, #ffd700 0%, #fff0aa 50%, #e6b800 100%);
-  box-shadow: 0 15px 40px rgba(107, 7, 26, 0.25), 0 0 30px rgba(255, 215, 0, 0.55);
+  box-shadow: 0 15px 40px rgba(107, 7, 26, 0.25), 0 0 35px rgba(255, 215, 0, 0.6);
   position: relative;
   z-index: 10;
   overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.wreath-frame-box:active {
+  transform: scale(0.975);
+}
+
+/* Couple photo with realistic romantic lean-in kiss animation */
 .center-couple-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: var(--radius-full);
   display: block;
+  transform-origin: 51% 42%;
+  animation: romanticKissMotion 6.5s ease-in-out infinite;
+  will-change: transform, filter;
+  transition: transform 0.3s ease;
+}
+
+@keyframes romanticKissMotion {
+  0%, 100% {
+    transform: scale(1) translate(0, 0) rotate(0deg);
+    filter: brightness(1) contrast(1.02);
+  }
+  24% {
+    /* Soft romantic breathing */
+    transform: scale(1.025) translateY(-2px) rotate(-0.3deg);
+  }
+  42% {
+    /* Leaning in close to each other in anticipation */
+    transform: scale(1.07) translateY(-4px) rotate(0.4deg);
+    filter: brightness(1.03) contrast(1.04);
+  }
+  49% {
+    /* Pre-kiss tenderness */
+    transform: scale(1.11) translateY(-6px) rotate(0.7deg);
+    filter: brightness(1.06) contrast(1.05);
+  }
+  51% {
+    /* THE KISS — faces meet in an intimate sweet kiss */
+    transform: scale(1.13) translateY(-7px) rotate(0.9deg);
+    filter: brightness(1.09) contrast(1.06) drop-shadow(0 0 14px rgba(255, 182, 193, 0.7));
+  }
+  54% {
+    /* Lingering sweet kiss */
+    transform: scale(1.12) translateY(-7px) rotate(0.8deg);
+    filter: brightness(1.08) contrast(1.05);
+  }
+  64% {
+    /* Gently parting with a smile */
+    transform: scale(1.05) translateY(-3px) rotate(0.3deg);
+    filter: brightness(1.03) contrast(1.03);
+  }
+  80% {
+    /* Relaxing back */
+    transform: scale(1.015) translateY(-1px) rotate(0deg);
+    filter: brightness(1) contrast(1.02);
+  }
+}
+
+/* Quick interactive kiss when tapped */
+.center-couple-photo.kiss-quick-pulse {
+  animation: quickKissTrigger 1.1s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+@keyframes quickKissTrigger {
+  0% { transform: scale(1) rotate(0deg); }
+  35% { transform: scale(1.16) translateY(-8px) rotate(1.2deg); filter: brightness(1.12) drop-shadow(0 0 18px rgba(255, 105, 180, 0.85)); }
+  60% { transform: scale(1.13) translateY(-7px) rotate(0.8deg); }
+  100% { transform: scale(1) translateY(0) rotate(0deg); }
+}
+
+/* Romantic warm light flare that blooms at the kiss instant */
+.kiss-light-flare {
+  position: absolute;
+  top: 42%;
+  left: 51%;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 215, 0, 0.9) 25%,
+    rgba(255, 105, 180, 0.7) 55%,
+    rgba(220, 20, 60, 0.25) 75%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  z-index: 12;
+  animation: kissFlarePulse 6.5s infinite ease-in-out;
+}
+
+@keyframes kissFlarePulse {
+  0%, 43% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+  48% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.2);
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+  }
+  51% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.9);
+    filter: drop-shadow(0 0 20px rgba(255, 105, 180, 0.95)) drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+  }
+  55% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+  64%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.1);
+  }
+}
+
+/* Animated Floating Kiss Hearts container */
+.kiss-floating-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 13;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+}
+
+.k-heart {
+  position: absolute;
+  top: 43%;
+  left: 51%;
+  font-size: 1.2rem;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.kh-1 {
+  animation: floatKissHeart 6.5s infinite 2.9s;
+  --dx: -32px;
+  --rot: -22deg;
+}
+.kh-2 {
+  animation: floatKissHeart 6.5s infinite 3.1s;
+  --dx: 28px;
+  --rot: 24deg;
+}
+.kh-3 {
+  animation: floatKissHeart 6.5s infinite 3.25s;
+  --dx: -8px;
+  --rot: 10deg;
+  font-size: 1.35rem;
+}
+.kh-4 {
+  animation: floatKissHeart 6.5s infinite 3.4s;
+  --dx: 38px;
+  --rot: -16deg;
+}
+.kh-5 {
+  animation: floatKissHeart 6.5s infinite 3.55s;
+  --dx: -22px;
+  --rot: 15deg;
+}
+.kh-6 {
+  animation: floatKissHeart 6.5s infinite 3.7s;
+  --dx: 16px;
+  --rot: -12deg;
+}
+
+@keyframes floatKissHeart {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+  16% {
+    opacity: 0.95;
+    transform: translate(calc(-50% + var(--dx) * 0.4), calc(-50% - 24px)) scale(0.95) rotate(var(--rot));
+  }
+  48% {
+    opacity: 0.9;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% - 65px)) scale(1.2) rotate(calc(var(--rot) * -1));
+    filter: drop-shadow(0 0 6px rgba(255, 105, 180, 0.85));
+  }
+  78% {
+    opacity: 0.45;
+    transform: translate(calc(-50% + var(--dx) * 1.35), calc(-50% - 100px)) scale(0.95) rotate(var(--rot));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx) * 1.55), calc(-50% - 130px)) scale(0.5) rotate(calc(var(--rot) * 1.6));
+  }
+}
+
+/* Intersecting Golden Wedding Rings Glint */
+.kiss-rings-sparkle {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.35rem;
+  z-index: 14;
+  filter: drop-shadow(0 0 8px #ffd700);
+  animation: ringsShimmer 3s infinite alternate ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes ringsShimmer {
+  0% { transform: translateX(-50%) scale(0.9) rotate(-5deg); filter: drop-shadow(0 0 4px #ffd700); }
+  50% { transform: translateX(-50%) scale(1.15) rotate(5deg); filter: drop-shadow(0 0 14px rgba(255, 215, 0, 0.95)) drop-shadow(0 0 8px #fff); }
+  100% { transform: translateX(-50%) scale(0.95) rotate(-3deg); filter: drop-shadow(0 0 6px #ffd700); }
+}
+
+/* Interactive Tap Burst Hearts */
+.interactive-burst-heart {
+  position: absolute;
+  font-size: 1.45rem;
+  pointer-events: none;
+  z-index: 25;
+  user-select: none;
+}
+
+@keyframes burstFlyOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.3) rotate(var(--rot));
+    filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.9));
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--tx) * 1.35), calc(-50% + var(--ty) * 1.35 - 30px)) scale(0.6) rotate(calc(var(--rot) * 1.5));
+  }
 }
 
 /* Floating Sparkles around photo */

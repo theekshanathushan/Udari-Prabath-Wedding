@@ -412,9 +412,70 @@ function updateAudioUI(isPlaying) {
 
 if (openCurtainsBtn) {
   openCurtainsBtn.addEventListener("click", openRoyalCurtains);
+  openCurtainsBtn.addEventListener("touchend", (e) => {
+    e.preventDefault();
+    openRoyalCurtains();
+  }, { passive: false });
 }
 if (audioToggleBtn) {
   audioToggleBtn.addEventListener("click", toggleAudio);
+}
+
+// ------------------------------------------------------------------------------
+// 5B. COUPLE PHOTO KISS ANIMATION & INTERACTIVE BURST
+// ------------------------------------------------------------------------------
+function initCoupleKissAnimation() {
+  const kissBox = document.getElementById("couple-kiss-box");
+  const coupleImg = document.getElementById("couple-photo-img");
+  if (!kissBox || !coupleImg) return;
+
+  function triggerKissBurst(e) {
+    // 1. Trigger instant romantic kiss pulse on the photo
+    coupleImg.classList.remove("kiss-quick-pulse");
+    void coupleImg.offsetWidth; // Force CSS reflow to re-trigger
+    coupleImg.classList.add("kiss-quick-pulse");
+
+    // 2. Play subtle love bell chime if audio context is running
+    try {
+      if (audioCtx && audioCtx.state === "running") {
+        playBell(880);
+        setTimeout(() => playBell(1174.66), 180);
+      }
+    } catch (_) {}
+
+    // 3. Spawn celebratory burst of floating love emojis from kiss point
+    const loveEmojis = ["💋", "💖", "💕", "✨", "❤️", "🥰", "💍", "🌹"];
+    const rect = kissBox.getBoundingClientRect();
+    const clickX = e && e.clientX ? e.clientX - rect.left : rect.width / 2;
+    const clickY = e && e.clientY ? e.clientY - rect.top : rect.height * 0.42;
+
+    const count = 8;
+    for (let i = 0; i < count; i++) {
+      const heartEl = document.createElement("span");
+      heartEl.className = "interactive-burst-heart";
+      heartEl.textContent = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
+      heartEl.style.left = `${clickX}px`;
+      heartEl.style.top = `${clickY}px`;
+
+      const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+      const dist = 50 + Math.random() * 55;
+      heartEl.style.setProperty("--tx", `${Math.cos(angle) * dist}px`);
+      heartEl.style.setProperty("--ty", `${Math.sin(angle) * dist - 35}px`);
+      heartEl.style.setProperty("--rot", `${(Math.random() - 0.5) * 70}deg`);
+      heartEl.style.animation = "burstFlyOut 1.1s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards";
+
+      kissBox.appendChild(heartEl);
+      setTimeout(() => heartEl.remove(), 1200);
+    }
+  }
+
+  kissBox.addEventListener("click", triggerKissBurst);
+  kissBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerKissBurst();
+    }
+  });
 }
 
 // ------------------------------------------------------------------------------
@@ -647,4 +708,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initCountdown();
   setupCalendarButtons();
   setupRSVPForm();
+  initCoupleKissAnimation();
 });
