@@ -1,7 +1,7 @@
 /**
  * ==============================================================================
- * UDARI & PRABATH — A DECEMBER ROYAL WEDDING
- * Curtains Reveal (Dora Redi Deka), Falling White Flower Petals & Snow (Sudu Mal & Thuhin)
+ * UDARI & PRABATH — WEDDING INVITATION CARD
+ * Curtains & Satin Bow Unlock, Falling White Petals & Snowflakes, WhatsApp RSVP
  * ==============================================================================
  */
 
@@ -12,13 +12,13 @@ const WEDDING_CONFIG = {
   brideName: "Udari",
   groomName: "Prabath",
   weddingDateISO: "2026-12-12T08:30:00+05:30", // Saturday, 12th December 2026
-  eventTitle: "December Wedding of Udari & Prabath",
-  eventDescription: "Poruwa Ceremony & Grand Reception of Udari & Prabath at Cinnamon Grand Colombo.",
+  eventTitle: "Wedding of Udari & Prabath",
+  eventDescription: "Poruwa Ceremony & Reception of Udari & Prabath at Cinnamon Grand Colombo.",
   venueName: "Cinnamon Grand Colombo (Grand Ballroom / Oak Room)",
   venueAddress: "77 Galle Road, Colombo 00300, Sri Lanka",
   venueMapsURL: "https://maps.google.com/?q=Cinnamon+Grand+Colombo",
   
-  // RSVP WhatsApp Number (Sri Lanka: 94 + 9 digits, e.g. 94771234567)
+  // WhatsApp RSVP Phone Number
   rsvpWhatsAppNumber: "94771234567",
   
   contact1Phone: "+94 77 123 4567",
@@ -31,74 +31,81 @@ const WEDDING_CONFIG = {
 const curtainOverlay = document.getElementById("curtain-overlay");
 const openCurtainsBtn = document.getElementById("open-curtains-btn");
 const weddingAudio = document.getElementById("wedding-audio");
-const audioBtn = document.getElementById("audio-btn");
-const audioPlayIcon = document.querySelector(".audio-icon-play");
-const audioMuteIcon = document.querySelector(".audio-icon-mute");
+const audioToggleBtn = document.getElementById("audio-toggle-btn");
+const heartIcon = document.getElementById("heart-icon");
 const toastElement = document.getElementById("toast");
 const toastText = document.getElementById("toast-text");
 const canvas = document.getElementById("snow-petal-canvas");
+const weddingCard = document.getElementById("wedding-card");
 
-// Prevent scrolling initially until curtains open
+// Lock scroll initially
 document.body.classList.add("locked");
 
 // ------------------------------------------------------------------------------
-// 3. FALLING WHITE FLOWER PETALS & SNOW CANVAS ENGINE (Sudu Mal & Thuhin)
+// 3. FALLING WHITE FLOWER PETALS & SNOW CANVAS ENGINE
 // ------------------------------------------------------------------------------
 let ctx = null;
 let particles = [];
 let burstParticles = [];
-let canvasWidth = window.innerWidth;
-let canvasHeight = window.innerHeight;
+let canvasWidth = 440;
+let canvasHeight = 800;
 
 function initSnowPetalCanvas() {
   if (!canvas) return;
   ctx = canvas.getContext("2d");
 
   function resizeCanvas() {
-    canvasWidth = canvas.width = window.innerWidth;
-    canvasHeight = canvas.height = window.innerHeight;
+    if (weddingCard) {
+      canvasWidth = canvas.width = weddingCard.offsetWidth || 440;
+      canvasHeight = canvas.height = weddingCard.offsetHeight || window.innerHeight;
+    } else {
+      canvasWidth = canvas.width = window.innerWidth;
+      canvasHeight = canvas.height = window.innerHeight;
+    }
   }
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  // Initialize white flower petals and snowflakes
-  const particleCount = window.innerWidth < 600 ? 50 : 90;
+  const particleCount = 45;
   for (let i = 0; i < particleCount; i++) {
     particles.push(createWhitePetalOrSnow());
   }
 
   // Interactive touch trail
-  window.addEventListener("pointermove", (e) => {
-    if (Math.random() > 0.6) {
-      particles.push({
-        type: Math.random() > 0.5 ? "petal" : "snow",
-        x: e.clientX,
-        y: e.clientY,
-        size: Math.random() * 5 + 3,
-        speedY: Math.random() * 1.5 + 0.8,
-        speedX: (Math.random() - 0.5) * 2,
-        sway: Math.random() * Math.PI * 2,
-        swaySpeed: 0.04,
-        rotation: Math.random() * 360,
-        rotSpeed: (Math.random() - 0.5) * 3,
-        alpha: 1,
-        isInteractive: true
-      });
-    }
-  });
+  if (weddingCard) {
+    weddingCard.addEventListener("pointermove", (e) => {
+      if (Math.random() > 0.6) {
+        const rect = weddingCard.getBoundingClientRect();
+        particles.push({
+          type: Math.random() > 0.5 ? "petal" : "snow",
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+          size: Math.random() * 4 + 2.5,
+          speedY: Math.random() * 1.5 + 0.8,
+          speedX: (Math.random() - 0.5) * 1.5,
+          sway: Math.random() * Math.PI * 2,
+          swaySpeed: 0.04,
+          rotation: Math.random() * 360,
+          rotSpeed: (Math.random() - 0.5) * 3,
+          alpha: 1,
+          isInteractive: true
+        });
+      }
+    });
+  }
 
   requestAnimationFrame(renderCanvasLoop);
 }
 
 function createWhitePetalOrSnow() {
-  const isPetal = Math.random() > 0.45; // Mix of white petals and snow/frost
+  const isPetal = Math.random() > 0.45;
   return {
     type: isPetal ? "petal" : "snow",
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    size: isPetal ? Math.random() * 6 + 5 : Math.random() * 3.5 + 1.2,
-    speedY: isPetal ? Math.random() * 1.2 + 0.6 : Math.random() * 0.9 + 0.4,
-    speedX: (Math.random() - 0.5) * 0.7,
+    size: isPetal ? Math.random() * 5 + 4 : Math.random() * 3 + 1.2,
+    speedY: isPetal ? Math.random() * 1.1 + 0.6 : Math.random() * 0.8 + 0.4,
+    speedX: (Math.random() - 0.5) * 0.6,
     sway: Math.random() * Math.PI * 2,
     swaySpeed: Math.random() * 0.02 + 0.015,
     rotation: Math.random() * 360,
@@ -107,21 +114,20 @@ function createWhitePetalOrSnow() {
   };
 }
 
-// Celebratory Shower when Royal Curtains Part
 function triggerCurtainOpeningShower(originX, originY) {
-  const count = 90;
+  const count = 75;
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 8 + 3;
+    const speed = Math.random() * 7 + 2.5;
     burstParticles.push({
       type: Math.random() > 0.4 ? "petal" : "snow",
       x: originX,
       y: originY,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      size: Math.random() * 7 + 3,
+      size: Math.random() * 6 + 3,
       alpha: 1,
-      gravity: 0.18,
+      gravity: 0.16,
       rotation: Math.random() * 360,
       rotSpeed: (Math.random() - 0.5) * 10
     });
@@ -136,7 +142,7 @@ function renderCanvasLoop() {
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.sway += p.swaySpeed;
-    p.x += p.speedX + Math.sin(p.sway) * 0.8;
+    p.x += p.speedX + Math.sin(p.sway) * 0.7;
     p.y += p.speedY;
     p.rotation += p.rotSpeed;
 
@@ -166,7 +172,7 @@ function renderCanvasLoop() {
     ctx.restore();
   }
 
-  // 2. Render curtain opening shower burst
+  // 2. Render shower burst
   for (let i = 0; i < burstParticles.length; i++) {
     const bp = burstParticles[i];
     bp.x += bp.vx;
@@ -194,7 +200,6 @@ function renderCanvasLoop() {
   requestAnimationFrame(renderCanvasLoop);
 }
 
-// Delicate curved white flower petal (Sudu Mal Pethi)
 function drawWhitePetal(ctx, x, y, size, rotation) {
   ctx.translate(x, y);
   ctx.rotate((rotation * Math.PI) / 180);
@@ -209,7 +214,6 @@ function drawWhitePetal(ctx, x, y, size, rotation) {
   ctx.bezierCurveTo(-size * 0.9, size * 0.5, -size * 0.8, -size * 0.5, 0, -size);
   ctx.fill();
 
-  // Subtle petal vein
   ctx.strokeStyle = "rgba(255, 240, 210, 0.6)";
   ctx.lineWidth = 0.8;
   ctx.beginPath();
@@ -218,13 +222,12 @@ function drawWhitePetal(ctx, x, y, size, rotation) {
   ctx.stroke();
 }
 
-// Crystalline Snow & Frost (Thuhin)
 function drawFrostSnowflake(ctx, x, y, size) {
   ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
   ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
-  ctx.shadowBlur = 6;
+  ctx.shadowBlur = 5;
 
-  if (size > 2.5) {
+  if (size > 2.2) {
     ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -242,21 +245,20 @@ function drawFrostSnowflake(ctx, x, y, size) {
 }
 
 // ------------------------------------------------------------------------------
-// 4. ROYAL CURTAIN REVEAL LOGIC (Dora Redi Deka Open Wela)
+// 4. ROYAL CURTAIN REVEAL & AUDIO
 // ------------------------------------------------------------------------------
 let isCurtainOpened = false;
 let isAudioPlaying = false;
 let audioCtx = null;
 let chimeInterval = null;
 
-// Festive Romantic Wedding Bells Synthesizer (Fallback if no MP3 uploaded)
 function startFestiveBells() {
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (!AudioContext) return;
     audioCtx = new AudioContext();
 
-    const notes = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00]; // D Major Festive Progression
+    const notes = [293.66, 369.99, 440.00, 587.33, 739.99, 880.00];
     let noteIdx = 0;
 
     function playBell(freq) {
@@ -292,19 +294,14 @@ function openRoyalCurtains() {
   if (isCurtainOpened) return;
   isCurtainOpened = true;
 
-  // 1. Shower burst of petals & snowflakes from the center
   const rect = openCurtainsBtn ? openCurtainsBtn.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
   const originX = rect.left + rect.width / 2;
   const originY = rect.top + rect.height / 2;
   triggerCurtainOpeningShower(originX, originY);
 
-  // 2. Slide curtains left & right to reveal couple photo
   curtainOverlay.classList.add("curtains-open");
-
-  // 3. Play music
   playAudio();
 
-  // 4. Smoothly transition to the main invitation after the grand reveal
   setTimeout(() => {
     curtainOverlay.classList.add("curtains-dissolved");
     document.body.classList.remove("locked");
@@ -346,22 +343,22 @@ function toggleAudio() {
 }
 
 function updateAudioUI(isPlaying) {
-  if (isPlaying) {
-    audioBtn.classList.add("audio-playing");
-    audioPlayIcon.classList.remove("hidden");
-    audioMuteIcon.classList.add("hidden");
-  } else {
-    audioBtn.classList.remove("audio-playing");
-    audioPlayIcon.classList.add("hidden");
-    audioMuteIcon.classList.remove("hidden");
+  if (heartIcon) {
+    if (isPlaying) {
+      heartIcon.style.color = "#c41e3a";
+      heartIcon.textContent = "♥";
+    } else {
+      heartIcon.style.color = "#888888";
+      heartIcon.textContent = "♡";
+    }
   }
 }
 
 if (openCurtainsBtn) {
   openCurtainsBtn.addEventListener("click", openRoyalCurtains);
 }
-if (audioBtn) {
-  audioBtn.addEventListener("click", toggleAudio);
+if (audioToggleBtn) {
+  audioToggleBtn.addEventListener("click", toggleAudio);
 }
 
 // ------------------------------------------------------------------------------
@@ -385,7 +382,7 @@ function initCountdown() {
       hoursEl.textContent = "00";
       minutesEl.textContent = "00";
       secondsEl.textContent = "00";
-      const heading = document.querySelector(".countdown-title");
+      const heading = document.querySelector(".countdown-tag");
       if (heading) heading.textContent = "TODAY IS OUR WEDDING DAY! 💍✨";
       return;
     }
@@ -413,7 +410,7 @@ function setupCalendarButtons() {
   const btnGoogle = document.getElementById("btn-google-calendar");
 
   const startDate = new Date(WEDDING_CONFIG.weddingDateISO);
-  const endDate = new Date(startDate.getTime() + 6 * 60 * 60 * 1000); // 6 hours
+  const endDate = new Date(startDate.getTime() + 6 * 60 * 60 * 1000);
 
   function formatDateToICS(date) {
     return date.toISOString().replace(/-|:|\.\d+/g, "");
@@ -472,7 +469,7 @@ function setupCalendarButtons() {
 // 7. INTERACTIVE RSVP FORM & WHATSAPP
 // ------------------------------------------------------------------------------
 function setupRSVPForm() {
-  const radioCards = document.querySelectorAll(".attendance-radio-wrap .radio-card");
+  const radioCards = document.querySelectorAll(".attendance-btn-row .radio-pill");
   const guestCountInput = document.getElementById("guest-count");
   const btnMinus = document.getElementById("stepper-minus");
   const btnPlus = document.getElementById("stepper-plus");
@@ -535,7 +532,7 @@ window.sendWhatsAppRSVP = function () {
     textMessage += `💬 *Warm Wishes:* ${guestMessage}\n`;
   }
 
-  textMessage += `\n_Sent via Udari & Prabath's December Wedding Website_ 💍✨`;
+  textMessage += `\n_Sent via Udari & Prabath's December Wedding Card_ 💍✨`;
 
   const encodedUrl = `https://wa.me/${WEDDING_CONFIG.rsvpWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
   window.open(encodedUrl, "_blank");
@@ -583,40 +580,14 @@ function showToast(message) {
 }
 
 // ------------------------------------------------------------------------------
-// 9. SCROLL REVEAL ANIMATIONS
+// 9. ACTIVE DOCKED BOTTOM NAVIGATION
 // ------------------------------------------------------------------------------
-function initScrollReveal() {
-  const fadeElements = document.querySelectorAll(".fade-in");
-  
-  if (!("IntersectionObserver" in window)) {
-    fadeElements.forEach(el => el.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        obs.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.15,
-    rootMargin: "0px 0px -40px 0px"
-  });
-
-  fadeElements.forEach(el => observer.observe(el));
-}
-
-// ------------------------------------------------------------------------------
-// 10. ACTIVE MOBILE BOTTOM NAV
-// ------------------------------------------------------------------------------
-function initMobileNav() {
-  const sections = document.querySelectorAll("section[id]");
-  const navItems = document.querySelectorAll(".mobile-bottom-nav .nav-item");
+function initBottomNav() {
+  const sections = document.querySelectorAll(".card-section[id]");
+  const navTabs = document.querySelectorAll(".card-docked-bottom-nav .nav-tab");
 
   window.addEventListener("scroll", () => {
-    let scrollPos = window.scrollY + 220;
+    let scrollPos = window.scrollY + 200;
 
     sections.forEach(section => {
       const top = section.offsetTop;
@@ -624,11 +595,11 @@ function initMobileNav() {
       const id = section.getAttribute("id");
 
       if (scrollPos >= top && scrollPos < top + height) {
-        navItems.forEach(item => {
-          if (item.getAttribute("href") === `#${id}`) {
-            item.classList.add("active");
+        navTabs.forEach(tab => {
+          if (tab.getAttribute("href") === `#${id}`) {
+            tab.classList.add("active");
           } else {
-            item.classList.remove("active");
+            tab.classList.remove("active");
           }
         });
       }
@@ -644,6 +615,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initCountdown();
   setupCalendarButtons();
   setupRSVPForm();
-  initScrollReveal();
-  initMobileNav();
+  initBottomNav();
 });

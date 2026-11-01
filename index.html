@@ -3,73 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>Udari & Prabath — A December Royal Wedding</title>
+  <title>Udari & Prabath — Wedding Invitation</title>
   
   <!-- SEO & WhatsApp Social Share Meta Tags -->
-  <meta name="title" content="Udari & Prabath — A December Royal Wedding 💍✨" />
-  <meta name="description" content="You are cordially invited to the December wedding of Udari & Prabath. Join us for a joyous celebration of love." />
+  <meta name="title" content="Udari & Prabath — Wedding Invitation 💍✨" />
+  <meta name="description" content="You are cordially invited to celebrate the December wedding of Udari & Prabath." />
   
   <!-- Open Graph / WhatsApp / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://theekshanathushan.github.io/Udari-Prabath-Wedding/" />
-  <meta property="og:title" content="Udari & Prabath — A December Royal Wedding 💍✨" />
-  <meta property="og:description" content="You are cordially invited to celebrate our wedding this December! Tap to open the royal card, ceremony details & RSVP." />
+  <meta property="og:title" content="Udari & Prabath — Wedding Invitation 💍✨" />
+  <meta property="og:description" content="You are cordially invited to our wedding celebration this December! Tap to view the invitation & RSVP." />
   <meta property="og:image" content="assets/images/couple-december.jpg" />
-
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Udari & Prabath — A December Royal Wedding" />
-  <meta property="twitter:description" content="Join us this December to celebrate the wedding of Udari & Prabath." />
-  <meta property="twitter:image" content="assets/images/couple-december.jpg" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌹</text></svg>" />
 
-  <!-- Google Fonts: Great Vibes (Royal Calligraphy), Playfair Display (Grand Serif), Outfit (Modern Mobile Clean) -->
+  <!-- Google Fonts: Cormorant Garamond, Great Vibes, Playfair Display, Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body class="locked">
 
-  <!-- =================================================================
-       LIVE CANVAS: FALLING WHITE FLOWER PETALS & SNOW (Sudu Mal & Thuhin)
-       ================================================================= -->
-  <canvas id="snow-petal-canvas"></canvas>
-
-  <!-- =================================================================
-       FLOATING AUDIO CONTROLLER
-       ================================================================= -->
+  <!-- Background Music Audio Element -->
   <audio id="wedding-audio" loop preload="auto">
     <source src="assets/audio/wedding-song.mp3" type="audio/mpeg" />
   </audio>
 
-  <div class="audio-control-wrapper" id="audio-control-wrapper" title="Play / Mute Music">
-    <button class="audio-btn" id="audio-btn" aria-label="Toggle festive wedding music">
-      <div class="audio-glow-ring"></div>
-      <svg class="audio-icon audio-icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-      </svg>
-      <svg class="audio-icon audio-icon-mute hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-        <line x1="23" y1="9" x2="17" y2="15"></line>
-        <line x1="17" y1="9" x2="23" y2="15"></line>
-      </svg>
-      <span class="music-note-emoji">🎵</span>
-    </button>
-  </div>
-
   <!-- =================================================================
-       SECTION 1: CURVED THEATER CURTAIN & RIBBON BOW UNLOCK
+       SECTION 1: THEATER CURVED CURTAINS & SATIN BOW UNLOCK SCREEN
        ================================================================= -->
   <div class="curtain-stage-overlay" id="curtain-overlay">
     
-    <!-- Revealed Stage (Behind Curtains): Couple Photo & Welcome -->
+    <!-- Revealed Stage Behind Curtains -->
     <div class="curtain-revealed-backdrop" id="curtain-backdrop">
       <div class="revealed-frame-wrap">
         <div class="revealed-photo-halo">
@@ -78,12 +48,12 @@
         <div class="revealed-welcome-text">
           <span class="rw-sub">✨ WELCOME TO OUR WEDDING ✨</span>
           <h2 class="rw-names">Udari &amp; Prabath</h2>
-          <span class="rw-date">Saturday, 12th December 2026 • Colombo</span>
+          <span class="rw-date">Saturday, 12th December 2026</span>
         </div>
       </div>
     </div>
 
-    <!-- Top Theatrical Scalloped Valance / Pelmet (Curved Swags with Gold Trim) -->
+    <!-- Top Theatrical Scalloped Valance / Pelmet -->
     <div class="curtain-top-valance" aria-hidden="true">
       <div class="valance-swag swag-left"></div>
       <div class="valance-swag swag-center"></div>
@@ -109,37 +79,28 @@
       </div>
     </div>
 
-    <!-- Center Satin Ribbon & Bow (Clear Clean Design - No Clutter!) -->
+    <!-- Center Clean Ribbon Bow (No Cluttered Text!) -->
     <div class="curtain-center-bow-wrapper" id="curtain-center-bow">
       
-      <!-- Horizontal Ribbon Joining the Curtains -->
       <div class="horizontal-ribbon-band" id="horizontal-ribbon">
         <div class="ribbon-gold-stitching"></div>
       </div>
 
-      <!-- Center Interactive Ribbon Bow Button -->
-      <button class="interactive-bow-btn" id="open-curtains-btn" aria-label="Untie ribbon bow to open curtains">
+      <!-- Interactive Bow Button -->
+      <button class="interactive-bow-btn" id="open-curtains-btn" aria-label="Untie ribbon bow to open invitation">
         <div class="bow-glow-ring"></div>
         
-        <!-- 3D Satin Ribbon Bow -->
         <div class="satin-bow-mesh">
-          <!-- Left Ribbon Loop -->
           <div class="bow-loop loop-left">
             <span class="loop-ribbon-highlight"></span>
           </div>
-
-          <!-- Right Ribbon Loop -->
           <div class="bow-loop loop-right">
             <span class="loop-ribbon-highlight"></span>
           </div>
-
-          <!-- Center Knot Medallion -->
           <div class="bow-knot-jewel">
-            <span class="knot-monogram">U &amp; P</span>
+            <span class="knot-monogram">U&amp;P</span>
             <span class="knot-ring-symbol">💍</span>
           </div>
-
-          <!-- Dangling Ribbon Tails with V-Cut Ends -->
           <div class="bow-tail tail-left">
             <div class="tail-v-cut"></div>
           </div>
@@ -148,380 +109,346 @@
           </div>
         </div>
 
-        <!-- Subtle Untie Indicator -->
         <span class="bow-action-pill">TAP TO UNTIE</span>
       </button>
 
-      <!-- Clean Hint Pill -->
       <p class="bow-gentle-hint">✨ Touch the Ribbon Bow to Open ✨</p>
     </div>
 
   </div>
 
   <!-- =================================================================
-       MAIN INVITATION CONTENT
+       MAIN CARD CONTAINER (PORTRAIT CARD FORMAT LIKE REFERENCE SITE)
        ================================================================= -->
-  <main class="main-content" id="main-content">
+  <div class="card-viewport-wrapper">
     
-    <!-- ===============================================================
-         HERO SECTION: RED, GOLD & WHITE DECEMBER ROMANCE
-         =============================================================== -->
-    <section class="section hero-section" id="hero">
-      <div class="container hero-container">
+    <!-- Centered Card Device -->
+    <div class="wedding-card-container" id="wedding-card">
+      
+      <!-- Live Falling White Petals & Snow Canvas Inside the Card -->
+      <canvas id="snow-petal-canvas"></canvas>
+
+      <!-- -------------------------------------------------------------
+           CARD TOP BAR: Menu Icon | Monogram "U & P" | Heart / Music
+           ------------------------------------------------------------- -->
+      <header class="card-top-bar">
+        <a href="#ceremony" class="top-bar-icon-btn" aria-label="View Schedule">
+          <span class="bar-icon">☰</span>
+        </a>
+        <div class="top-bar-center-monogram">
+          <span>U &amp; P</span>
+        </div>
+        <button class="top-bar-icon-btn" id="audio-toggle-btn" aria-label="Toggle Music">
+          <span class="heart-pulse-icon" id="heart-icon">♥</span>
+        </button>
+      </header>
+
+      <!-- -------------------------------------------------------------
+           HERO SECTION: ANIMATED PHOTO CENTERPIECE & INVITATION
+           ------------------------------------------------------------- -->
+      <section class="card-section hero-card-section" id="hero">
         
-        <!-- Christmas Garland Header -->
-        <div class="festive-garland-ornament fade-in">
-          <span class="garland-flower">🌹</span>
-          <span class="garland-line"></span>
-          <span class="garland-bell">🔔</span>
-          <span class="garland-line"></span>
-          <span class="garland-flower">🌹</span>
-        </div>
-
-        <p class="suba-mangala-tag fade-in">Under the blessings of the Triple Gem and beloved parents,</p>
-
-        <!-- Parents Box -->
-        <div class="parents-festive-grid fade-in">
-          <div class="parent-white-card">
-            <span class="p-side-label">Daughter of</span>
-            <h4 class="p-names">Mr. &amp; Mrs. Rajapaksha</h4>
-            <span class="p-city">Galle, Sri Lanka</span>
-          </div>
-
-          <div class="parents-gold-ring">
-            <span>💍</span>
-          </div>
-
-          <div class="parent-white-card">
-            <span class="p-side-label">Son of</span>
-            <h4 class="p-names">Mr. &amp; Mrs. Jayasinghe</h4>
-            <span class="p-city">Colombo, Sri Lanka</span>
-          </div>
-        </div>
-
-        <p class="request-line fade-in">request the honor of your gracious presence to celebrate the wedding union of</p>
-
-        <!-- Couple Names in Rich Calligraphy -->
-        <div class="hero-couple-names fade-in">
-          <h1 class="bride-name">Udari</h1>
-          <div class="gold-heart-amp">&amp;</div>
-          <h1 class="groom-name">Prabath</h1>
-        </div>
-
-        <!-- Featured Couple Photo (From User Upload) -->
-        <div class="featured-hero-photo-wrap fade-in">
-          <div class="photo-gold-border">
-            <img src="assets/images/couple-december.jpg" alt="Udari & Prabath - December Wedding" class="hero-couple-img" />
-          </div>
-          <div class="photo-caption-ribbon">
-            <span class="ribbon-sparkle">✨</span>
-            <span class="ribbon-text">OUR DECEMBER WEDDING</span>
-            <span class="ribbon-sparkle">✨</span>
-          </div>
-        </div>
-
-        <!-- Date & Ceremony Highlight -->
-        <div class="hero-date-banner fade-in">
-          <p class="banner-ceremony-type">PORUWA CEREMONY &amp; GRAND RECEPTION</p>
-          <h2 class="banner-wedding-date">Saturday, 12th December 2026</h2>
-          <div class="banner-time-line">
-            <span>🕘 08:30 AM Onwards</span>
-            <span class="time-dot">•</span>
-            <span class="nekatha-pill">Poruwa Nekatha at 09:14 AM</span>
-          </div>
-        </div>
-
-        <!-- Live Countdown Timer -->
-        <div class="countdown-card fade-in" id="countdown-section">
-          <h3 class="countdown-title">COUNTING DOWN TO OUR AUSPICIOUS MOMENT</h3>
-          <div class="countdown-grid">
-            <div class="c-box">
-              <span class="c-val" id="days">00</span>
-              <span class="c-lbl">Days</span>
-            </div>
-            <div class="c-box">
-              <span class="c-val" id="hours">00</span>
-              <span class="c-lbl">Hours</span>
-            </div>
-            <div class="c-box">
-              <span class="c-val" id="minutes">00</span>
-              <span class="c-lbl">Minutes</span>
-            </div>
-            <div class="c-box">
-              <span class="c-val" id="seconds">00</span>
-              <span class="c-lbl">Seconds</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Add to Calendar Buttons -->
-        <div class="hero-actions-wrap fade-in">
-          <button class="btn btn-crimson-gold" id="btn-add-calendar">
-            <span class="btn-emoji">📅</span>
-            Save to Calendar (.ics)
-          </button>
+        <!-- Animated Couple Photo Centerpiece with Wreath & Glow -->
+        <div class="couple-photo-centerpiece-wrap">
           
-          <a class="btn btn-white-gold" id="btn-google-calendar" href="#" target="_blank" rel="noopener noreferrer">
-            <span class="btn-emoji">🗓️</span>
-            Add to Google Calendar
+          <!-- Outer Rotating Golden Aura Ring -->
+          <div class="aura-gold-ring"></div>
+          <div class="aura-particles-glow"></div>
+          
+          <!-- Ornate Floral Wreath Frame -->
+          <div class="wreath-frame-box">
+            <img src="assets/images/couple-december.jpg" alt="Udari & Prabath - December Wedding" class="center-couple-photo" />
+          </div>
+
+          <!-- Floating Sparkle Badges -->
+          <div class="floating-sparkle sp-1">✨</div>
+          <div class="floating-sparkle sp-2">🌹</div>
+          <div class="floating-sparkle sp-3">✨</div>
+          <div class="floating-sparkle sp-4">❄️</div>
+        </div>
+
+        <!-- Invitation Intro Text (Like Reference: "WITH JOYFUL HEARTS") -->
+        <div class="joyful-hearts-line">
+          <span class="jh-rule"></span>
+          <span class="jh-text">WITH JOYFUL HEARTS</span>
+          <span class="jh-rule"></span>
+        </div>
+
+        <!-- Parents Line -->
+        <div class="parents-card-block">
+          <span class="parents-lead">DAUGHTER OF</span>
+          <p class="parents-title">Mr. &amp; Mrs. Rajapaksha</p>
+          <span class="parents-lead and-lead">&amp; SON OF</span>
+          <p class="parents-title">Mr. &amp; Mrs. Jayasinghe</p>
+        </div>
+
+        <p class="honor-presence-text">
+          request the honour of your presence at the celebration of the marriage of their children
+        </p>
+
+        <!-- Grand Couple Typography -->
+        <div class="names-grand-display">
+          <h1 class="c-name-text">Udari</h1>
+          <div class="c-amp-script">&amp;</div>
+          <h1 class="c-name-text">Prabath</h1>
+        </div>
+
+        <div class="gold-accent-swirl">
+          <svg viewBox="0 0 200 24" class="swirl-svg">
+            <path d="M10,12 Q100,0 190,12 Q100,24 10,12 Z" fill="url(#goldSwirlGrad)" />
+            <circle cx="100" cy="12" r="3.5" fill="#ffd700" />
+            <defs>
+              <linearGradient id="goldSwirlGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff5b8" />
+                <stop offset="50%" stop-color="#ffd700" />
+                <stop offset="100%" stop-color="#b8860b" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Ceremony Date Card -->
+        <div class="card-date-badge">
+          <p class="ceremony-badge-type">PORUWA CEREMONY &amp; RECEPTION</p>
+          <h2 class="ceremony-badge-date">Saturday, 12th December 2026</h2>
+          <p class="ceremony-badge-time">08:30 AM Onwards • Auspicious Poruwa at 09:14 AM</p>
+        </div>
+
+        <!-- Live Countdown -->
+        <div class="card-countdown-wrap" id="countdown-section">
+          <span class="countdown-tag">COUNTING DOWN TO OUR WEDDING</span>
+          <div class="compact-timer-grid">
+            <div class="c-timer-unit">
+              <span class="c-timer-num" id="days">00</span>
+              <span class="c-timer-sub">Days</span>
+            </div>
+            <div class="c-timer-unit">
+              <span class="c-timer-num" id="hours">00</span>
+              <span class="c-timer-sub">Hours</span>
+            </div>
+            <div class="c-timer-unit">
+              <span class="c-timer-num" id="minutes">00</span>
+              <span class="c-timer-sub">Mins</span>
+            </div>
+            <div class="c-timer-unit">
+              <span class="c-timer-num" id="seconds">00</span>
+              <span class="c-timer-sub">Secs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add to Calendar -->
+        <div class="card-actions-row">
+          <button class="btn btn-crimson-gold" id="btn-add-calendar">
+            <span>📅</span> Save to Calendar
+          </button>
+          <a class="btn btn-outline-gold" id="btn-google-calendar" href="#" target="_blank" rel="noopener noreferrer">
+            <span>🗓️</span> Google Calendar
           </a>
         </div>
 
-      </div>
-    </section>
+      </section>
 
-    <!-- ===============================================================
-         OUR STORY / LOVE JOURNEY
-         =============================================================== -->
-    <section class="section story-section" id="story">
-      <div class="container">
-        
-        <div class="section-title-wrap fade-in">
-          <span class="section-tag-gold">A BEAUTIFUL DECEMBER TALE</span>
-          <h2 class="section-main-title">Our Story</h2>
-          <div class="gold-rose-divider">
-            <span>🌹</span>
-          </div>
+      <!-- -------------------------------------------------------------
+           OUR STORY TIMELINE
+           ------------------------------------------------------------- -->
+      <section class="card-section story-card-section" id="story">
+        <div class="section-card-header">
+          <span class="sec-tag">A DECEMBER LOVE STORY</span>
+          <h2 class="sec-title">Our Story</h2>
+          <div class="sec-rose-line">🌹</div>
         </div>
 
-        <div class="story-cards-grid">
+        <div class="story-mini-timeline">
           
-          <!-- Story 1 -->
-          <div class="story-festive-card fade-in">
-            <div class="story-img-wrap">
-              <img src="assets/images/story-1.jpg" alt="When We Met" class="story-photo" />
-              <div class="story-badge">CHAPTER I</div>
+          <div class="story-mini-card">
+            <div class="story-mini-img-wrap">
+              <img src="assets/images/story-1.jpg" alt="When We Met" class="story-mini-img" />
+              <span class="story-chapter-pill">CHAPTER I</span>
             </div>
-            <div class="story-content-wrap">
-              <span class="story-subtitle">The First Spark</span>
-              <h3 class="story-heading">Where Paths Crossed</h3>
-              <p class="story-para">
-                What started as a warm conversation blossomed into shared dreams, mutual respect, and an unshakeable bond filled with warmth and laughter.
+            <div class="story-mini-content">
+              <h3 class="story-mini-heading">Where Paths Crossed</h3>
+              <p class="story-mini-desc">
+                A serendipitous encounter that blossomed into comforting conversations, shared laughter, and finding our rhythm together.
               </p>
             </div>
           </div>
 
-          <!-- Story 2 -->
-          <div class="story-festive-card fade-in">
-            <div class="story-img-wrap">
-              <img src="assets/images/story-2.jpg" alt="Walking Together" class="story-photo" />
-              <div class="story-badge">CHAPTER II</div>
+          <div class="story-mini-card">
+            <div class="story-mini-img-wrap">
+              <img src="assets/images/story-2.jpg" alt="Growing Hand in Hand" class="story-mini-img" />
+              <span class="story-chapter-pill">CHAPTER II</span>
             </div>
-            <div class="story-content-wrap">
-              <span class="story-subtitle">Growing in Love</span>
-              <h3 class="story-heading">Walking Hand in Hand</h3>
-              <p class="story-para">
-                Through every journey and sunset, we found our home in each other. Supporting every milestone, celebrating life, and cherishing every moment.
+            <div class="story-mini-content">
+              <h3 class="story-mini-heading">Growing Hand in Hand</h3>
+              <p class="story-mini-desc">
+                Through every journey across hills and coasts, supporting each other's dreams and building memories that last forever.
               </p>
             </div>
           </div>
 
-          <!-- Story 3 -->
-          <div class="story-festive-card fade-in">
-            <div class="story-img-wrap">
-              <img src="assets/images/story-3.jpg" alt="She Said Yes" class="story-photo" />
-              <div class="story-badge">CHAPTER III</div>
+          <div class="story-mini-card">
+            <div class="story-mini-img-wrap">
+              <img src="assets/images/story-3.jpg" alt="She Said Yes" class="story-mini-img" />
+              <span class="story-chapter-pill">CHAPTER III</span>
             </div>
-            <div class="story-content-wrap">
-              <span class="story-subtitle">Forever Promise</span>
-              <h3 class="story-heading">She Said Yes! 💍</h3>
-              <p class="story-para">
-                Surrounded by warmth and joy, a promise for eternity was sealed. Now we are excited to step into this sacred chapter together as husband and wife.
+            <div class="story-mini-content">
+              <h3 class="story-mini-heading">She Said Yes! 💍</h3>
+              <p class="story-mini-desc">
+                Under an evening canopy of stars, a lifetime promise was made. Now, we begin our greatest adventure together.
               </p>
             </div>
           </div>
 
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ===============================================================
-         CEREMONY & PROGRAM OF EVENTS
-         =============================================================== -->
-    <section class="section schedule-section" id="ceremony">
-      <div class="container">
-        
-        <div class="section-title-wrap fade-in">
-          <span class="section-tag-gold">AUSPICIOUS TIMINGS</span>
-          <h2 class="section-main-title">Ceremony Itinerary</h2>
-          <p class="section-subtitle">Please join us early to take part in every traditional ritual and blessing.</p>
-          <div class="gold-rose-divider">
-            <span>🌹</span>
-          </div>
+      <!-- -------------------------------------------------------------
+           SCHEDULE & CEREMONY ITINERARY
+           ------------------------------------------------------------- -->
+      <section class="card-section schedule-card-section" id="ceremony">
+        <div class="section-card-header">
+          <span class="sec-tag">AUSPICIOUS TIMINGS</span>
+          <h2 class="sec-title">Ceremony Itinerary</h2>
+          <div class="sec-rose-line">🌹</div>
         </div>
 
-        <div class="timeline-program">
+        <div class="compact-program-list">
           
-          <!-- Event 1 -->
-          <div class="timeline-row fade-in">
-            <div class="t-badge-circle">🥁</div>
-            <div class="t-card">
-              <div class="t-time">08:30 AM</div>
-              <h3 class="t-name">Arrival &amp; Magul Bera Welcome</h3>
-              <p class="t-desc">Traditional drum greetings and welcome refreshments as guests are seated in the Grand Ballroom.</p>
+          <div class="program-item">
+            <div class="p-icon">🥁</div>
+            <div class="p-details">
+              <span class="p-time">08:30 AM</span>
+              <h4 class="p-title">Magul Bera &amp; Welcome</h4>
+              <p class="p-desc">Traditional drum greetings and welcome refreshments.</p>
             </div>
           </div>
 
-          <!-- Event 2: Auspicious Poruwa -->
-          <div class="timeline-row highlight-row fade-in">
-            <div class="t-badge-circle poruwa-gold-circle">🏛️</div>
-            <div class="t-card auspicious-card">
-              <div class="auspicious-ribbon">⭐ AUSPICIOUS NEKATHA ⭐</div>
-              <div class="t-time gold-time">09:14 AM</div>
-              <h3 class="t-name">The Sacred Poruwa Ceremony</h3>
-              <p class="t-desc">Ascending the Poruwa, chanting of Jayamangala Gatha, exchange of rings, tying of the Nuul, and breaking of the traditional coconut.</p>
+          <div class="program-item highlight-item">
+            <div class="p-icon poruwa-icon">🏛️</div>
+            <div class="p-details">
+              <span class="p-auspicious-tag">AUSPICIOUS NEKATHA</span>
+              <span class="p-time gold-time">09:14 AM</span>
+              <h4 class="p-title">The Sacred Poruwa Ceremony</h4>
+              <p class="p-desc">Ascending the Poruwa, Jayamangala Gatha, and tying of the Nuul.</p>
             </div>
           </div>
 
-          <!-- Event 3 -->
-          <div class="timeline-row fade-in">
-            <div class="t-badge-circle">🪔</div>
-            <div class="t-card">
-              <div class="t-time">10:15 AM</div>
-              <h3 class="t-name">Lighting the Traditional Oil Lamp</h3>
-              <p class="t-desc">Lighting of the Pana Pahan symbolizing prosperity, followed by wedding cake cutting and toasts.</p>
+          <div class="program-item">
+            <div class="p-icon">🪔</div>
+            <div class="p-details">
+              <span class="p-time">10:15 AM</span>
+              <h4 class="p-title">Traditional Oil Lamp &amp; Rings</h4>
+              <p class="p-desc">Lighting the Pana Pahan and celebratory cake cutting.</p>
             </div>
           </div>
 
-          <!-- Event 4 -->
-          <div class="timeline-row fade-in">
-            <div class="t-badge-circle">🥂</div>
-            <div class="t-card">
-              <div class="t-time">12:30 PM</div>
-              <h3 class="t-name">Wedding Banquet Feast</h3>
-              <p class="t-desc">A festive buffet of Sri Lankan delicacies and international cuisine served with heartfelt wishes.</p>
+          <div class="program-item">
+            <div class="p-icon">🥂</div>
+            <div class="p-details">
+              <span class="p-time">12:30 PM</span>
+              <h4 class="p-title">Wedding Banquet Feast</h4>
+              <p class="p-desc">Lavish buffet of international and Sri Lankan cuisine.</p>
             </div>
           </div>
 
-          <!-- Event 5 -->
-          <div class="timeline-row fade-in">
-            <div class="t-badge-circle">💃</div>
-            <div class="t-card">
-              <div class="t-time">02:00 PM Onwards</div>
-              <h3 class="t-name">Music, Photographs &amp; Farewell</h3>
-              <p class="t-desc">Celebratory dancing, photographs with the newlyweds, and warm goodbyes as the celebration concludes.</p>
+          <div class="program-item">
+            <div class="p-icon">💃</div>
+            <div class="p-details">
+              <span class="p-time">02:00 PM Onwards</span>
+              <h4 class="p-title">Music, Photos &amp; Farewell</h4>
+              <p class="p-desc">Photographs with the newlyweds and celebratory toasts.</p>
             </div>
           </div>
 
         </div>
 
-        <!-- Dress Code Box -->
-        <div class="dress-code-card fade-in">
-          <div class="dc-icon">✨</div>
-          <div class="dc-text-wrap">
-            <h4 class="dc-title">DRESS CODE</h4>
-            <p class="dc-highlight"><strong>Traditional Sri Lankan or Festive Elegant Attire</strong></p>
-            <p class="dc-desc">Gentlemen: Lounge Suit or National Attire • Ladies: Saree, Osari, or Evening Dress</p>
-            <p class="dc-hint">Christmas jewel tones (Red, Gold, White, Wine) are warmly encouraged! 🌹✨</p>
+        <!-- Dress Code Box inside card -->
+        <div class="compact-dress-code">
+          <span class="dc-icon">✨</span>
+          <div>
+            <h5 class="dc-head">DRESS CODE</h5>
+            <p class="dc-body"><strong>Traditional Sri Lankan or Festive Formal</strong></p>
+            <span class="dc-colors">Red, Gold, White &amp; Jewel tones warmly welcomed! 🌹</span>
           </div>
         </div>
 
-      </div>
-    </section>
+      </section>
 
-    <!-- ===============================================================
-         VENUE & LOCATION
-         =============================================================== -->
-    <section class="section venue-section" id="venue">
-      <div class="container">
-        
-        <div class="section-title-wrap fade-in">
-          <span class="section-tag-gold">CELEBRATION VENUE</span>
-          <h2 class="section-main-title">The Grand Ballroom</h2>
-          <div class="gold-rose-divider">
-            <span>🌹</span>
-          </div>
+      <!-- -------------------------------------------------------------
+           VENUE & DIRECTIONS
+           ------------------------------------------------------------- -->
+      <section class="card-section venue-card-section" id="venue">
+        <div class="section-card-header">
+          <span class="sec-tag">CELEBRATION VENUE</span>
+          <h2 class="sec-title">The Grand Venue</h2>
+          <div class="sec-rose-line">🌹</div>
         </div>
 
-        <div class="venue-main-card fade-in">
-          <div class="venue-photo-container">
-            <img src="assets/images/venue.jpg" alt="Cinnamon Grand Ballroom" class="venue-photo" />
-            <div class="venue-floating-badge">📍 MAIN VENUE</div>
+        <div class="compact-venue-card">
+          <div class="v-img-wrap">
+            <img src="assets/images/venue.jpg" alt="Cinnamon Grand Ballroom" class="v-img" />
+            <span class="v-badge">📍 GRAND BALLROOM</span>
           </div>
+          <div class="v-body">
+            <h3 class="v-hotel">Cinnamon Grand Colombo</h3>
+            <p class="v-hall">The Oak Room / Grand Ballroom</p>
+            <p class="v-street">77 Galle Road, Colombo 00300, Sri Lanka</p>
 
-          <div class="venue-info-container">
-            <h3 class="v-hotel-name">Cinnamon Grand Colombo</h3>
-            <p class="v-hall-name">The Oak Room / Grand Ballroom</p>
-            <p class="v-address">77 Galle Road, Colombo 00300, Sri Lanka</p>
-
-            <div class="v-amenities">
-              <span>🚗 Valet Parking</span>
-              <span>❄️ Air Conditioned</span>
-              <span>♿ Wheelchair Accessible</span>
-            </div>
-
-            <div class="v-button-wrap">
-              <a href="https://maps.google.com/?q=Cinnamon+Grand+Colombo" target="_blank" rel="noopener noreferrer" class="btn btn-crimson-gold btn-lg">
-                <span class="btn-emoji">🗺️</span>
-                Open in Google Maps / Get Directions
-              </a>
-            </div>
+            <a href="https://maps.google.com/?q=Cinnamon+Grand+Colombo" target="_blank" rel="noopener noreferrer" class="btn btn-crimson-gold w-100">
+              <span>🗺️</span> Open in Google Maps
+            </a>
           </div>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ===============================================================
-         INTERACTIVE WHATSAPP RSVP
-         =============================================================== -->
-    <section class="section rsvp-section" id="rsvp">
-      <div class="container">
-        
-        <div class="section-title-wrap fade-in">
-          <span class="section-tag-gold">CONFIRM YOUR ATTENDANCE</span>
-          <h2 class="section-main-title">RSVP</h2>
-          <p class="section-subtitle">Please let us know if you can join us by <strong>15th November 2026</strong>.</p>
-          <div class="gold-rose-divider">
-            <span>🌹</span>
-          </div>
+      <!-- -------------------------------------------------------------
+           RSVP VIA WHATSAPP
+           ------------------------------------------------------------- -->
+      <section class="card-section rsvp-card-section" id="rsvp">
+        <div class="section-card-header">
+          <span class="sec-tag">CONFIRM ATTENDANCE</span>
+          <h2 class="sec-title">RSVP</h2>
+          <p class="sec-sub">Kindly confirm by <strong>15th November 2026</strong></p>
+          <div class="sec-rose-line">🌹</div>
         </div>
 
-        <div class="rsvp-white-card fade-in">
-          <form id="rsvp-form" class="rsvp-form" onsubmit="event.preventDefault(); sendWhatsAppRSVP();">
+        <div class="compact-rsvp-card">
+          <form id="rsvp-form" onsubmit="event.preventDefault(); sendWhatsAppRSVP();">
             
-            <!-- Guest Name -->
             <div class="form-group">
-              <label for="guest-name" class="form-label">Your Full Name(s) *</label>
-              <input type="text" id="guest-name" class="form-input" placeholder="e.g. Dr. &amp; Mrs. Perera" required />
+              <label for="guest-name" class="f-lbl">Your Name(s) *</label>
+              <input type="text" id="guest-name" class="f-inp" placeholder="e.g. Dr. &amp; Mrs. Perera" required />
             </div>
 
-            <!-- Attendance Radio -->
             <div class="form-group">
-              <label class="form-label">Will you attend? *</label>
-              <div class="attendance-radio-wrap">
-                <label class="radio-card active">
+              <label class="f-lbl">Will you attend? *</label>
+              <div class="attendance-btn-row">
+                <label class="radio-pill active">
                   <input type="radio" name="attendance" value="Joyfully Accept" checked />
-                  <span class="radio-circle"></span>
-                  <span class="radio-title">Joyfully Accept 🥂✨</span>
+                  <span>Joyfully Accept 🥂✨</span>
                 </label>
-                
-                <label class="radio-card">
+                <label class="radio-pill">
                   <input type="radio" name="attendance" value="Regretfully Decline" />
-                  <span class="radio-circle"></span>
-                  <span class="radio-title">Regretfully Decline 🙏</span>
+                  <span>Regretfully Decline 🙏</span>
                 </label>
               </div>
             </div>
 
-            <!-- Guest Count Stepper -->
             <div class="form-group" id="guest-count-group">
-              <label class="form-label">Number of Guests Attending *</label>
-              <div class="stepper-box">
-                <button type="button" class="stepper-btn" id="stepper-minus" aria-label="Decrease">−</button>
-                <input type="number" id="guest-count" class="stepper-val" value="2" min="1" max="10" readonly />
-                <button type="button" class="stepper-btn" id="stepper-plus" aria-label="Increase">+</button>
+              <label class="f-lbl">Number of Guests *</label>
+              <div class="f-stepper">
+                <button type="button" class="s-btn" id="stepper-minus">−</button>
+                <input type="number" id="guest-count" class="s-val" value="2" min="1" max="10" readonly />
+                <button type="button" class="s-btn" id="stepper-plus">+</button>
               </div>
             </div>
 
-            <!-- Message -->
             <div class="form-group">
-              <label for="guest-message" class="form-label">Blessing or Dietary Note (Optional)</label>
-              <textarea id="guest-message" class="form-input form-textarea" rows="3" placeholder="Leave your warm wishes for Udari &amp; Prabath..."></textarea>
+              <label for="guest-message" class="f-lbl">Blessing or Dietary Note (Optional)</label>
+              <textarea id="guest-message" class="f-inp f-area" rows="2" placeholder="Wishes for Udari &amp; Prabath..."></textarea>
             </div>
 
-            <!-- Submit WhatsApp Button -->
             <button type="submit" class="btn btn-whatsapp w-100">
               <svg class="wa-svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 17.06c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.3c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.12.17 1.78 2.71 4.3 3.8 2.53 1.09 2.53.73 2.99.69.45-.05 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.05-.1-.23-.16-.48-.28z"/>
@@ -529,127 +456,86 @@
               Confirm via WhatsApp
             </button>
 
-            <p class="rsvp-footer-note">Pressing this button opens WhatsApp with your confirmation ready to send.</p>
-
           </form>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ===============================================================
-         FAMILY CONTACTS
-         =============================================================== -->
-    <section class="section contact-section" id="contact">
-      <div class="container">
-        
-        <div class="section-title-wrap fade-in">
-          <span class="section-tag-gold">NEED ASSISTANCE?</span>
-          <h2 class="section-main-title">Family Contacts</h2>
-          <p class="section-subtitle">Feel free to reach out to our families for directions or assistance.</p>
-          <div class="gold-rose-divider">
-            <span>🌹</span>
-          </div>
+      <!-- -------------------------------------------------------------
+           CONTACTS & CLOSING
+           ------------------------------------------------------------- -->
+      <section class="card-section contact-card-section" id="contact">
+        <div class="section-card-header">
+          <span class="sec-tag">NEED ASSISTANCE?</span>
+          <h2 class="sec-title">Contacts</h2>
+          <div class="sec-rose-line">🌹</div>
         </div>
 
-        <div class="contacts-grid">
-          
-          <!-- Contact 1 -->
-          <div class="contact-card fade-in">
-            <span class="c-badge">BRIDE'S SIDE</span>
-            <h3 class="c-name">Malith Rajapaksha</h3>
-            <p class="c-role">Brother of the Bride</p>
-            <p class="c-phone" id="phone-1">+94 77 123 4567</p>
-
-            <div class="c-actions">
-              <a href="tel:+94771234567" class="c-btn">📞 Call</a>
-              <a href="https://wa.me/94771234567" target="_blank" rel="noopener noreferrer" class="c-btn">💬 WhatsApp</a>
-              <button class="c-btn" onclick="copyContact('+94 77 123 4567', this)">📋 Copy</button>
+        <div class="compact-contacts-row">
+          <div class="c-person-card">
+            <span class="c-person-role">BRIDE'S SIDE</span>
+            <h4 class="c-person-name">Malith Rajapaksha</h4>
+            <a href="tel:+94771234567" class="c-phone-link">+94 77 123 4567</a>
+            <div class="c-btn-group">
+              <a href="tel:+94771234567" class="c-pill">📞 Call</a>
+              <a href="https://wa.me/94771234567" target="_blank" rel="noopener noreferrer" class="c-pill">💬 WhatsApp</a>
+              <button class="c-pill" onclick="copyContact('+94 77 123 4567', this)">📋</button>
             </div>
           </div>
 
-          <!-- Contact 2 -->
-          <div class="contact-card fade-in">
-            <span class="c-badge">GROOM'S SIDE</span>
-            <h3 class="c-name">Kasun Jayasinghe</h3>
-            <p class="c-role">Brother of the Groom</p>
-            <p class="c-phone" id="phone-2">+94 71 987 6543</p>
-
-            <div class="c-actions">
-              <a href="tel:+94719876543" class="c-btn">📞 Call</a>
-              <a href="https://wa.me/94719876543" target="_blank" rel="noopener noreferrer" class="c-btn">💬 WhatsApp</a>
-              <button class="c-btn" onclick="copyContact('+94 71 987 6543', this)">📋 Copy</button>
+          <div class="c-person-card">
+            <span class="c-person-role">GROOM'S SIDE</span>
+            <h4 class="c-person-name">Kasun Jayasinghe</h4>
+            <a href="tel:+94719876543" class="c-phone-link">+94 71 987 6543</a>
+            <div class="c-btn-group">
+              <a href="tel:+94719876543" class="c-pill">📞 Call</a>
+              <a href="https://wa.me/94719876543" target="_blank" rel="noopener noreferrer" class="c-pill">💬 WhatsApp</a>
+              <button class="c-pill" onclick="copyContact('+94 71 987 6543', this)">📋</button>
             </div>
           </div>
-
         </div>
 
-      </div>
-    </section>
+        <!-- Closing Blessing -->
+        <div class="card-closing-blessing">
+          <div class="c-blessing-roses">🌹 💍 🌹</div>
+          <h3 class="c-blessing-title">We Can't Wait to Celebrate with You!</h3>
+          <p class="c-blessing-names">With boundless love,<br /><strong>Udari &amp; Prabath</strong></p>
+          <p class="c-sinhala-blessing">|| ඔබ සැමට තෙරුවන් සරණයි! ||</p>
+        </div>
 
-    <!-- ===============================================================
-         CLOSING SECTION & BLESSINGS
-         =============================================================== -->
-    <section class="section closing-section">
-      <div class="container text-center">
-        
-        <div class="closing-rose-icon fade-in">🌹 💍 🌹</div>
+        <footer class="card-footer">
+          <p>© 2026 Udari &amp; Prabath • December Wedding</p>
+        </footer>
 
-        <h2 class="closing-title fade-in">We Can't Wait to Celebrate with You!</h2>
-        <p class="closing-message fade-in">
-          Your warm blessings, love, and presence will make our wedding day truly unforgettable.
-        </p>
+      </section>
 
-        <p class="closing-signature fade-in">
-          With Love &amp; Warmest Blessings,<br />
-          <strong class="names-highlight">Udari &amp; Prabath</strong>
-        </p>
+      <!-- -------------------------------------------------------------
+           CARD DOCKED BOTTOM NAVIGATION
+           ------------------------------------------------------------- -->
+      <nav class="card-docked-bottom-nav">
+        <a href="#hero" class="nav-tab active">
+          <span class="nav-icon">🌹</span>
+          <span class="nav-txt">Home</span>
+        </a>
+        <a href="#story" class="nav-tab">
+          <span class="nav-icon">📖</span>
+          <span class="nav-txt">Story</span>
+        </a>
+        <a href="#ceremony" class="nav-tab">
+          <span class="nav-icon">⏳</span>
+          <span class="nav-txt">Schedule</span>
+        </a>
+        <a href="#venue" class="nav-tab">
+          <span class="nav-icon">📍</span>
+          <span class="nav-txt">Venue</span>
+        </a>
+        <a href="#rsvp" class="nav-tab rsvp-glow">
+          <span class="nav-icon">💌</span>
+          <span class="nav-txt">RSVP</span>
+        </a>
+      </nav>
 
-        <p class="closing-sinhala-text fade-in">
-          || ඔබ සැමට තෙරුවන් සරණයි! • WARM DECEMBER WISHES ||
-        </p>
-
-      </div>
-    </section>
-
-    <!-- Site Footer -->
-    <footer class="site-footer">
-      <div class="container">
-        <p>© 2026 Udari &amp; Prabath • December Wedding Celebration. Crafted with Love.</p>
-      </div>
-    </footer>
-
-  </main>
-
-  <!-- ===============================================================
-       STICKY BOTTOM MOBILE NAVIGATION (Ruby Velvet & Gold)
-       =============================================================== -->
-  <nav class="mobile-bottom-nav" id="mobile-nav">
-    <a href="#hero" class="nav-item active">
-      <span class="nav-icon">🌹</span>
-      <span class="nav-label">Home</span>
-    </a>
-    <a href="#story" class="nav-item">
-      <span class="nav-icon">📖</span>
-      <span class="nav-label">Story</span>
-    </a>
-    <a href="#ceremony" class="nav-item">
-      <span class="nav-icon">⏳</span>
-      <span class="nav-label">Schedule</span>
-    </a>
-    <a href="#venue" class="nav-item">
-      <span class="nav-icon">📍</span>
-      <span class="nav-label">Venue</span>
-    </a>
-    <a href="#rsvp" class="nav-item rsvp-highlight">
-      <span class="nav-icon">💌</span>
-      <span class="nav-label">RSVP</span>
-    </a>
-    <a href="#contact" class="nav-item">
-      <span class="nav-icon">📞</span>
-      <span class="nav-label">Contact</span>
-    </a>
-  </nav>
+    </div>
+  </div>
 
   <!-- Toast Notification -->
   <div class="toast-notification" id="toast">
