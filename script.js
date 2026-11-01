@@ -11,18 +11,22 @@
 const WEDDING_CONFIG = {
   brideName: "Udari",
   groomName: "Prabath",
-  weddingDateISO: "2026-12-12T08:30:00+05:30", // Saturday, 12th December 2026
-  eventTitle: "Wedding of Udari & Prabath",
-  eventDescription: "Poruwa Ceremony & Reception of Udari & Prabath at Cinnamon Grand Colombo.",
-  venueName: "Cinnamon Grand Colombo (Grand Ballroom / Oak Room)",
-  venueAddress: "77 Galle Road, Colombo 00300, Sri Lanka",
-  venueMapsURL: "https://maps.google.com/?q=Cinnamon+Grand+Colombo",
+  weddingDateISO: "2026-12-10T11:00:00+05:30", // Thursday, 10th December 2026, 11:00 AM
+  weddingEndDateISO: "2026-12-10T16:15:00+05:30", // 04:15 PM
+  eventTitle: "Udari & Prabath Wedding",
+  eventDescription: "Wedding Celebration of Udari & Prabath at Ramira Reception Hall, Agalawaththa (11:00 AM – 04:15 PM).",
+  venueName: "Ramira Reception Hall",
+  venueAddress: "Agalawaththa, Sri Lanka",
+  venueMapsURL: "https://maps.app.goo.gl/ub2awTQqFTStJXy36",
   
   // WhatsApp RSVP Phone Number
-  rsvpWhatsAppNumber: "94771234567",
+  rsvpWhatsAppNumber: "94772921684",
+  rsvpDeadline: "December 05, 2026",
   
-  contact1Phone: "+94 77 123 4567",
-  contact2Phone: "+94 71 987 6543"
+  contacts: [
+    { name: "Theekshana", phone: "077 292 1684", intl: "+94772921684" },
+    { name: "Hasinthaka", phone: "070 155 1247", intl: "+94701551247" }
+  ]
 };
 
 // ------------------------------------------------------------------------------
@@ -462,7 +466,7 @@ function setupCalendarButtons() {
   const btnGoogle = document.getElementById("btn-google-calendar");
 
   const startDate = new Date(WEDDING_CONFIG.weddingDateISO);
-  const endDate = new Date(startDate.getTime() + 6 * 60 * 60 * 1000);
+  const endDate = new Date(WEDDING_CONFIG.weddingEndDateISO);
 
   function formatDateToICS(date) {
     return date.toISOString().replace(/-|:|\.\d+/g, "");
@@ -572,7 +576,10 @@ window.sendWhatsAppRSVP = function () {
     return;
   }
 
-  let textMessage = `🌹 *DECEMBER WEDDING RSVP: UDARI & PRABATH* 🌹\n\n`;
+  let textMessage = `🌹 *RSVP: UDARI & PRABATH WEDDING* 🌹\n\n`;
+  textMessage += `📅 *Date:* Thursday, 10th December 2026\n`;
+  textMessage += `⏰ *Time:* 11:00 AM – 04:15 PM\n`;
+  textMessage += `📍 *Venue:* Ramira Reception Hall, Agalawaththa\n\n`;
   textMessage += `👤 *Guest Name:* ${guestName}\n`;
   textMessage += `💌 *Attendance:* ${selectedAttendance}\n`;
 
@@ -584,7 +591,7 @@ window.sendWhatsAppRSVP = function () {
     textMessage += `💬 *Warm Wishes:* ${guestMessage}\n`;
   }
 
-  textMessage += `\n_Sent via Udari & Prabath's December Wedding Card_ 💍✨`;
+  textMessage += `\n_Sent via Udari & Prabath's Wedding Invitation Card_ 💍✨`;
 
   const encodedUrl = `https://wa.me/${WEDDING_CONFIG.rsvpWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
   window.open(encodedUrl, "_blank");
