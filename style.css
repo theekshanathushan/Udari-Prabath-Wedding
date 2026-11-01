@@ -1,14 +1,18 @@
 /* ==========================================================================
    UDARI & PRABATH — A DECEMBER ROYAL WEDDING
    Theme: Christmas Romance (Royal Red, Liquid Gold & Snow White)
-   Features: Royal Velvet Curtain Reveal (Dora Redi Deka), Falling White Flower Petals & Snow (Sudu Mal & Thuhin)
+   Features:
+     - Curved Royal Velvet Theater Curtains with Valance Swags
+     - Satin Ribbon Bow Center Lock ("Redi Patiyak Gata Gahala Wage Bor Ekak")
+     - Cleaned Center Display (No Text Clutter on Curtains)
+     - Falling White Flower Petals & Snow ("Sudu Mal & Thuhin")
    ========================================================================== */
 
 :root {
   /* Christmas Red, Gold & White Palette */
-  --royal-red-dark: #4a0311;
-  --royal-red-velvet: #7a0920;
-  --royal-red-crimson: #9e0e2e;
+  --royal-red-dark: #3b020c;
+  --royal-red-velvet: #6b071a;
+  --royal-red-crimson: #910c26;
   --royal-red-bright: #c41e3a;
   
   --gold-24k: #ffd700;
@@ -21,18 +25,19 @@
   --pearl-white: #fffdf9;
   --ivory-cream: #fff9f0;
   --frosted-white: rgba(255, 255, 255, 0.94);
-  --card-white-shadow: 0 10px 30px rgba(122, 9, 32, 0.08);
+  --card-white-shadow: 0 10px 30px rgba(107, 7, 26, 0.08);
 
   --text-dark: #20040a;
   --text-muted: #5e4349;
   --text-gold: #ffd700;
   --text-white: #ffffff;
 
-  /* Gradients */
-  --grad-curtain-left: linear-gradient(90deg, #42020d 0%, #75081e 30%, #9e0e2e 65%, #590413 100%);
-  --grad-curtain-right: linear-gradient(-90deg, #42020d 0%, #75081e 30%, #9e0e2e 65%, #590413 100%);
+  /* Curtain Realistic Velvet Shading */
+  --grad-curtain-left: linear-gradient(90deg, #38020b 0%, #660719 25%, #910c26 55%, #b51535 75%, #47030e 100%);
+  --grad-curtain-right: linear-gradient(-90deg, #38020b 0%, #660719 25%, #910c26 55%, #b51535 75%, #47030e 100%);
   --grad-gold-foil: linear-gradient(135deg, #fff5b8 0%, #ffd700 40%, #e6b800 75%, #a6790b 100%);
   --grad-crimson-gold: linear-gradient(135deg, #a30e2f 0%, #69061b 100%);
+  --grad-satin-ribbon: linear-gradient(135deg, #c41e3a 0%, #87071f 60%, #4a020e 100%);
 
   /* Fonts */
   --font-script: 'Great Vibes', cursive;
@@ -185,18 +190,18 @@ button {
 }
 
 /* ==========================================================================
-   SECTION 1: GRAND ROYAL CURTAIN REVEAL (Dora Redi Deka Open Wela)
+   SECTION 1: CURVED THEATER CURTAIN & SATIN BOW UNLOCK SCREEN
    ========================================================================== */
 .curtain-stage-overlay {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  background: #180208;
+  background: #140105;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: opacity 1.3s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .curtain-stage-overlay.curtains-dissolved {
@@ -204,7 +209,7 @@ button {
   pointer-events: none;
 }
 
-/* Behind Curtains: Revealed Photo Backdrop */
+/* Revealed Stage (Behind Curtains): Couple Photo */
 .curtain-revealed-backdrop {
   position: absolute;
   inset: 0;
@@ -212,7 +217,7 @@ button {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: radial-gradient(circle at center, #630517 0%, #30020a 60%, #120104 100%);
+  background: radial-gradient(circle at center, #570514 0%, #2b0209 55%, #0f0103 100%);
   z-index: 1;
 }
 
@@ -220,9 +225,9 @@ button {
   text-align: center;
   max-width: 440px;
   width: 100%;
-  transform: scale(0.9);
+  transform: scale(0.88);
   opacity: 0;
-  transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
+  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.3s ease;
 }
 
 .curtain-stage-overlay.curtains-open .revealed-frame-wrap {
@@ -230,30 +235,38 @@ button {
   opacity: 1;
 }
 
+.revealed-photo-halo {
+  display: inline-block;
+  padding: 8px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(255, 240, 170, 0.3));
+  box-shadow: 0 0 45px rgba(255, 215, 0, 0.6), 0 20px 50px rgba(0, 0, 0, 0.8);
+  margin-bottom: 16px;
+}
+
 .revealed-couple-photo {
   width: 100%;
-  max-width: 340px;
-  margin: 0 auto 16px;
-  border-radius: var(--radius-lg);
-  border: 3px solid var(--gold-24k);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.5);
+  max-width: 330px;
+  border-radius: calc(var(--radius-lg) - 4px);
   object-fit: cover;
+  display: block;
 }
 
 .revealed-welcome-text .rw-sub {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 3px;
   font-weight: 700;
   color: var(--gold-champagne);
   display: block;
+  margin-bottom: 2px;
 }
 
 .revealed-welcome-text .rw-names {
   font-family: var(--font-script);
-  font-size: 3.4rem;
+  font-size: 3.5rem;
   color: #ffffff;
   line-height: 1.1;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
 }
 
 .revealed-welcome-text .rw-date {
@@ -263,51 +276,90 @@ button {
   color: var(--gold-champagne);
 }
 
-/* Left & Right Velvet Red Curtains */
+/* --------------------------------------------------------------------------
+   TOP THEATRICAL SCALLOPED VALANCE / PELMET (Curved Swags with Gold Trim)
+   -------------------------------------------------------------------------- */
+.curtain-top-valance {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  z-index: 22;
+  display: flex;
+  pointer-events: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+}
+
+.valance-swag {
+  flex: 1;
+  height: 100%;
+  background: radial-gradient(ellipse at 50% 0%, #87081e 0%, #520311 75%, #36010a 100%);
+  border-radius: 0 0 50% 50% / 0 0 60px 60px;
+  position: relative;
+  box-shadow: inset 0 -8px 15px rgba(0, 0, 0, 0.5), 0 6px 15px rgba(0, 0, 0, 0.6);
+  border-bottom: 3.5px solid var(--gold-24k);
+}
+
+.valance-gold-fringe {
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, #ffd700 0px, #ffd700 3px, #b8860b 4px, #ffd700 7px);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   LEFT & RIGHT CURVED THEATRICAL CURTAINS
+   -------------------------------------------------------------------------- */
 .curtain-half {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50.5%; /* slight overlap */
+  width: 50.8%; /* slight center overlap */
   z-index: 10;
-  box-shadow: 0 0 35px rgba(0, 0, 0, 0.85);
-  transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+  transition: transform 2.2s cubic-bezier(0.77, 0, 0.175, 1), border-radius 2s ease;
   overflow: hidden;
 }
 
 .curtain-left {
   left: 0;
   background: var(--grad-curtain-left);
-  transform-origin: left center;
+  transform-origin: top left;
 }
 
 .curtain-right {
   right: 0;
   background: var(--grad-curtain-right);
-  transform-origin: right center;
+  transform-origin: top right;
 }
 
-/* Curtain Pleats Effect */
-.curtain-pleats {
+/* Realistic 3D Velvet Folds with Curved Shading */
+.curtain-drape-folds {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.35) 0px,
-    rgba(0, 0, 0, 0.1) 15px,
-    rgba(255, 255, 255, 0.12) 30px,
-    rgba(0, 0, 0, 0.35) 45px
+    rgba(0, 0, 0, 0.45) 0px,
+    rgba(0, 0, 0, 0.15) 20px,
+    rgba(255, 255, 255, 0.16) 40px,
+    rgba(255, 255, 255, 0.05) 55px,
+    rgba(0, 0, 0, 0.45) 75px
   );
   pointer-events: none;
 }
 
+/* Gold Edge Trim on the Inner Edge */
 .curtain-golden-fringe {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 5px;
+  width: 4px;
   background: var(--grad-gold-foil);
-  box-shadow: 0 0 12px var(--gold-24k);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
 }
 
 .curtain-left .curtain-golden-fringe {
@@ -318,162 +370,271 @@ button {
   left: 0;
 }
 
-/* Golden Tassel Tie-Backs */
-.curtain-tassel-tie {
+/* Side Tieback Cords with Golden Tassels */
+.curtain-tieback-cord {
   position: absolute;
-  top: 48%;
-  font-size: 1.8rem;
+  top: 50%;
+  font-size: 2rem;
   color: var(--gold-24k);
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
-  z-index: 15;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.7));
+  z-index: 14;
 }
 
-.left-tassel {
-  right: 18px;
+.left-tieback {
+  right: 20px;
 }
 
-.right-tassel {
-  left: 18px;
+.right-tieback {
+  left: 20px;
 }
 
-/* Center Seal / Tap to Open Button */
-.curtain-center-seal {
-  position: relative;
-  z-index: 25;
-  text-align: center;
-  color: #ffffff;
-  max-width: 420px;
-  padding: 20px;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.season-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 215, 0, 0.15);
-  border: 1.5px solid var(--gold-24k);
-  padding: 6px 18px;
-  border-radius: var(--radius-full);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--gold-champagne);
-  margin-bottom: 14px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-}
-
-.welcome-heading {
-  font-family: var(--font-script);
-  font-size: 3.8rem;
-  line-height: 1.1;
-  color: #fffdf9;
-  text-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 4px 10px rgba(0, 0, 0, 0.8);
-  margin-bottom: 8px;
-}
-
-.welcome-lead {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-style: italic;
-  color: #fed9bf;
-  margin-bottom: 26px;
-}
-
-/* Open Curtains Button */
-.open-curtains-btn {
-  width: 105px;
-  height: 105px;
-  border-radius: var(--radius-full);
-  background: radial-gradient(circle at 35% 35%, #fff2b2 0%, #ffd700 45%, #c4951b 80%, #7d5904 100%);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 215, 0, 0.65), inset 0 2px 4px #ffffff;
-  display: inline-flex;
+/* --------------------------------------------------------------------------
+   CENTER SATIN RIBBON & BOW TIE (CLEAN DESIGN - NO TEXT CLUTTER!)
+   -------------------------------------------------------------------------- */
+.curtain-center-bow-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 28;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  cursor: pointer;
-  transition: transform var(--trans-fast);
-  animation: sealPulse 2.4s infinite ease-in-out;
+  pointer-events: none;
+  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.open-curtains-btn:hover {
+/* Horizontal Ribbon Band across the center joining curtains */
+.horizontal-ribbon-band {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  height: 44px;
+  background: var(--grad-satin-ribbon);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(196, 30, 58, 0.5);
+  border-top: 2px solid var(--gold-24k);
+  border-bottom: 2px solid var(--gold-24k);
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+.ribbon-gold-stitching {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(255, 215, 0, 0.7);
+  border-bottom: 1px dashed rgba(255, 215, 0, 0.7);
+}
+
+/* Interactive Bow Button */
+.interactive-bow-btn {
+  pointer-events: auto;
+  position: relative;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--trans-fast);
+  animation: bowGentlyFloat 3s infinite ease-in-out;
+}
+
+.interactive-bow-btn:hover {
   transform: scale(1.08);
 }
 
-.open-curtains-btn:active {
-  transform: scale(0.95);
+.interactive-bow-btn:active {
+  transform: scale(0.96);
 }
 
-.btn-gold-halo {
+@keyframes bowGentlyFloat {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.7)); }
+  50% { transform: scale(1.04); filter: drop-shadow(0 15px 35px rgba(255, 215, 0, 0.4)); }
+}
+
+.bow-glow-ring {
   position: absolute;
-  inset: -8px;
+  width: 140px;
+  height: 140px;
   border-radius: var(--radius-full);
-  border: 2px dashed var(--gold-champagne);
-  animation: rotateHalo 14s linear infinite;
+  border: 2px dashed rgba(255, 215, 0, 0.7);
+  animation: rotateBowHalo 12s linear infinite;
   pointer-events: none;
 }
 
-@keyframes rotateHalo {
+@keyframes rotateBowHalo {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-@keyframes sealPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+/* 3D Satin Ribbon Bow */
+.satin-bow-mesh {
+  position: relative;
+  width: 190px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn-core {
+/* Left & Right Bow Loops */
+.bow-loop {
+  position: absolute;
+  top: 15px;
+  width: 78px;
+  height: 64px;
+  background: radial-gradient(ellipse at center, #c41e3a 0%, #87071f 65%, #42020d 100%);
+  border: 2.5px solid var(--gold-24k);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.6);
+  z-index: 5;
+}
+
+.loop-left {
+  left: 14px;
+  border-radius: 65% 25% 25% 65% / 50% 50% 50% 50%;
+  transform: rotate(-18deg);
+}
+
+.loop-right {
+  right: 14px;
+  border-radius: 25% 65% 65% 25% / 50% 50% 50% 50%;
+  transform: rotate(18deg);
+}
+
+.loop-ribbon-highlight {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  height: 8px;
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.8), rgba(255, 255, 255, 0.8));
+  border-radius: var(--radius-full);
+  opacity: 0.6;
+}
+
+/* Center Knot Medallion */
+.bow-knot-jewel {
+  position: relative;
+  z-index: 10;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle at 35% 35%, #fff2b2 0%, #ffd700 45%, #c4951b 80%, #7d5904 100%);
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 215, 0, 0.7), inset 0 2px 4px #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #38040d;
+  justify-content: center;
+  color: #38030b;
 }
 
-.btn-rings-icon {
-  font-size: 1.7rem;
+.knot-monogram {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 1px;
   line-height: 1;
 }
 
-.btn-action-text {
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  margin-top: 4px;
+.knot-ring-symbol {
+  font-size: 1.15rem;
+  margin-top: 1px;
 }
 
-.curtain-tap-hint {
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
+/* Dangling Tails with V-Cut Ends */
+.bow-tail {
+  position: absolute;
+  top: 60px;
+  width: 32px;
+  height: 70px;
+  background: linear-gradient(180deg, #910c26 0%, #5e0517 75%, #38020b 100%);
+  border-left: 2px solid var(--gold-24k);
+  border-right: 2px solid var(--gold-24k);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.tail-left {
+  left: 60px;
+  transform: rotate(18deg);
+  border-radius: 0 0 4px 4px;
+}
+
+.tail-right {
+  right: 60px;
+  transform: rotate(-18deg);
+  border-radius: 0 0 4px 4px;
+}
+
+/* V-Cut End on Tails */
+.tail-v-cut {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: #140105;
+  clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+/* Tap to Untie Pill */
+.bow-action-pill {
+  margin-top: 28px;
+  background: var(--grad-gold-foil);
+  color: #38030b;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+}
+
+.bow-gentle-hint {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--gold-champagne);
-  margin-top: 22px;
-  text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  margin-top: 14px;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
-.sinhala-welcome-blessing {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  color: var(--gold-champagne);
-  letter-spacing: 2px;
-  margin-top: 10px;
-  opacity: 0.85;
-}
-
-/* OPENING STATE: Curtains Part Way Left & Right */
+/* --------------------------------------------------------------------------
+   CURTAIN OPENING SWEEP ANIMATION (CURVED DRAPES PARTING)
+   -------------------------------------------------------------------------- */
 .curtain-stage-overlay.curtains-open .curtain-left {
-  transform: translateX(-102%) scaleX(0.7);
+  transform: translate3d(-105%, -6%, 0) scaleX(0.65) rotate(-6deg);
+  border-radius: 0 100px 100px 0 / 0 50% 50% 0;
 }
 
 .curtain-stage-overlay.curtains-open .curtain-right {
-  transform: translateX(102%) scaleX(0.7);
+  transform: translate3d(105%, -6%, 0) scaleX(0.65) rotate(6deg);
+  border-radius: 100px 0 0 100px / 50% 0 0 50%;
 }
 
-.curtain-stage-overlay.curtains-open .curtain-center-seal {
+.curtain-stage-overlay.curtains-open .horizontal-ribbon-band {
+  transform: translateY(-50%) scaleX(0);
   opacity: 0;
-  transform: scale(1.15);
+}
+
+.curtain-stage-overlay.curtains-open .interactive-bow-btn {
+  transform: scale(1.3) rotate(20deg);
+  opacity: 0;
+  transition: transform 0.6s ease, opacity 0.5s ease;
   pointer-events: none;
+}
+
+.curtain-stage-overlay.curtains-open .bow-gentle-hint {
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 /* ==========================================================================
@@ -716,7 +877,7 @@ button {
   font-weight: 900;
   color: var(--royal-red-crimson);
   line-height: 1.05;
-  text-shadow: 0 2px 15px rgba(158, 14, 46, 0.15);
+  text-shadow: 0 2px 15px rgba(145, 12, 38, 0.15);
 }
 
 .gold-heart-amp {
@@ -727,7 +888,7 @@ button {
   filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
 }
 
-/* Featured Couple Photo (User Upload) */
+/* Featured Couple Photo (From User Upload) */
 .featured-hero-photo-wrap {
   max-width: 440px;
   margin: 0 auto 34px;
@@ -738,7 +899,7 @@ button {
   border: 4px solid var(--gold-24k);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 18px 45px rgba(122, 9, 32, 0.25), 0 0 35px rgba(255, 215, 0, 0.35);
+  box-shadow: 0 18px 45px rgba(107, 7, 26, 0.25), 0 0 35px rgba(255, 215, 0, 0.35);
   background: #ffffff;
 }
 
@@ -782,7 +943,7 @@ button {
   padding: 26px 20px;
   max-width: 560px;
   margin: 0 auto 34px;
-  box-shadow: 0 14px 35px rgba(122, 9, 32, 0.3), 0 0 20px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 14px 35px rgba(107, 7, 26, 0.3), 0 0 20px rgba(255, 215, 0, 0.3);
 }
 
 .banner-ceremony-type {
@@ -900,7 +1061,7 @@ button {
 
 .story-festive-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(122, 9, 32, 0.18), 0 0 25px rgba(255, 215, 0, 0.35);
+  box-shadow: 0 18px 40px rgba(107, 7, 26, 0.18), 0 0 25px rgba(255, 215, 0, 0.35);
 }
 
 .story-img-wrap {
@@ -999,7 +1160,7 @@ button {
   font-size: 1.4rem;
   color: #ffffff;
   flex-shrink: 0;
-  box-shadow: 0 6px 18px rgba(122, 9, 32, 0.25), 0 0 15px rgba(255, 215, 0, 0.35);
+  box-shadow: 0 6px 18px rgba(107, 7, 26, 0.25), 0 0 15px rgba(255, 215, 0, 0.35);
 }
 
 .poruwa-gold-circle {
@@ -1078,7 +1239,7 @@ button {
   border: 2px solid var(--gold-24k);
   border-radius: var(--radius-lg);
   padding: 26px 30px;
-  box-shadow: 0 10px 30px rgba(122, 9, 32, 0.3), 0 0 20px rgba(255, 215, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(107, 7, 26, 0.3), 0 0 20px rgba(255, 215, 0, 0.35);
   max-width: 650px;
   margin: 0 auto;
 }
@@ -1216,7 +1377,7 @@ button {
   border: 2px solid var(--gold-24k);
   border-radius: var(--radius-lg);
   padding: 38px 30px;
-  box-shadow: 0 12px 35px rgba(122, 9, 32, 0.1), 0 0 20px rgba(255, 215, 0, 0.25);
+  box-shadow: 0 12px 35px rgba(107, 7, 26, 0.1), 0 0 20px rgba(255, 215, 0, 0.25);
   max-width: 580px;
   margin: 0 auto;
 }
@@ -1291,7 +1452,7 @@ button {
 .radio-card.active {
   border-color: var(--royal-red-crimson);
   background: #fff8f6;
-  box-shadow: 0 3px 12px rgba(158, 14, 46, 0.15);
+  box-shadow: 0 3px 12px rgba(145, 12, 38, 0.15);
 }
 
 .radio-card.active .radio-circle {
@@ -1440,7 +1601,7 @@ button {
    CLOSING SECTION & FOOTER
    ========================================================================== */
 .closing-section {
-  background: radial-gradient(circle at center, #78091f 0%, #40030f 100%);
+  background: radial-gradient(circle at center, #6b071a 0%, #36010a 100%);
   color: #ffffff;
   padding: 85px 0 65px;
   text-align: center;
@@ -1490,7 +1651,7 @@ button {
 }
 
 .site-footer {
-  background: #1c0106;
+  background: #140105;
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.8rem;
   text-align: center;
@@ -1505,7 +1666,7 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(50, 4, 13, 0.95);
+  background: rgba(43, 3, 10, 0.95);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-top: 2px solid var(--gold-24k);
@@ -1594,8 +1755,35 @@ button {
     padding: 50px 0;
   }
 
-  .welcome-heading {
-    font-size: 3rem;
+  .satin-bow-mesh {
+    width: 160px;
+    height: 95px;
+  }
+
+  .bow-loop {
+    width: 65px;
+    height: 52px;
+  }
+
+  .bow-knot-jewel {
+    width: 58px;
+    height: 58px;
+  }
+
+  .knot-monogram {
+    font-size: 0.85rem;
+  }
+
+  .knot-ring-symbol {
+    font-size: 1rem;
+  }
+
+  .horizontal-ribbon-band {
+    height: 38px;
+  }
+
+  .valance-swag {
+    border-radius: 0 0 50% 50% / 0 0 40px 40px;
   }
 
   .bride-name,

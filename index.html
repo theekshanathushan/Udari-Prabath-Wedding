@@ -65,63 +65,95 @@
   </div>
 
   <!-- =================================================================
-       SECTION 1: GRAND ROYAL CURTAIN REVEAL (Dora Redi Deka Open Wela)
+       SECTION 1: CURVED THEATER CURTAIN & RIBBON BOW UNLOCK
        ================================================================= -->
   <div class="curtain-stage-overlay" id="curtain-overlay">
     
-    <!-- Background Photo Reveal Container (Positioned Behind Curtains) -->
+    <!-- Revealed Stage (Behind Curtains): Couple Photo & Welcome -->
     <div class="curtain-revealed-backdrop" id="curtain-backdrop">
       <div class="revealed-frame-wrap">
-        <img src="assets/images/couple-december.jpg" alt="Udari & Prabath" class="revealed-couple-photo" />
+        <div class="revealed-photo-halo">
+          <img src="assets/images/couple-december.jpg" alt="Udari & Prabath" class="revealed-couple-photo" />
+        </div>
         <div class="revealed-welcome-text">
-          <span class="rw-sub">WELCOME TO OUR WEDDING</span>
+          <span class="rw-sub">✨ WELCOME TO OUR WEDDING ✨</span>
           <h2 class="rw-names">Udari &amp; Prabath</h2>
-          <span class="rw-date">Saturday, 12th December 2026</span>
+          <span class="rw-date">Saturday, 12th December 2026 • Colombo</span>
         </div>
       </div>
     </div>
 
-    <!-- Left Royal Velvet Red Curtain -->
+    <!-- Top Theatrical Scalloped Valance / Pelmet (Curved Swags with Gold Trim) -->
+    <div class="curtain-top-valance" aria-hidden="true">
+      <div class="valance-swag swag-left"></div>
+      <div class="valance-swag swag-center"></div>
+      <div class="valance-swag swag-right"></div>
+      <div class="valance-gold-fringe"></div>
+    </div>
+
+    <!-- Left Curved Royal Velvet Curtain -->
     <div class="curtain-half curtain-left" id="curtain-left">
-      <div class="curtain-pleats"></div>
+      <div class="curtain-drape-folds"></div>
       <div class="curtain-golden-fringe"></div>
-      <div class="curtain-tassel-tie left-tassel">
-        <span class="tassel-rope"></span>
-        <span class="tassel-knot">⚜️</span>
+      <div class="curtain-tieback-cord left-tieback">
+        <span class="gold-tassel">⚜️</span>
       </div>
     </div>
 
-    <!-- Right Royal Velvet Red Curtain -->
+    <!-- Right Curved Royal Velvet Curtain -->
     <div class="curtain-half curtain-right" id="curtain-right">
-      <div class="curtain-pleats"></div>
+      <div class="curtain-drape-folds"></div>
       <div class="curtain-golden-fringe"></div>
-      <div class="curtain-tassel-tie right-tassel">
-        <span class="tassel-rope"></span>
-        <span class="tassel-knot">⚜️</span>
+      <div class="curtain-tieback-cord right-tieback">
+        <span class="gold-tassel">⚜️</span>
       </div>
     </div>
 
-    <!-- Center Royal Crest & Tap to Open Button -->
-    <div class="curtain-center-seal" id="curtain-center-seal">
-      <div class="season-badge-pill">
-        <span>❄️</span>
-        <span>A DECEMBER ROYAL WEDDING</span>
-        <span>❄️</span>
+    <!-- Center Satin Ribbon & Bow (Clear Clean Design - No Clutter!) -->
+    <div class="curtain-center-bow-wrapper" id="curtain-center-bow">
+      
+      <!-- Horizontal Ribbon Joining the Curtains -->
+      <div class="horizontal-ribbon-band" id="horizontal-ribbon">
+        <div class="ribbon-gold-stitching"></div>
       </div>
 
-      <h1 class="welcome-heading">Udari &amp; Prabath</h1>
-      <p class="welcome-lead">Cordially invite you to celebrate their holy matrimony</p>
+      <!-- Center Interactive Ribbon Bow Button -->
+      <button class="interactive-bow-btn" id="open-curtains-btn" aria-label="Untie ribbon bow to open curtains">
+        <div class="bow-glow-ring"></div>
+        
+        <!-- 3D Satin Ribbon Bow -->
+        <div class="satin-bow-mesh">
+          <!-- Left Ribbon Loop -->
+          <div class="bow-loop loop-left">
+            <span class="loop-ribbon-highlight"></span>
+          </div>
 
-      <button class="open-curtains-btn" id="open-curtains-btn" aria-label="Open Royal Curtains">
-        <div class="btn-gold-halo"></div>
-        <div class="btn-core">
-          <span class="btn-rings-icon">💍</span>
-          <span class="btn-action-text">TAP TO OPEN</span>
+          <!-- Right Ribbon Loop -->
+          <div class="bow-loop loop-right">
+            <span class="loop-ribbon-highlight"></span>
+          </div>
+
+          <!-- Center Knot Medallion -->
+          <div class="bow-knot-jewel">
+            <span class="knot-monogram">U &amp; P</span>
+            <span class="knot-ring-symbol">💍</span>
+          </div>
+
+          <!-- Dangling Ribbon Tails with V-Cut Ends -->
+          <div class="bow-tail tail-left">
+            <div class="tail-v-cut"></div>
+          </div>
+          <div class="bow-tail tail-right">
+            <div class="tail-v-cut"></div>
+          </div>
         </div>
+
+        <!-- Subtle Untie Indicator -->
+        <span class="bow-action-pill">TAP TO UNTIE</span>
       </button>
 
-      <p class="curtain-tap-hint">✨ Touch the Golden Seal to Open Curtains ✨</p>
-      <p class="sinhala-welcome-blessing">|| ශුභ මංගලම් • SEASON OF LOVE ||</p>
+      <!-- Clean Hint Pill -->
+      <p class="bow-gentle-hint">✨ Touch the Ribbon Bow to Open ✨</p>
     </div>
 
   </div>
