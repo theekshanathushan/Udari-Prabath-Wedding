@@ -346,13 +346,19 @@ function openRoyalCurtains() {
   triggerCurtainOpeningShower(originX, originY);
 
   curtainOverlay.classList.add("curtains-open");
+  if (curtainOverlay) {
+    curtainOverlay.style.pointerEvents = "none";
+  }
+  document.body.classList.remove("locked");
   playAudio();
-
-  setTimeout(() => {
-    curtainOverlay.classList.add("curtains-dissolved");
-    document.body.classList.remove("locked");
-  }, 2600);
 }
+
+// Forward mouse wheel scrolling from anywhere on screen to the central card
+window.addEventListener("wheel", (e) => {
+  if (weddingCard && !weddingCard.contains(e.target)) {
+    weddingCard.scrollTop += e.deltaY;
+  }
+}, { passive: true });
 
 function playAudio() {
   weddingAudio.play().then(() => {
