@@ -675,7 +675,7 @@ button {
   border-radius: 30px;
   position: relative;
   overflow: hidden;
-  padding-bottom: 75px; /* space for docked bottom bar */
+  padding-bottom: 0;
 }
 
 @media (max-width: 579px) {
@@ -1568,58 +1568,15 @@ button {
 
 .card-footer {
   text-align: center;
-  padding: 14px;
+  padding: 24px 14px 28px;
   font-size: 0.78rem;
   color: var(--text-muted);
-}
-
-/* ==========================================================================
-   DOCKED BOTTOM NAVIGATION INSIDE CARD
-   ========================================================================== */
-.card-docked-bottom-nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: rgba(50, 4, 13, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1.5px solid var(--gold-24k);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 4px 10px;
-  z-index: 50;
-}
-
-.nav-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.68rem;
-  font-weight: 600;
-  padding: 4px;
-}
-
-.nav-icon { font-size: 1.1rem; line-height: 1; }
-.nav-txt { margin-top: 2px; }
-
-.nav-tab.active,
-.nav-tab:hover {
-  color: var(--gold-24k);
-}
-
-.nav-tab.rsvp-glow {
-  color: var(--gold-24k);
-  font-weight: 800;
 }
 
 /* Toast */
 .toast-notification {
   position: fixed;
-  bottom: 75px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%) translateY(30px);
   background: var(--grad-crimson-gold);

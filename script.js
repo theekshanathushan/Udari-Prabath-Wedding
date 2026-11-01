@@ -626,34 +626,6 @@ function showToast(message) {
 }
 
 // ------------------------------------------------------------------------------
-// 10. ACTIVE DOCKED BOTTOM NAVIGATION
-// ------------------------------------------------------------------------------
-function initBottomNav() {
-  const sections = document.querySelectorAll(".card-section[id]");
-  const navTabs = document.querySelectorAll(".card-docked-bottom-nav .nav-tab");
-
-  window.addEventListener("scroll", () => {
-    let scrollPos = window.scrollY + 200;
-
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute("id");
-
-      if (scrollPos >= top && scrollPos < top + height) {
-        navTabs.forEach(tab => {
-          if (tab.getAttribute("href") === `#${id}`) {
-            tab.classList.add("active");
-          } else {
-            tab.classList.remove("active");
-          }
-        });
-      }
-    });
-  }, { passive: true });
-}
-
-// ------------------------------------------------------------------------------
 // INITIALIZE
 // ------------------------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
@@ -662,5 +634,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initCountdown();
   setupCalendarButtons();
   setupRSVPForm();
-  initBottomNav();
 });
