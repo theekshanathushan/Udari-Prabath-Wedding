@@ -25,7 +25,7 @@ const WEDDING_CONFIG = {
   
   contacts: [
     { name: "Theekshana", phone: "077 292 1684", intl: "+94772921684" },
-    { name: "Hasinthaka", phone: "070 155 1247", intl: "+94701551247" }
+    { name: "Hasinthaka", phone: "070 155 1244", intl: "+94701551244" }
   ]
 };
 
