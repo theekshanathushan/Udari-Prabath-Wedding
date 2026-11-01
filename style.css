@@ -24,7 +24,8 @@
   --ivory-cream: #faf5ec;
   --card-bg: #fffdf9;
   
-  --desktop-ambient-bg: #ece6df; /* Soft aesthetic backdrop for desktop */
+  --desktop-ambient-bg: #140105; /* Deep Christmas theater background */
+  --desktop-theater-grad: radial-gradient(circle at 50% 30%, #3e040f 0%, #1c0106 58%, #080002 100%);
   --card-border: 1px solid rgba(212, 175, 55, 0.35);
 
   --text-dark: #24050d;
@@ -62,19 +63,23 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: 16px;
-  background-color: var(--desktop-ambient-bg);
+  background: var(--desktop-ambient-bg);
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--desktop-ambient-bg);
+  background: var(--desktop-theater-grad);
   color: var(--text-dark);
   line-height: 1.6;
-  min-height: 100vh;
+  height: 100%;
+  width: 100%;
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 body.locked {
@@ -247,85 +252,17 @@ button {
 .curtain-stage-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
-  background: #140105;
+  z-index: 20;
+  background: transparent;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 1.3s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: auto;
 }
 
-.curtain-stage-overlay.curtains-dissolved {
-  opacity: 0;
+.curtain-stage-overlay.curtains-open {
   pointer-events: none;
-}
-
-/* Revealed Stage Behind Curtains */
-.curtain-revealed-backdrop {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: radial-gradient(circle at center, #570514 0%, #2b0209 55%, #0f0103 100%);
-  z-index: 1;
-}
-
-.revealed-frame-wrap {
-  text-align: center;
-  max-width: 440px;
-  width: 100%;
-  transform: scale(0.88);
-  opacity: 0;
-  transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.3s ease;
-}
-
-.curtain-stage-overlay.curtains-open .revealed-frame-wrap {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.revealed-photo-halo {
-  display: inline-block;
-  padding: 8px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(255, 240, 170, 0.3));
-  box-shadow: 0 0 45px rgba(255, 215, 0, 0.6), 0 20px 50px rgba(0, 0, 0, 0.8);
-  margin-bottom: 16px;
-}
-
-.revealed-couple-photo {
-  width: 100%;
-  max-width: 320px;
-  border-radius: calc(var(--radius-lg) - 4px);
-  object-fit: cover;
-  display: block;
-}
-
-.revealed-welcome-text .rw-sub {
-  font-size: 0.8rem;
-  letter-spacing: 3px;
-  font-weight: 700;
-  color: var(--gold-champagne);
-  display: block;
-  margin-bottom: 2px;
-}
-
-.revealed-welcome-text .rw-names {
-  font-family: var(--font-script);
-  font-size: 3.4rem;
-  color: #ffffff;
-  line-height: 1.1;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-}
-
-.revealed-welcome-text .rw-date {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-style: italic;
-  color: var(--gold-champagne);
 }
 
 /* Top Theatrical Valance */
@@ -619,20 +556,43 @@ button {
   text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
-/* Curtain Open Sweep */
+/* Curtain Open Sweep — Keeps curtains gracefully opened on left & right */
 .curtain-stage-overlay.curtains-open .curtain-left {
-  transform: translate3d(-105%, -6%, 0) scaleX(0.65) rotate(-6deg);
-  border-radius: 0 100px 100px 0 / 0 50% 50% 0;
+  transform: translate3d(-62%, 0, 0) scaleX(0.72);
+  border-radius: 0 140px 140px 0 / 0 50% 50% 0;
+  box-shadow: 25px 0 50px rgba(0, 0, 0, 0.9), inset -10px 0 25px rgba(255, 215, 0, 0.4);
+  pointer-events: none;
 }
 
 .curtain-stage-overlay.curtains-open .curtain-right {
-  transform: translate3d(105%, -6%, 0) scaleX(0.65) rotate(6deg);
-  border-radius: 100px 0 0 100px / 50% 0 0 50%;
+  transform: translate3d(62%, 0, 0) scaleX(0.72);
+  border-radius: 140px 0 0 140px / 50% 0 0 50%;
+  box-shadow: -25px 0 50px rgba(0, 0, 0, 0.9), inset 10px 0 25px rgba(255, 215, 0, 0.4);
+  pointer-events: none;
+}
+
+@media (max-width: 1100px) {
+  .curtain-stage-overlay.curtains-open .curtain-left {
+    transform: translate3d(-72%, 0, 0) scaleX(0.65);
+  }
+  .curtain-stage-overlay.curtains-open .curtain-right {
+    transform: translate3d(72%, 0, 0) scaleX(0.65);
+  }
+}
+
+@media (max-width: 768px) {
+  .curtain-stage-overlay.curtains-open .curtain-left {
+    transform: translate3d(-84%, 0, 0) scaleX(0.55);
+  }
+  .curtain-stage-overlay.curtains-open .curtain-right {
+    transform: translate3d(84%, 0, 0) scaleX(0.55);
+  }
 }
 
 .curtain-stage-overlay.curtains-open .horizontal-ribbon-band {
   transform: translateY(-50%) scaleX(0);
   opacity: 0;
+  pointer-events: none;
 }
 
 .curtain-stage-overlay.curtains-open .interactive-bow-btn {
@@ -644,57 +604,78 @@ button {
 
 .curtain-stage-overlay.curtains-open .bow-gentle-hint {
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.4s ease;
 }
 
 /* ==========================================================================
-   WIDER GRAND PORTRAIT CARD CONTAINER (550px Layout - "thawa palal")
+   WIDER GRAND PORTRAIT CARD CONTAINER (550px Layout)
    ========================================================================== */
 .card-viewport-wrapper {
-  width: 100%;
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 0;
-  background-color: var(--desktop-ambient-bg);
-}
-
-@media (min-width: 580px) {
-  .card-viewport-wrapper {
-    padding: 35px 20px;
-  }
+  background: transparent;
+  z-index: 10;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
 .wedding-card-container {
   width: 100%;
-  max-width: 550px; /* Wider grand card width (thawa tikak palal) */
-  min-height: 100vh;
+  max-width: 550px; /* Wider grand card width */
+  height: calc(100vh - 28px);
+  margin: 14px auto;
   background: var(--card-bg);
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.18), 0 0 4px rgba(0, 0, 0, 0.08);
-  border-radius: 30px;
+  box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85), 0 0 35px rgba(212, 175, 55, 0.28);
+  border: 1.5px solid rgba(212, 175, 55, 0.38);
+  border-radius: 28px;
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
   padding-bottom: 0;
+}
+
+.wedding-card-container::-webkit-scrollbar {
+  width: 6px;
+}
+.wedding-card-container::-webkit-scrollbar-track {
+  background: rgba(43, 2, 7, 0.05);
+}
+.wedding-card-container::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.45);
+  border-radius: 10px;
+}
+.wedding-card-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.8);
 }
 
 @media (max-width: 579px) {
   .wedding-card-container {
     max-width: 100%;
+    height: 100vh;
+    margin: 0;
     border-radius: 0;
+    border: none;
     box-shadow: none;
   }
 }
 
-/* Canvas running inside card */
+/* Fullscreen Canvas for Falling White Petals & Snow */
 #snow-petal-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  z-index: 5;
+  z-index: 25; /* Rains softly over the entire page */
 }
 
 /* --------------------------------------------------------------------------
