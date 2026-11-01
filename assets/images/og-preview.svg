@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#641122" />
+      <stop offset="50%" stop-color="#420a15" />
+      <stop offset="100%" stop-color="#22040b" />
+    </radialGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf3b8" />
+      <stop offset="50%" stop-color="#d4af37" />
+      <stop offset="100%" stop-color="#9a711c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)" />
+
+  <!-- Ornate Border -->
+  <rect x="30" y="30" width="1140" height="570" rx="20" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.6" />
+  <rect x="42" y="42" width="1116" height="546" rx="14" fill="none" stroke="#d4af37" stroke-width="1" stroke-dasharray="8 6" opacity="0.4" />
+
+  <!-- Lotus Center Top -->
+  <g transform="translate(600, 140) scale(1.2)">
+    <path d="M0 -30 C-10 -10 -25 0 -35 15 C-20 17 -10 10 0 -5 C10 10 20 17 35 15 C25 0 10 -10 0 -30 Z" fill="url(#goldText)" />
+    <path d="M0 -10 C-15 10 -35 20 -50 30 C-32 35 -15 28 0 15 C15 28 32 35 50 30 C35 20 15 10 0 -10 Z" fill="url(#goldText)" opacity="0.85" />
+    <circle cx="0" cy="27" r="4" fill="#fdf3b8" />
+  </g>
+
+  <!-- Content -->
+  <text x="600" y="220" text-anchor="middle" fill="#c5a059" font-family="'Cinzel Decorative', 'Georgia', serif" font-size="20" letter-spacing="8">WEDDING INVITATION</text>
+  
+  <text x="600" y="320" text-anchor="middle" fill="url(#goldText)" font-family="'Cinzel Decorative', 'Georgia', serif" font-size="76" font-weight="bold">Udari &amp; Prabath</text>
+  
+  <text x="600" y="380" text-anchor="middle" fill="#eed6c2" font-family="'Cormorant Garamond', 'Georgia', serif" font-style="italic" font-size="28">Together with their families, invite you to celebrate their union</text>
+
+  <line x1="450" y1="420" x2="750" y2="420" stroke="#d4af37" stroke-width="1.5" opacity="0.7" />
+
+  <text x="600" y="470" text-anchor="middle" fill="#ffffff" font-family="'Cinzel Decorative', 'Georgia', serif" font-size="24" letter-spacing="4">PORUWA CEREMONY &amp; RECEPTION</text>
+  <text x="600" y="520" text-anchor="middle" fill="#fedfa2" font-family="'Plus Jakarta Sans', sans-serif" font-size="20">Saturday, 12th December 2026 • Cinnamon Grand Colombo</text>
+</svg>
