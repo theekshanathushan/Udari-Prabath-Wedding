@@ -252,7 +252,7 @@ button {
 .curtain-stage-overlay {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: 1000;
   background: transparent;
   overflow: hidden;
   display: flex;
@@ -263,6 +263,7 @@ button {
 
 .curtain-stage-overlay.curtains-open {
   pointer-events: none;
+  z-index: 15;
 }
 
 /* Top Theatrical Valance */
@@ -271,21 +272,21 @@ button {
   top: 0;
   left: 0;
   right: 0;
-  height: 90px;
-  z-index: 22;
+  height: 55px;
+  z-index: 15;
   display: flex;
   pointer-events: none;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
 }
 
 .valance-swag {
   flex: 1;
   height: 100%;
   background: radial-gradient(ellipse at 50% 0%, #87081e 0%, #520311 75%, #36010a 100%);
-  border-radius: 0 0 50% 50% / 0 0 60px 60px;
+  border-radius: 0 0 50% 50% / 0 0 45px 45px;
   position: relative;
-  box-shadow: inset 0 -8px 15px rgba(0, 0, 0, 0.5), 0 6px 15px rgba(0, 0, 0, 0.6);
-  border-bottom: 3.5px solid var(--gold-24k);
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.5), 0 5px 12px rgba(0, 0, 0, 0.6);
+  border-bottom: 3px solid var(--gold-24k);
 }
 
 .valance-gold-fringe {
@@ -618,10 +619,11 @@ button {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 0;
+  align-items: flex-start;
+  padding-top: 64px; /* Sits cleanly below the 55px top valance */
+  padding-bottom: 12px;
   background: transparent;
-  z-index: 10;
+  z-index: 25; /* Above opened curtains/valance */
   overflow: hidden;
   pointer-events: auto;
 }
@@ -629,12 +631,12 @@ button {
 .wedding-card-container {
   width: 100%;
   max-width: 550px; /* Wider grand card width */
-  height: calc(100vh - 28px);
-  margin: 14px auto;
+  height: calc(100vh - 76px);
+  margin: 0 auto;
   background: var(--card-bg);
   box-shadow: 0 25px 75px rgba(0, 0, 0, 0.85), 0 0 35px rgba(212, 175, 55, 0.28);
   border: 1.5px solid rgba(212, 175, 55, 0.38);
-  border-radius: 28px;
+  border-radius: 26px;
   position: relative;
   overflow-y: auto;
   overflow-x: hidden;
@@ -658,6 +660,10 @@ button {
 }
 
 @media (max-width: 579px) {
+  .card-viewport-wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   .wedding-card-container {
     max-width: 100%;
     height: 100vh;
@@ -665,6 +671,11 @@ button {
     border-radius: 0;
     border: none;
     box-shadow: none;
+  }
+  .curtain-stage-overlay.curtains-open .curtain-top-valance {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
   }
 }
 
@@ -675,7 +686,7 @@ button {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 25; /* Rains softly over the entire page */
+  z-index: 30; /* Rains softly over the entire page */
 }
 
 /* --------------------------------------------------------------------------
@@ -686,32 +697,36 @@ button {
   top: 0;
   left: 0;
   right: 0;
-  height: 64px;
-  background: rgba(255, 253, 249, 0.94);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  height: 60px;
+  background: rgba(255, 253, 249, 0.98);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(212, 175, 55, 0.35);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 24px;
-  z-index: 50;
+  padding: 0 20px;
+  z-index: 60;
 }
 
 .top-bar-icon-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--royal-red-crimson);
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   border-radius: var(--radius-full);
-  transition: transform var(--trans-fast);
+  cursor: pointer;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  transition: transform var(--trans-fast), background var(--trans-fast);
 }
 
 .top-bar-icon-btn:hover {
-  transform: scale(1.12);
+  transform: scale(1.1);
+  background: rgba(212, 175, 55, 0.25);
 }
 
 .top-bar-center-monogram {
