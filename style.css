@@ -659,23 +659,376 @@ button {
   background: rgba(212, 175, 55, 0.8);
 }
 
+/* ==========================================================================
+   ADVANCED MOBILE RESPONSIVENESS (Tested down to 360px & 320px screens)
+   ========================================================================== */
 @media (max-width: 579px) {
-  .card-viewport-wrapper {
-    padding-top: 0;
-    padding-bottom: 0;
+  /* Prevent horizontal body overflow */
+  html, body {
+    width: 100%;
+    overflow-x: hidden;
   }
+
+  /* Full mobile viewport card container */
+  .card-viewport-wrapper {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    z-index: 25;
+  }
+
   .wedding-card-container {
+    width: 100%;
     max-width: 100%;
-    height: 100vh;
+    height: 100%;
+    height: 100dvh;
     margin: 0;
     border-radius: 0;
     border: none;
     box-shadow: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Top Bar */
+  .card-top-bar {
+    height: 56px;
+    padding: 0 16px;
+  }
+  .top-bar-icon-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+  .top-bar-center-monogram {
+    font-size: 1.3rem;
+    letter-spacing: 4px;
+  }
+
+  /* Curtains Open Positioning on Mobile */
+  .curtain-stage-overlay.curtains-open .curtain-left {
+    transform: translate3d(-92%, 0, 0) scaleX(0.45);
+  }
+  .curtain-stage-overlay.curtains-open .curtain-right {
+    transform: translate3d(92%, 0, 0) scaleX(0.45);
   }
   .curtain-stage-overlay.curtains-open .curtain-top-valance {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease;
+  }
+  .curtain-stage-overlay.curtains-open .curtain-tieback-cord {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Sections Padding */
+  .card-section {
+    padding: 32px 18px;
+  }
+  .hero-card-section {
+    padding-top: 22px;
+  }
+
+  /* Couple Centerpiece Photo on Mobile */
+  .couple-photo-centerpiece-wrap {
+    width: clamp(230px, 72vw, 290px);
+    height: clamp(230px, 72vw, 290px);
+    margin: 0 auto 20px;
+  }
+  .aura-gold-ring {
+    inset: -8px;
+  }
+  .aura-particles-glow {
+    inset: -4px;
+  }
+  .floating-sparkle {
+    font-size: 1.15rem;
+  }
+  .sp-1 { top: 8px; right: 8px; }
+  .sp-2 { bottom: 12px; left: 8px; }
+
+  /* Hero Typography */
+  .joyful-hearts-line {
+    margin-bottom: 14px;
+  }
+  .jh-rule {
+    width: 32px;
+  }
+  .jh-text {
+    font-size: 0.72rem;
+    letter-spacing: 2.2px;
+  }
+
+  .parents-lead {
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+  }
+  .parents-title {
+    font-size: clamp(1.05rem, 4.4vw, 1.25rem);
+    line-height: 1.35;
+    padding: 0 4px;
+  }
+  .honor-presence-text {
+    font-size: clamp(0.92rem, 3.8vw, 1.05rem);
+    padding: 0 8px;
+    margin-bottom: 14px;
+  }
+
+  .c-name-text {
+    font-size: clamp(2.7rem, 11.5vw, 3.5rem);
+  }
+  .c-amp-script {
+    font-size: clamp(2.3rem, 9vw, 2.8rem);
+    margin: -6px 0;
+  }
+  .gold-accent-swirl {
+    max-width: 160px;
+    margin-bottom: 20px;
+  }
+
+  /* Date Badge */
+  .card-date-badge {
+    padding: 18px 14px;
+    margin-bottom: 22px;
+  }
+  .ceremony-badge-type {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+  .ceremony-badge-date {
+    font-size: clamp(1.22rem, 5vw, 1.48rem);
+  }
+  .ceremony-badge-time {
+    font-size: 0.82rem;
+  }
+
+  /* Countdown Timer Grid */
+  .compact-timer-grid {
+    gap: 8px;
+    max-width: 310px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .c-timer-unit {
+    flex: 1;
+    min-width: 0;
+    height: 66px;
+    padding: 4px;
+  }
+  .c-timer-num {
+    font-size: 1.55rem;
+  }
+  .c-timer-sub {
+    font-size: 0.65rem;
+  }
+
+  /* Action Buttons (Add to Calendar) */
+  .card-actions-row {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .card-actions-row .btn {
+    width: 100%;
+    padding: 13px 18px;
+    font-size: 0.88rem;
+    min-height: 48px;
+  }
+
+  /* Section Headers */
+  .sec-tag {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+  .sec-title {
+    font-size: clamp(1.65rem, 6.5vw, 1.95rem);
+  }
+  .sec-sub {
+    font-size: 0.85rem;
+  }
+
+  /* Story Cards */
+  .story-mini-content {
+    padding: 14px 12px;
+  }
+  .story-mini-heading {
+    font-size: 1.2rem;
+  }
+  .story-mini-desc {
+    font-size: 0.86rem;
+  }
+
+  /* Schedule / Itinerary */
+  .compact-program-list {
+    gap: 12px;
+  }
+  .program-item {
+    gap: 12px;
+    padding: 13px 12px;
+  }
+  .p-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+  .p-time {
+    font-size: 0.82rem;
+  }
+  .p-title {
+    font-size: 1.12rem;
+  }
+  .p-desc {
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+  .compact-dress-code {
+    padding: 14px 14px;
+    gap: 12px;
+  }
+  .dc-icon {
+    font-size: 1.8rem;
+  }
+  .dc-head {
+    font-size: 0.7rem;
+  }
+  .dc-body {
+    font-size: 0.92rem;
+  }
+  .dc-colors {
+    font-size: 0.78rem;
+  }
+
+  /* Venue Card */
+  .v-body {
+    padding: 18px 14px;
+  }
+  .v-hotel {
+    font-size: 1.48rem;
+  }
+  .v-hall {
+    font-size: 0.92rem;
+  }
+  .v-street {
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+  }
+  .v-body .btn {
+    min-height: 48px;
+    font-size: 0.9rem;
+  }
+
+  /* RSVP Form */
+  .compact-rsvp-card {
+    padding: 20px 14px;
+  }
+  .f-lbl {
+    font-size: 0.84rem;
+  }
+  .f-inp {
+    font-size: 16px; /* Crucial: prevents auto-zoom on iOS Safari */
+    padding: 12px 14px;
+  }
+  .radio-pill {
+    padding: 11px 12px;
+    font-size: 0.88rem;
+  }
+  .btn-whatsapp {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    min-height: 50px;
+  }
+
+  /* Contacts */
+  .c-person-card {
+    padding: 14px 10px;
+  }
+  .c-person-role {
+    font-size: 0.68rem;
+  }
+  .c-person-name {
+    font-size: 1.25rem;
+  }
+  .c-phone-link {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .c-btn-group {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .c-pill {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+    min-height: 38px;
+  }
+
+  /* Closing Blessing */
+  .c-blessing-roses {
+    font-size: 1.45rem;
+  }
+  .c-blessing-title {
+    font-size: 1.45rem;
+  }
+  .c-blessing-names {
+    font-size: 0.95rem;
+  }
+  .c-sinhala-blessing {
+    font-size: 1.1rem;
+  }
+  .card-footer {
+    padding: 18px 12px 24px;
+    font-size: 0.74rem;
+  }
+}
+
+/* Extra Compact Mobile Screens (360px and below) */
+@media (max-width: 375px) {
+  .card-section {
+    padding: 26px 14px;
+  }
+  .couple-photo-centerpiece-wrap {
+    width: 220px;
+    height: 220px;
+  }
+  .c-name-text {
+    font-size: 2.45rem;
+  }
+  .c-amp-script {
+    font-size: 2.1rem;
+  }
+  .compact-timer-grid {
+    gap: 5px;
+  }
+  .c-timer-unit {
+    height: 60px;
+  }
+  .c-timer-num {
+    font-size: 1.4rem;
+  }
+  .c-timer-sub {
+    font-size: 0.6rem;
+  }
+  .program-item {
+    padding: 10px 10px;
+    gap: 10px;
+  }
+  .p-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+  .p-title {
+    font-size: 1.05rem;
   }
 }
 
