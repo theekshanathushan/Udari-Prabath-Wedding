@@ -79,9 +79,17 @@ function initSideNavDrawer() {
   }
 
   drawerItems.forEach(item => {
-    item.addEventListener("click", () => {
+    item.addEventListener("click", (e) => {
       drawerItems.forEach(i => i.classList.remove("active"));
       item.classList.add("active");
+      const targetId = item.getAttribute("href");
+      if (targetId && targetId.startsWith("#")) {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl && weddingCard) {
+          e.preventDefault();
+          targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
       closeDrawer();
     });
   });
@@ -93,52 +101,44 @@ function initSideNavDrawer() {
 let ctx = null;
 let particles = [];
 let burstParticles = [];
-let canvasWidth = 550;
-let canvasHeight = 850;
+let canvasWidth = window.innerWidth;
+let canvasHeight = window.innerHeight;
 
 function initSnowPetalCanvas() {
   if (!canvas) return;
   ctx = canvas.getContext("2d");
 
   function resizeCanvas() {
-    if (weddingCard) {
-      canvasWidth = canvas.width = weddingCard.offsetWidth || 550;
-      canvasHeight = canvas.height = weddingCard.offsetHeight || window.innerHeight;
-    } else {
-      canvasWidth = canvas.width = window.innerWidth;
-      canvasHeight = canvas.height = window.innerHeight;
-    }
+    canvasWidth = canvas.width = window.innerWidth;
+    canvasHeight = canvas.height = window.innerHeight;
   }
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  const particleCount = 50;
+  const particleCount = 85;
   for (let i = 0; i < particleCount; i++) {
     particles.push(createWhitePetalOrSnow());
   }
 
-  // Interactive touch trail
-  if (weddingCard) {
-    weddingCard.addEventListener("pointermove", (e) => {
-      if (Math.random() > 0.6) {
-        const rect = weddingCard.getBoundingClientRect();
-        particles.push({
-          type: Math.random() > 0.5 ? "petal" : "snow",
-          x: e.clientX - rect.left,
-          y: e.clientY - rect.top,
-          size: Math.random() * 4 + 2.5,
-          speedY: Math.random() * 1.5 + 0.8,
-          speedX: (Math.random() - 0.5) * 1.5,
-          sway: Math.random() * Math.PI * 2,
-          swaySpeed: 0.04,
-          rotation: Math.random() * 360,
-          rotSpeed: (Math.random() - 0.5) * 3,
-          alpha: 1,
-          isInteractive: true
-        });
-      }
-    });
-  }
+  // Interactive touch trail across full screen
+  window.addEventListener("pointermove", (e) => {
+    if (Math.random() > 0.55) {
+      particles.push({
+        type: Math.random() > 0.45 ? "petal" : "snow",
+        x: e.clientX,
+        y: e.clientY,
+        size: Math.random() * 4 + 2.5,
+        speedY: Math.random() * 1.5 + 0.8,
+        speedX: (Math.random() - 0.5) * 1.5,
+        sway: Math.random() * Math.PI * 2,
+        swaySpeed: 0.04,
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 3,
+        alpha: 1,
+        isInteractive: true
+      });
+    }
+  });
 
   requestAnimationFrame(renderCanvasLoop);
 }
