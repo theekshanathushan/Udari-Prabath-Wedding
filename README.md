@@ -102,3 +102,4 @@ Since your Git repository is already connected to `theekshanathushan/Udari-Praba
 ## 📱 Testing on Mobile
 - Open `https://theekshanathushan.github.io/Udari-Prabath-Wedding/` on your mobile browser (Safari / Chrome).
 - Send the link to yourself on WhatsApp to verify that the rich preview card (title, image, description) shows up!
+

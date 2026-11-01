@@ -9,3 +9,4 @@ Place your sister's wedding photos in this folder (`assets/images/`):
 5. **og-preview.jpg**: The preview picture shown when you send the website link on WhatsApp, Viber, or Facebook. (Recommended: 1200x630px).
 
 > **Tip:** You can compress your photos for free at https://tinypng.com before adding them to ensure the website loads lightning-fast on mobile phones!
+

@@ -8,3 +8,4 @@ To play a romantic wedding song or instrumental music when guests open the card:
 3. Place it inside this folder (`assets/audio/wedding-song.mp3`).
 
 *Note:* If you don't add an MP3 file, the website has an automatic built-in gentle melodic chime that plays using the browser's native Web Audio API, so it never feels empty!
+
