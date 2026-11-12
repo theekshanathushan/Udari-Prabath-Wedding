@@ -673,7 +673,7 @@ button {
 }
 
 /* ==========================================================================
-   ROYAL SANDESHAYA SCROLL PROCLAMATION FORMAT (සන්දේශයක් වගේ)
+   ROYAL SANDESHAYA SCROLL PROCLAMATION FORMAT
    ========================================================================== */
 .sandeshaya-scroll-rod {
   position: sticky;
@@ -757,7 +757,7 @@ button {
   100% { transform: rotate(5deg); }
 }
 
-/* Sandeshaya Filigree Corner Accents (කෝණ ලියවැල) */
+/* Sandeshaya Filigree Corner Accents */
 .sandeshaya-corner-filigree {
   position: absolute;
   width: 44px;
@@ -805,21 +805,11 @@ button {
 .sandeshaya-proclamation-title {
   display: block;
   font-family: var(--font-royal);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   font-weight: 800;
   letter-spacing: 4px;
   text-transform: uppercase;
   color: var(--royal-red-dark);
-  margin-bottom: 4px;
-}
-
-.sandeshaya-proclamation-sinhala {
-  display: block;
-  font-family: var(--font-royal), serif;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 3.5px;
-  color: #996e05;
   margin-bottom: 12px;
 }
 
