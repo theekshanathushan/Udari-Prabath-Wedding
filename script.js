@@ -16,7 +16,7 @@ const WEDDING_CONFIG = {
   eventTitle: "Udari & Prabath Wedding",
   eventDescription: "Wedding Celebration of Udari & Prabath at Ramira Reception Hall, Agalawaththa (11:00 AM – 04:15 PM).",
   venueName: "Ramira Reception Hall",
-  venueAddress: "Agalawaththa, Sri Lanka",
+  venueAddress: "No. 148, Yatiyana, Agalawaththa, Sri Lanka",
   venueMapsURL: "https://maps.app.goo.gl/ub2awTQqFTStJXy36",
   
   // WhatsApp RSVP Phone Number

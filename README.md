@@ -40,19 +40,19 @@ Open `script.js` and edit the top configuration block:
 const WEDDING_CONFIG = {
   brideName: "Udari",
   groomName: "Prabath",
-  weddingDateISO: "2026-12-12T08:30:00+05:30", // Change to exact wedding date and time
-  eventTitle: "Wedding of Udari & Prabath",
-  eventDescription: "Poruwa Ceremony & Wedding Reception of Udari & Prabath",
-  venueName: "Cinnamon Grand Colombo (Grand Ballroom)",
-  venueAddress: "77 Galle Road, Colombo 00300, Sri Lanka",
-  venueMapsURL: "https://maps.google.com/?q=Cinnamon+Grand+Colombo",
+  weddingDateISO: "2026-12-10T11:00:00+05:30",
+  eventTitle: "Udari & Prabath Wedding Celebration",
+  eventDescription: "Udari & Prabath Wedding Celebration at Ramira Reception Hall, Agalawaththa",
+  venueName: "Ramira Reception Hall",
+  venueAddress: "No. 148, Yatiyana, Agalawaththa, Sri Lanka",
+  venueMapsURL: "https://maps.app.goo.gl/ub2awTQqFTStJXy36",
   
   // Set the WhatsApp phone number (with Sri Lanka country code 94, without + or 0)
-  rsvpWhatsAppNumber: "94771234567",
+  rsvpWhatsAppNumber: "94772921684",
   
   // Family contact numbers
-  contact1Phone: "+94 77 123 4567",
-  contact2Phone: "+94 71 987 6543"
+  contact1Phone: "+94 77 292 1684",
+  contact2Phone: "+94 70 155 1244"
 };
 ```
 
