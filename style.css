@@ -1031,6 +1031,11 @@ button {
   .ceremony-badge-time {
     font-size: 0.82rem;
   }
+  .ceremony-badge-poruwa {
+    font-size: 0.92rem;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+  }
 
   /* Countdown Timer Grid */
   .compact-timer-grid {
@@ -1811,6 +1816,16 @@ button {
   font-weight: 600;
   letter-spacing: 2px;
   color: #fff8e8;
+}
+
+.ceremony-badge-poruwa {
+  font-family: var(--font-royal);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--gold-champagne);
+  margin-top: 8px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.45);
 }
 
 /* Compact Countdown */

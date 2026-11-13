@@ -42,7 +42,7 @@ const WEDDING_CONFIG = {
   groomName: "Prabath",
   weddingDateISO: "2026-12-10T11:00:00+05:30",
   eventTitle: "Udari & Prabath Wedding Celebration",
-  eventDescription: "Udari & Prabath Wedding Celebration at Ramira Reception Hall, Agalawaththa",
+  eventDescription: "Udari & Prabath Wedding Celebration at Ramira Reception Hall, Agalawaththa (Poruwa Ceremony: 11:00 AM)",
   venueName: "Ramira Reception Hall",
   venueAddress: "No. 148, Yatiyana, Agalawaththa, Sri Lanka",
   venueMapsURL: "https://maps.app.goo.gl/ub2awTQqFTStJXy36",
