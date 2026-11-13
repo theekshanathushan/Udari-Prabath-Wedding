@@ -379,7 +379,7 @@
         </div>
 
         <div class="compact-rsvp-card">
-          <form id="rsvp-form" onsubmit="event.preventDefault(); sendWhatsAppRSVP();">
+          <form id="rsvp-form" onsubmit="event.preventDefault(); submitRSVPForm();">
             
             <div class="form-group">
               <label for="guest-name" class="f-lbl">Your Name(s) *</label>
@@ -414,14 +414,20 @@
               <textarea id="guest-message" class="f-inp f-area" rows="2" placeholder="Wishes for Udari &amp; Prabath..."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-whatsapp w-100">
-              <svg class="wa-svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 17.06c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.3c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43s-.56-1.35-.77-1.85c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.12.17 1.78 2.71 4.3 3.8 2.53 1.09 2.53.73 2.99.69.45-.05 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.05-.1-.23-.16-.48-.28z"/>
-              </svg>
-              Confirm via WhatsApp
+            <button type="submit" class="btn btn-crimson-gold w-100" id="rsvp-submit-btn">
+              <span>💌</span> Confirm RSVP
             </button>
 
           </form>
+
+          <!-- RSVP Confirmation Success Card -->
+          <div id="rsvp-success-box" class="rsvp-success-card" style="display: none;">
+            <div class="success-icon">🌹 💍 ✨</div>
+            <h4 class="success-title">Thank You, <span id="success-guest-name"></span>!</h4>
+            <p class="success-desc" id="success-desc-text">Your RSVP has been confirmed.</p>
+            <p class="success-sub">We look forward to celebrating our special day with you!</p>
+            <button type="button" class="btn btn-outline-gold" onclick="resetRSVPForm()">Submit Another Response</button>
+          </div>
         </div>
       </section>
 
@@ -468,7 +474,7 @@
         </div>
 
         <footer class="card-footer">
-          <p>© 2026 Udari &amp; Prabath • 10th December 2026 • Ramira Reception Hall, Agalawaththa</p>
+          <p>© 2026 Udari &amp; Prabath • 10th December 2026 • Ramira Reception Hall, Agalawaththa <a href="admin.html" title="Guest Portal" style="text-decoration:none; color:inherit; opacity:0.35; margin-left:6px;">🔒</a></p>
         </footer>
 
       </section>

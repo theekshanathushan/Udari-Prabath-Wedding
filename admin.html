@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP & Guest Management — Udari & Prabath</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Montserrat:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-body: #160205;
+      --bg-panel: #200408;
+      --bg-card: #2c070c;
+      --bg-card-light: #ffffff;
+      --gold-primary: #d4af37;
+      --gold-light: #ffd700;
+      --gold-glow: rgba(212, 175, 55, 0.35);
+      --crimson-dark: #40060e;
+      --text-gold: #f5e6b3;
+      --text-muted: #c9b99a;
+      --border-gold: rgba(212, 175, 55, 0.45);
+      --font-cinzel: 'Cinzel', serif;
+      --font-montserrat: 'Montserrat', sans-serif;
+      --font-script: 'Great Vibes', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-montserrat);
+      background-color: var(--bg-body);
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(107, 7, 26, 0.5) 0%, transparent 70%),
+        radial-gradient(circle at 15% 90%, rgba(212, 175, 55, 0.12) 0%, transparent 40%),
+        linear-gradient(180deg, #120104 0%, #1c0307 100%);
+      color: #f7efe6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ==========================================================================
+       LOGIN / PIN SCREEN
+       ========================================================================== */
+    #pin-gate-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 1, 3, 0.96);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
+    }
+
+    .pin-box {
+      width: 100%;
+      max-width: 420px;
+      background: linear-gradient(145deg, #2a050b, #190205);
+      border: 2px solid var(--gold-primary);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 35px var(--gold-glow);
+      position: relative;
+    }
+
+    .pin-box::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 1px dashed rgba(212, 175, 55, 0.4);
+      border-radius: 14px;
+      pointer-events: none;
+    }
+
+    .pin-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .pin-title {
+      font-family: var(--font-cinzel);
+      font-size: 1.45rem;
+      color: var(--gold-light);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .pin-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .pin-input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 14px 18px;
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 6px;
+      font-weight: 700;
+      color: #fff;
+      background: #100103;
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 10px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .pin-input:focus {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    .btn-gold {
+      width: 100%;
+      padding: 13px 20px;
+      background: linear-gradient(135deg, #ffd700 0%, #d4af37 50%, #997519 100%);
+      color: #2b0207;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.55);
+    }
+
+    .pin-error {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ==========================================================================
+       DASHBOARD HEADER
+       ========================================================================== */
+    .admin-navbar {
+      background: rgba(28, 4, 8, 0.95);
+      border-bottom: 1.5px solid var(--border-gold);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 1.8rem;
+    }
+
+    .brand-title {
+      font-family: var(--font-cinzel);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-nav {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: var(--gold-primary);
+      color: #2b0207;
+    }
+
+    /* ==========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================== */
+    .dashboard-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 18px 60px;
+      flex: 1;
+    }
+
+    /* ==========================================================================
+       STAT CARDS GRID
+       ========================================================================== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: linear-gradient(145deg, #27050a, #1a0205);
+      border: 1.5px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::after {
+      content: "";
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .stat-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-gold);
+      flex-shrink: 0;
+    }
+
+    .stat-content {
+      flex: 1;
+    }
+
+    .stat-number {
+      font-family: var(--font-cinzel);
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .stat-highlight {
+      color: var(--gold-light);
+    }
+
+    /* ==========================================================================
+       CONTROL & TOOLBAR SECTION
+       ========================================================================== */
+    .toolbar-panel {
+      background: #200408;
+      border: 1.5px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-input {
+      padding: 10px 14px;
+      background: #120104;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.9rem;
+      min-width: 220px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold-light);
+    }
+
+    .filter-select {
+      padding: 10px 14px;
+      background: #120104;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-action {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-excel {
+      background: linear-gradient(135deg, #107c41, #0b552c);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 124, 65, 0.4);
+    }
+
+    .btn-excel:hover {
+      background: linear-gradient(135deg, #189851, #0e6e39);
+      transform: translateY(-2px);
+    }
+
+    .btn-sync {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1.5px solid var(--gold-primary);
+      color: var(--gold-light);
+    }
+
+    .btn-sync:hover {
+      background: var(--gold-primary);
+      color: #2b0207;
+      transform: translateY(-2px);
+    }
+
+    .btn-add-guest {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #f7efe6;
+    }
+
+    .btn-add-guest:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    /* ==========================================================================
+       GUEST LIST TABLE & CARDS
+       ========================================================================== */
+    .table-container {
+      background: #200408;
+      border: 1.5px solid var(--border-gold);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .table-header-bar {
+      padding: 16px 20px;
+      background: rgba(14, 1, 3, 0.6);
+      border-bottom: 1px solid var(--border-gold);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-header-title {
+      font-family: var(--font-cinzel);
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .table-count-badge {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--border-gold);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      color: var(--gold-primary);
+      font-weight: 700;
+    }
+
+    .guest-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .guest-table th {
+      background: #170205;
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--gold-primary);
+      border-bottom: 1.5px solid var(--border-gold);
+      font-weight: 700;
+    }
+
+    .guest-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+      font-size: 0.92rem;
+      color: #f7efe6;
+      vertical-align: middle;
+    }
+
+    .guest-table tbody tr:hover {
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .badge-accept {
+      background: rgba(46, 204, 113, 0.18);
+      color: #2ecc71;
+      border: 1px solid rgba(46, 204, 113, 0.4);
+    }
+
+    .badge-decline {
+      background: rgba(231, 76, 60, 0.18);
+      color: #e74c3c;
+      border: 1px solid rgba(231, 76, 60, 0.4);
+    }
+
+    .badge-count {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--gold-primary);
+      border-radius: 50%;
+      font-weight: 800;
+      color: var(--gold-light);
+    }
+
+    .msg-preview {
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .btn-delete-row {
+      background: transparent;
+      border: none;
+      color: #e74c3c;
+      font-size: 1.1rem;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .btn-delete-row:hover {
+      background: rgba(231, 76, 60, 0.2);
+    }
+
+    .empty-state {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+      opacity: 0.7;
+    }
+
+    /* ==========================================================================
+       MODALS
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal-card {
+      background: #250409;
+      border: 2px solid var(--gold-primary);
+      border-radius: 18px;
+      width: 100%;
+      max-width: 580px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 30px var(--gold-glow);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-gold);
+      padding-bottom: 12px;
+    }
+
+    .modal-title {
+      font-family: var(--font-cinzel);
+      font-size: 1.25rem;
+      color: var(--gold-light);
+    }
+
+    .btn-close-modal {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      margin-bottom: 20px;
+    }
+
+    .field-lbl {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      margin-bottom: 6px;
+    }
+
+    .field-inp {
+      width: 100%;
+      padding: 12px 14px;
+      background: #120104;
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      outline: none;
+    }
+
+    .field-inp:focus {
+      border-color: var(--gold-light);
+    }
+
+    .code-box {
+      background: #110103;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: #ffd700;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: 16px;
+    }
+
+    /* Toast */
+    #admin-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #ffd700, #d4af37);
+      color: #2b0207;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 10000;
+      pointer-events: none;
+    }
+
+    #admin-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .guest-table thead {
+        display: none;
+      }
+      .guest-table, .guest-table tbody, .guest-table tr, .guest-table td {
+        display: block;
+        width: 100%;
+      }
+      .guest-table tr {
+        margin-bottom: 14px;
+        background: #190205;
+        border: 1px solid var(--border-gold);
+        border-radius: 12px;
+        padding: 12px;
+      }
+      .guest-table td {
+        border-bottom: none;
+        padding: 6px 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .guest-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.78rem;
+        color: var(--gold-primary);
+        text-transform: uppercase;
+      }
+      .msg-preview {
+        max-width: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       PIN SECURITY GATE
+       ========================================================================== -->
+  <div id="pin-gate-screen">
+    <div class="pin-box">
+      <div class="pin-icon">👑 💍</div>
+      <h2 class="pin-title">Udari &amp; Prabath</h2>
+      <p class="pin-sub">Private RSVP &amp; Guest Management Portal</p>
+      
+      <div class="pin-input-group">
+        <input type="password" id="admin-pin-input" class="pin-input" maxlength="8" placeholder="••••" autofocus onkeypress="if(event.key==='Enter') checkAdminPIN()">
+      </div>
+
+      <button type="button" class="btn-gold" onclick="checkAdminPIN()">Unlock Portal 🔓</button>
+      <p id="pin-error-msg" class="pin-error">Incorrect Security PIN. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ADMIN NAVIGATION BAR
+       ========================================================================== -->
+  <header class="admin-navbar">
+    <div class="brand-group">
+      <div class="brand-icon">🌹</div>
+      <div>
+        <h1 class="brand-title">Udari &amp; Prabath</h1>
+        <div class="brand-subtitle">Guest Attendance &amp; RSVP Portal</div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <a href="index.html" target="_blank" class="btn-nav">
+        <span>💌</span> View Card ↗
+      </a>
+      <button type="button" class="btn-nav" onclick="openSettingsModal()">
+        <span>⚙️</span> Google Sheets Sync
+      </button>
+      <button type="button" class="btn-nav" onclick="lockAdminPortal()">
+        <span>🔒</span> Lock
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN DASHBOARD
+       ========================================================================== -->
+  <main class="dashboard-container">
+
+    <!-- Top Key Metrics Cards -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon-wrap">👥</div>
+        <div class="stat-content">
+          <div class="stat-number stat-highlight" id="stat-attending-guests">0</div>
+          <div class="stat-label">Confirmed Attending Guests</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap">💖</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-accepted-rsvps">0</div>
+          <div class="stat-label">Joyfully Accepted Responses</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap">🕊️</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-declined-rsvps">0</div>
+          <div class="stat-label">Regretfully Declined</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon-wrap">📋</div>
+        <div class="stat-content">
+          <div class="stat-number" id="stat-total-responses">0</div>
+          <div class="stat-label">Total Submissions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolbar: Search, Filters & Export -->
+    <section class="toolbar-panel">
+      <div class="toolbar-left">
+        <input type="text" id="guest-search" class="search-input" placeholder="🔍 Search guest name or wishes..." oninput="renderGuestList()">
+        <select id="attendance-filter" class="filter-select" onchange="renderGuestList()">
+          <option value="all">All Responses</option>
+          <option value="Joyfully Accept">Joyfully Accept (Attending)</option>
+          <option value="Regretfully Decline">Regretfully Decline</option>
+        </select>
+      </div>
+
+      <div class="toolbar-right">
+        <button type="button" class="btn-action btn-add-guest" onclick="openAddGuestModal()">
+          <span>➕</span> Add Guest
+        </button>
+        <button type="button" class="btn-action btn-sync" onclick="syncData()">
+          <span>🔄</span> Refresh / Sync
+        </button>
+        <button type="button" class="btn-action btn-excel" onclick="exportToExcel()">
+          <span>📥</span> Download Excel (.csv)
+        </button>
+      </div>
+    </section>
+
+    <!-- Guest Responses Table -->
+    <section class="table-container">
+      <div class="table-header-bar">
+        <h3 class="table-header-title">RSVP Submissions</h3>
+        <div class="table-count-badge" id="table-count-badge">0 Submissions</div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="guest-table" id="guest-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Date &amp; Time</th>
+              <th>Guest Name</th>
+              <th>Status</th>
+              <th>Count</th>
+              <th>Wishes / Note</th>
+              <th style="text-align: right;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="guest-table-body">
+            <!-- Dynamic Rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="empty-state-box" class="empty-state" style="display: none;">
+        <div class="empty-icon">💌</div>
+        <h4 style="font-family: var(--font-cinzel); color: var(--gold-light); margin-bottom: 8px;">No RSVP Submissions Yet</h4>
+        <p>When guests fill the RSVP form on your wedding invitation card, their confirmations and guest counts will appear here instantly.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       MODAL: ADD OFFLINE GUEST
+       ========================================================================== -->
+  <div class="modal-overlay" id="add-guest-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">➕ Add Offline / Phone Guest</h3>
+        <button type="button" class="btn-close-modal" onclick="closeAddGuestModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-lbl">Guest Name(s) *</label>
+        <input type="text" id="manual-name" class="field-inp" placeholder="e.g. Mr. & Mrs. Silva">
+
+        <label class="field-lbl">Attendance *</label>
+        <select id="manual-attendance" class="field-inp" onchange="toggleManualGuestCount(this.value)">
+          <option value="Joyfully Accept">Joyfully Accept</option>
+          <option value="Regretfully Decline">Regretfully Decline</option>
+        </select>
+
+        <div id="manual-count-wrapper">
+          <label class="field-lbl">Number of Guests</label>
+          <input type="number" id="manual-count" class="field-inp" value="2" min="1" max="20">
+        </div>
+
+        <label class="field-lbl">Wishes / Note (Optional)</label>
+        <input type="text" id="manual-message" class="field-inp" placeholder="e.g. Confirmed via phone call">
+
+        <button type="button" class="btn-gold" onclick="saveManualGuest()">Save Guest to List 💾</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: GOOGLE SHEETS SETUP & SYNC
+       ========================================================================== -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ Google Sheets Cloud Sync</h3>
+        <button type="button" class="btn-close-modal" onclick="closeSettingsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+          Connect your wedding card to your private Google Sheet so guest responses automatically sync from any device.
+        </p>
+
+        <label class="field-lbl">Your Google Apps Script Web App URL</label>
+        <input type="url" id="sheet-url-input" class="field-inp" placeholder="https://script.google.com/macros/s/.../exec">
+
+        <div style="display: flex; gap: 10px; margin-bottom: 24px;">
+          <button type="button" class="btn-gold" style="flex: 1;" onclick="saveSheetURL()">Save &amp; Connect 🔗</button>
+          <button type="button" class="btn-action btn-sync" onclick="testSheetConnection()">Test Fetch 🧪</button>
+        </div>
+
+        <h4 style="font-family: var(--font-cinzel); font-size: 1rem; color: var(--gold-light); margin-bottom: 8px;">
+          📋 2-Minute Google Apps Script Code:
+        </h4>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 8px;">
+          Create a Google Sheet &gt; Extensions &gt; Apps Script &gt; Paste this code &gt; Deploy as Web App (Access: Anyone):
+        </p>
+
+        <div class="code-box" id="apps-script-code">function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    data.timestamp || new Date().toLocaleString(),
+    data.name || "Guest",
+    data.attendance || "Joyfully Accept",
+    data.guests || 1,
+    data.message || ""
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  var rsvps = [];
+  for (var i = 1; i < rows.length; i++) {
+    if (rows[i][1]) {
+      rsvps.push({
+        id: "sheet_" + i,
+        timestamp: rows[i][0],
+        name: rows[i][1],
+        attendance: rows[i][2],
+        guests: Number(rows[i][3]) || 0,
+        message: rows[i][4] || ""
+      });
+    }
+  }
+  return ContentService.createTextOutput(JSON.stringify({ status: "success", data: rsvps }))
+    .setMimeType(ContentService.MimeType.JSON);
+}</div>
+
+        <button type="button" class="btn-action btn-sync" style="width: 100%;" onclick="copyAppsScriptCode()">
+          📋 Copy Google Apps Script Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="admin-toast">Notification Message</div>
+
+  <!-- ==========================================================================
+       DASHBOARD SCRIPT
+       ========================================================================== -->
+  <script>
+    const SECRET_PIN = "2026";
+    let allRSVPs = [];
+
+    // Authentication Check
+    function checkAdminPIN() {
+      const pin = document.getElementById("admin-pin-input").value.trim();
+      const errEl = document.getElementById("pin-error-msg");
+      if (pin === SECRET_PIN) {
+        sessionStorage.setItem("wedding_admin_auth", "true");
+        document.getElementById("pin-gate-screen").style.display = "none";
+        initDashboard();
+      } else {
+        errEl.style.display = "block";
+      }
+    }
+
+    function lockAdminPortal() {
+      sessionStorage.removeItem("wedding_admin_auth");
+      document.getElementById("admin-pin-input").value = "";
+      document.getElementById("pin-error-msg").style.display = "none";
+      document.getElementById("pin-gate-screen").style.display = "flex";
+    }
+
+    // Initialize Dashboard
+    function initDashboard() {
+      loadRSVPs();
+      const savedUrl = localStorage.getItem("wedding_sheet_url") || "";
+      if (savedUrl) {
+        document.getElementById("sheet-url-input").value = savedUrl;
+        syncFromGoogleSheet(savedUrl, false);
+      }
+    }
+
+    // Load from LocalStorage
+    function loadRSVPs() {
+      try {
+        allRSVPs = JSON.parse(localStorage.getItem("wedding_rsvps") || "[]");
+      } catch (e) {
+        allRSVPs = [];
+      }
+      renderDashboard();
+    }
+
+    // Render Stats and Table
+    function renderDashboard() {
+      // Calculate Stats
+      let totalGuestsAttending = 0;
+      let totalAccepted = 0;
+      let totalDeclined = 0;
+
+      allRSVPs.forEach(item => {
+        if (item.attendance === "Joyfully Accept") {
+          totalAccepted++;
+          totalGuestsAttending += (parseInt(item.guests, 10) || 1);
+        } else {
+          totalDeclined++;
+        }
+      });
+
+      document.getElementById("stat-attending-guests").textContent = totalGuestsAttending;
+      document.getElementById("stat-accepted-rsvps").textContent = totalAccepted;
+      document.getElementById("stat-declined-rsvps").textContent = totalDeclined;
+      document.getElementById("stat-total-responses").textContent = allRSVPs.length;
+      document.getElementById("table-count-badge").textContent = allRSVPs.length + " Submissions";
+
+      renderGuestList();
+    }
+
+    // Render Filtered Table Rows
+    function renderGuestList() {
+      const searchTerm = (document.getElementById("guest-search").value || "").toLowerCase().trim();
+      const filterStatus = document.getElementById("attendance-filter").value;
+      const tbody = document.getElementById("guest-table-body");
+      const emptyState = document.getElementById("empty-state-box");
+      const table = document.getElementById("guest-table");
+
+      tbody.innerHTML = "";
+
+      const filtered = allRSVPs.filter(item => {
+        const matchesSearch = (item.name && item.name.toLowerCase().includes(searchTerm)) ||
+                              (item.message && item.message.toLowerCase().includes(searchTerm));
+        const matchesStatus = filterStatus === "all" || item.attendance === filterStatus;
+        return matchesSearch && matchesStatus;
+      });
+
+      if (filtered.length === 0) {
+        emptyState.style.display = "block";
+      } else {
+        emptyState.style.display = "none";
+      }
+
+      filtered.forEach((item, index) => {
+        const tr = document.createElement("tr");
+
+        const isAccept = item.attendance === "Joyfully Accept";
+        const statusBadge = isAccept 
+          ? `<span class="badge-status badge-accept">💖 Accepted</span>`
+          : `<span class="badge-status badge-decline">🕊️ Declined</span>`;
+
+        const guestsCountBadge = isAccept
+          ? `<span class="badge-count">${item.guests || 1}</span>`
+          : `<span style="color: var(--text-muted);">-</span>`;
+
+        tr.innerHTML = `
+          <td data-label="#">${index + 1}</td>
+          <td data-label="Date &amp; Time" style="font-size: 0.85rem; color: var(--text-muted);">${item.timestamp || "-"}</td>
+          <td data-label="Guest Name"><strong>${escapeHtml(item.name || "Guest")}</strong></td>
+          <td data-label="Status">${statusBadge}</td>
+          <td data-label="Count">${guestsCountBadge}</td>
+          <td data-label="Wishes / Note" class="msg-preview" title="${escapeHtml(item.message || "")}">${escapeHtml(item.message || "-")}</td>
+          <td data-label="Action" style="text-align: right;">
+            <button type="button" class="btn-delete-row" title="Delete entry" onclick="deleteRSVPEntry('${item.id || index}')">🗑️</button>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    // Delete Entry
+    function deleteRSVPEntry(idOrIndex) {
+      if (!confirm("Are you sure you want to remove this RSVP entry?")) return;
+      allRSVPs = allRSVPs.filter((item, idx) => (item.id !== idOrIndex && idx.toString() !== idOrIndex));
+      localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
+      renderDashboard();
+      showAdminToast("Entry removed.");
+    }
+
+    // Export to Excel / CSV with UTF-8 BOM
+    function exportToExcel() {
+      if (allRSVPs.length === 0) {
+        alert("No RSVP data to export yet!");
+        return;
+      }
+
+      let csvContent = "\uFEFF"; // UTF-8 BOM so Excel opens it with proper characters
+      csvContent += "Index,Timestamp,Guest Name,Attendance,Guest Count,Wishes / Message\n";
+
+      allRSVPs.forEach((item, index) => {
+        const row = [
+          index + 1,
+          `"${(item.timestamp || '').replace(/"/g, '""')}"`,
+          `"${(item.name || '').replace(/"/g, '""')}"`,
+          `"${(item.attendance || '').replace(/"/g, '""')}"`,
+          item.attendance === "Joyfully Accept" ? (item.guests || 1) : 0,
+          `"${(item.message || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += row.join(",") + "\n";
+      });
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement("a");
+      const now = new Date();
+      const dateStr = now.toISOString().slice(0, 10);
+      downloadLink.setAttribute("href", url);
+      downloadLink.setAttribute("download", `Udari_Prabath_Wedding_RSVP_List_${dateStr}.csv`);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      showAdminToast("Excel (.csv) downloaded successfully! 📊");
+    }
+
+    // Add Offline Guest Modal
+    function openAddGuestModal() {
+      document.getElementById("add-guest-modal").style.display = "flex";
+      document.getElementById("manual-name").focus();
+    }
+
+    function closeAddGuestModal() {
+      document.getElementById("add-guest-modal").style.display = "none";
+    }
+
+    function toggleManualGuestCount(val) {
+      document.getElementById("manual-count-wrapper").style.display = 
+        val === "Joyfully Accept" ? "block" : "none";
+    }
+
+    function saveManualGuest() {
+      const name = document.getElementById("manual-name").value.trim();
+      if (!name) {
+        alert("Please enter the guest name.");
+        return;
+      }
+
+      const attendance = document.getElementById("manual-attendance").value;
+      const count = attendance === "Joyfully Accept" 
+        ? (parseInt(document.getElementById("manual-count").value, 10) || 1) 
+        : 0;
+      const msg = document.getElementById("manual-message").value.trim();
+      const now = new Date();
+      const formattedTime = now.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) +
+        " " + now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+
+      const newEntry = {
+        id: "manual_" + Date.now(),
+        timestamp: formattedTime + " (Offline Entry)",
+        name: name,
+        attendance: attendance,
+        guests: count,
+        message: msg || "Manual offline confirmation"
+      };
+
+      allRSVPs.unshift(newEntry);
+      localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
+
+      // Also push to Google Sheet if connected
+      const sheetUrl = localStorage.getItem("wedding_sheet_url") || "";
+      if (sheetUrl) {
+        fetch(sheetUrl, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newEntry)
+        }).catch(e => console.log("Manual entry sheet sync:", e));
+      }
+
+      closeAddGuestModal();
+      document.getElementById("manual-name").value = "";
+      document.getElementById("manual-message").value = "";
+      renderDashboard();
+      showAdminToast("Guest added successfully!");
+    }
+
+    // Settings Modal (Google Sheets)
+    function openSettingsModal() {
+      document.getElementById("settings-modal").style.display = "flex";
+    }
+
+    function closeSettingsModal() {
+      document.getElementById("settings-modal").style.display = "none";
+    }
+
+    function saveSheetURL() {
+      const url = document.getElementById("sheet-url-input").value.trim();
+      if (!url) {
+        localStorage.removeItem("wedding_sheet_url");
+        showAdminToast("Sheet URL cleared.");
+        closeSettingsModal();
+        return;
+      }
+      localStorage.setItem("wedding_sheet_url", url);
+      showAdminToast("Google Sheet URL connected! 🔗");
+      syncFromGoogleSheet(url, true);
+      closeSettingsModal();
+    }
+
+    function testSheetConnection() {
+      const url = document.getElementById("sheet-url-input").value.trim();
+      if (!url) {
+        alert("Please paste your Google Apps Script URL first.");
+        return;
+      }
+      syncFromGoogleSheet(url, true);
+    }
+
+    function syncData() {
+      loadRSVPs();
+      const url = localStorage.getItem("wedding_sheet_url") || "";
+      if (url) {
+        syncFromGoogleSheet(url, true);
+      } else {
+        showAdminToast("Synced with local storage data.");
+      }
+    }
+
+    function syncFromGoogleSheet(url, notify) {
+      if (!url) return;
+      if (notify) showAdminToast("Connecting to Google Sheet... ⏳");
+
+      fetch(url)
+        .then(res => res.json())
+        .then(res => {
+          if (res && res.status === "success" && Array.isArray(res.data)) {
+            // Merge unique entries
+            const sheetRows = res.data;
+            const existingMap = new Map();
+            allRSVPs.forEach(item => existingMap.set(item.name.toLowerCase(), item));
+            
+            sheetRows.forEach(row => {
+              if (row.name && !existingMap.has(row.name.toLowerCase())) {
+                allRSVPs.push(row);
+                existingMap.set(row.name.toLowerCase(), row);
+              }
+            });
+
+            localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
+            renderDashboard();
+            if (notify) showAdminToast(`Synced! Loaded ${sheetRows.length} guest records from Google Sheet.`);
+          } else {
+            if (notify) showAdminToast("Note: Sheet returned no row data yet.");
+          }
+        })
+        .catch(err => {
+          console.log("Sheet fetch error:", err);
+          if (notify) showAdminToast("Sheet connection check complete.");
+        });
+    }
+
+    function copyAppsScriptCode() {
+      const code = document.getElementById("apps-script-code").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        showAdminToast("Apps Script code copied to clipboard! 📋");
+      });
+    }
+
+    function showAdminToast(msg) {
+      const toast = document.getElementById("admin-toast");
+      toast.textContent = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 3200);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Auto-login if previously unlocked in this session
+    window.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("wedding_admin_auth") === "true") {
+        document.getElementById("pin-gate-screen").style.display = "none";
+        initDashboard();
+      }
+    });
+  </script>
+</body>
+</html>

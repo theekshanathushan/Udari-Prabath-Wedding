@@ -8,25 +8,28 @@ Features an interactive royal envelope with wax seal unlock, live countdown time
 
 ## 🌟 Key Features
 
-1. **Interactive Royal Envelope Unlock**:
-   - Guests are greeted with an ornate maroon and gold envelope with a traditional lotus wax seal.
-   - Touching the seal plays background music and smoothly unlocks the invitation page.
+1. **Interactive Royal Envelope Unlock & Red Curtains**:
+   - Guests are greeted with an ornate curtain reveal and wax seal unlock.
+   - Touching the seal plays background music and smoothly opens the royal scroll proclamation.
 2. **Sri Lankan Heritage Aesthetic**:
    - Royal Maroon (`#520d1c`), Antique Gold (`#d4af37`), and Warm Ivory color palette.
    - Traditional Poruwa motifs, *Jaya Mangalam* blessings, and Kandyan-inspired borders.
 3. **Save The Date & Live Countdown**:
-   - Live Days, Hours, Minutes, and Seconds countdown down to the auspicious Poruwa time.
+   - Live Days, Hours, Minutes, and Seconds countdown down to the auspicious Poruwa time (11:00 AM, 10th December 2026).
    - **Save to Calendar (.ics)** button for Apple / Outlook calendar + direct **Add to Google Calendar** link.
-4. **Ceremony Itinerary & Dress Code**:
-   - Auspicious Nekatha time highlight, Magul Bera welcome, Poruwa ceremony, tea/champagne toast, banquet, and dress code recommendations.
-5. **Interactive WhatsApp RSVP**:
+4. **Direct Confirm RSVP (No WhatsApp Requirement)**:
    - Guests enter their name, select attendance (*Joyfully Accept* or *Regretfully Decline*), specify guest count, and optional blessings.
-   - Generates an instant, pre-filled WhatsApp message sent directly to the couple's WhatsApp number.
+   - Submits directly on the card and shows a warm, romantic confirmation card.
+5. **Private Security-PIN Admin Portal (`admin.html`)**:
+   - Secret PIN-protected dashboard (Default PIN: `2026`).
+   - Live counters: Total Confirmed Guests Count, Total Accepted, Total Declined.
+   - Instant **1-Click "Download Excel (.csv)"** button with UTF-8 BOM encoding for Microsoft Excel.
+   - Real-time guest search & filter.
+   - Optional 1-minute Google Sheets Cloud Sync integration for cross-device updates.
 6. **Tap-to-Call & One-Tap Copy**:
-   - Direct call, WhatsApp, and "Copy Phone Number" buttons with feedback toast.
+   - Direct call and "Copy Phone Number" buttons with feedback toast.
 7. **Mobile-First & Ultra-Fast**:
    - Zero heavy libraries or external JS frameworks (100% pure vanilla JS & CSS).
-   - Sticky bottom navigation bar for effortless mobile browsing.
    - Pre-configured OpenGraph meta tags for rich previews on WhatsApp, Viber, and Facebook.
 
 ---

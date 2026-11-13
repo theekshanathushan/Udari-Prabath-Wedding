@@ -630,60 +630,127 @@ function setupRSVPForm() {
   }
 }
 
-window.sendWhatsAppRSVP = function () {
-  const guestName = document.getElementById("guest-name").value.trim();
-  const selectedAttendance = document.querySelector("input[name='attendance']:checked").value;
-  const guestCount = document.getElementById("guest-count").value;
-  const guestMessage = document.getElementById("guest-message").value.trim();
+// ------------------------------------------------------------------------------
+// DIRECT CONFIRM RSVP SUBMISSION (NO WHATSAPP REQUIRED)
+// ------------------------------------------------------------------------------
+window.submitRSVPForm = function () {
+  const nameInput = document.getElementById("guest-name");
+  const guestName = (nameInput ? nameInput.value : "").trim();
+  const attendanceInput = document.querySelector("input[name='attendance']:checked");
+  const selectedAttendance = attendanceInput ? attendanceInput.value : "Joyfully Accept";
+  const guestCountInput = document.getElementById("guest-count");
+  const guestCountVal = guestCountInput ? guestCountInput.value : "1";
+  const messageInput = document.getElementById("guest-message");
+  const guestMessage = (messageInput ? messageInput.value : "").trim();
+  const submitBtn = document.getElementById("rsvp-submit-btn");
 
   if (!guestName) {
-    alert("Please enter your name.");
+    if (typeof showToast === "function") {
+      showToast("Please enter your name to confirm.");
+    } else {
+      alert("Please enter your name.");
+    }
+    if (nameInput) nameInput.focus();
     return;
   }
 
-  // 1. Automatically sync RSVP submission to Google Sheets / Excel
-  if (WEDDING_CONFIG.googleSheetScriptURL) {
-    const rsvpData = {
-      timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }),
-      name: guestName,
-      attendance: selectedAttendance,
-      guests: selectedAttendance === "Joyfully Accept" ? (parseInt(guestCount, 10) || 1) : 0,
-      message: guestMessage || "-"
-    };
+  // Visual button loading state
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<span>⏳</span> Confirming...`;
+  }
 
+  const numericGuests = selectedAttendance === "Joyfully Accept" ? (parseInt(guestCountVal, 10) || 1) : 0;
+  const now = new Date();
+  const formattedTime = now.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) +
+    " " + now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+
+  const rsvpData = {
+    id: "rsvp_" + Date.now(),
+    timestamp: formattedTime,
+    name: guestName,
+    attendance: selectedAttendance,
+    guests: numericGuests,
+    message: guestMessage || "-"
+  };
+
+  // 1. Save locally to localStorage for instant Admin Portal viewing
+  try {
+    const stored = JSON.parse(localStorage.getItem("wedding_rsvps") || "[]");
+    stored.unshift(rsvpData);
+    localStorage.setItem("wedding_rsvps", JSON.stringify(stored));
+  } catch (e) {
+    console.warn("Local storage write error:", e);
+  }
+
+  // 2. Sync to Private Google Sheet (if configured)
+  const sheetUrl = WEDDING_CONFIG.googleSheetScriptURL || localStorage.getItem("wedding_sheet_url") || "";
+  if (sheetUrl) {
     try {
-      fetch(WEDDING_CONFIG.googleSheetScriptURL, {
+      fetch(sheetUrl, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(rsvpData)
-      }).catch(err => console.log("Google Sheets sync note:", err));
-    } catch (e) {
-      console.log("Sheet sync error:", e);
+      }).catch(err => console.log("Google Sheets post notice:", err));
+    } catch (err) {
+      console.log("Sheet post error:", err);
     }
   }
 
-  // 2. Open WhatsApp with pre-filled invitation reply
-  let textMessage = `🌹 *RSVP: UDARI & PRABATH WEDDING* 🌹\n\n`;
-  textMessage += `📅 *Date:* Thursday, 10th December 2026\n`;
-  textMessage += `⏰ *Time:* 11:00 AM – 04:15 PM (Poruwa Ceremony: 11:00 AM)\n`;
-  textMessage += `📍 *Venue:* Ramira Reception Hall, Agalawaththa\n\n`;
-  textMessage += `👤 *Guest Name:* ${guestName}\n`;
-  textMessage += `💌 *Attendance:* ${selectedAttendance}\n`;
+  // 3. Show Success Card on Invitation (No WhatsApp redirect!)
+  setTimeout(() => {
+    const formEl = document.getElementById("rsvp-form");
+    const successBox = document.getElementById("rsvp-success-box");
+    const guestNameEl = document.getElementById("success-guest-name");
+    const descText = document.getElementById("success-desc-text");
 
-  if (selectedAttendance === "Joyfully Accept") {
-    textMessage += `👥 *Number of Guests:* ${guestCount}\n`;
-  }
+    if (formEl) formEl.style.display = "none";
+    if (guestNameEl) guestNameEl.textContent = guestName;
 
-  if (guestMessage) {
-    textMessage += `💬 *Warm Wishes:* ${guestMessage}\n`;
-  }
+    if (descText) {
+      if (selectedAttendance === "Joyfully Accept") {
+        descText.textContent = `Your attendance for ${numericGuests} guest${numericGuests > 1 ? "s" : ""} has been joyfully recorded!`;
+      } else {
+        descText.textContent = "Your response has been received with warm gratitude.";
+      }
+    }
 
-  textMessage += `\n_Sent via Udari & Prabath's Wedding Invitation Card_ 💍✨`;
-
-  const encodedUrl = `https://wa.me/${WEDDING_CONFIG.rsvpWhatsAppNumber}?text=${encodeURIComponent(textMessage)}`;
-  window.open(encodedUrl, "_blank");
+    if (successBox) successBox.style.display = "block";
+    if (typeof showToast === "function") {
+      showToast("RSVP Confirmed! Thank you!");
+    }
+  }, 400);
 };
+
+window.resetRSVPForm = function () {
+  const formEl = document.getElementById("rsvp-form");
+  const successBox = document.getElementById("rsvp-success-box");
+  const submitBtn = document.getElementById("rsvp-submit-btn");
+  const guestCountInput = document.getElementById("guest-count");
+  const guestCountGroup = document.getElementById("guest-count-group");
+
+  if (formEl) {
+    formEl.reset();
+    formEl.style.display = "block";
+  }
+  if (successBox) successBox.style.display = "none";
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = `<span>💌</span> Confirm RSVP`;
+  }
+  if (guestCountInput) guestCountInput.value = "2";
+  if (guestCountGroup) guestCountGroup.style.opacity = "1";
+
+  const radioCards = document.querySelectorAll(".attendance-btn-row .radio-pill");
+  radioCards.forEach((c, idx) => {
+    if (idx === 0) c.classList.add("active");
+    else c.classList.remove("active");
+  });
+};
+
+// Backwards-compatible alias in case of external call
+window.sendWhatsAppRSVP = window.submitRSVPForm;
 
 // ------------------------------------------------------------------------------
 // 9. CLIPBOARD HELPER & TOAST NOTIFICATION
