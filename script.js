@@ -23,6 +23,10 @@ const WEDDING_CONFIG = {
   rsvpWhatsAppNumber: "94772921684",
   rsvpDeadline: "December 05, 2026",
   
+  // Google Sheets Web App URL for automatic Excel RSVP Logging & Guest Count
+  // (Paste your deployed Google Apps Script Web App URL here)
+  googleSheetScriptURL: "",
+  
   contacts: [
     { name: "Theekshana", phone: "077 292 1684", intl: "+94772921684" },
     { name: "Hasinthaka", phone: "070 155 1244", intl: "+94701551244" }
@@ -637,6 +641,29 @@ window.sendWhatsAppRSVP = function () {
     return;
   }
 
+  // 1. Automatically sync RSVP submission to Google Sheets / Excel
+  if (WEDDING_CONFIG.googleSheetScriptURL) {
+    const rsvpData = {
+      timestamp: new Date().toLocaleString("en-US", { timeZone: "Asia/Colombo" }),
+      name: guestName,
+      attendance: selectedAttendance,
+      guests: selectedAttendance === "Joyfully Accept" ? (parseInt(guestCount, 10) || 1) : 0,
+      message: guestMessage || "-"
+    };
+
+    try {
+      fetch(WEDDING_CONFIG.googleSheetScriptURL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(rsvpData)
+      }).catch(err => console.log("Google Sheets sync note:", err));
+    } catch (e) {
+      console.log("Sheet sync error:", e);
+    }
+  }
+
+  // 2. Open WhatsApp with pre-filled invitation reply
   let textMessage = `🌹 *RSVP: UDARI & PRABATH WEDDING* 🌹\n\n`;
   textMessage += `📅 *Date:* Thursday, 10th December 2026\n`;
   textMessage += `⏰ *Time:* 11:00 AM – 04:15 PM (Poruwa Ceremony: 11:00 AM)\n`;
