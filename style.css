@@ -2465,15 +2465,192 @@ button {
   color: #ffffff;
 }
 
-.card-closing-blessing {
+/* ==========================================================================
+   ROMANTIC KEEPSAKE LOVE NOTE & MONOGRAM SEAL
+   ========================================================================== */
+.romantic-closing-card {
   text-align: center;
-  padding: 24px 12px;
+  margin: 10px 14px 24px;
+  padding: 34px 20px 28px;
+  background: linear-gradient(180deg, #fffcf7 0%, #fff7eb 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.55);
+  border-radius: 20px;
+  box-shadow: 
+    0 12px 36px rgba(107, 7, 26, 0.08),
+    inset 0 0 25px rgba(212, 175, 55, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
-.c-blessing-roses { font-size: 1.7rem; margin-bottom: 8px; }
-.c-blessing-title { font-family: var(--font-serif); font-size: 1.75rem; color: var(--royal-red-dark); margin-bottom: 10px; }
-.c-blessing-names { font-size: 1.05rem; color: var(--text-dark); margin-bottom: 12px; }
-.c-sinhala-blessing { font-family: var(--font-serif); font-size: 1.25rem; color: var(--gold-bronze); }
+.romantic-closing-card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.closing-gold-filigree-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--gold-24k);
+  font-size: 1.1rem;
+}
+
+.closing-gold-filigree-top .f-leaf {
+  font-size: 1.3rem;
+  opacity: 0.85;
+}
+
+.closing-gold-filigree-top .f-gem {
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+/* Royal Monogram Medallion */
+.closing-monogram-crest {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.monogram-outer-ring {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffef0 0%, #f7df94 40%, #c99c1a 75%, #7a5804 100%);
+  border: 2px solid var(--gold-24k);
+  box-shadow: 
+    0 6px 18px rgba(107, 7, 26, 0.25),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  position: relative;
+  animation: monogramPulse 3s infinite ease-in-out;
+}
+
+@keyframes monogramPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(107, 7, 26, 0.25); }
+  50% { transform: scale(1.04); box-shadow: 0 8px 24px rgba(212, 175, 55, 0.5); }
+}
+
+.monogram-outer-ring .m-letter {
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #3b030b;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.monogram-outer-ring .m-heart {
+  font-size: 0.95rem;
+  color: #a80f25;
+  animation: heartBeat 1.8s infinite ease-in-out;
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.25); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.25); }
+  70% { transform: scale(1); }
+}
+
+.closing-script-quote {
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.55rem;
+  color: #6b071a;
+  line-height: 1.4;
+  margin: 0 auto 12px;
+  max-width: 440px;
+  text-shadow: 0 1px 2px rgba(212, 175, 55, 0.2);
+}
+
+.closing-romantic-heading {
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--royal-red-dark);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.closing-romantic-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.08rem;
+  color: #4a332a;
+  line-height: 1.6;
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+
+.closing-divider-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.closing-divider-ornament .orn-line {
+  height: 1px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7), transparent);
+}
+
+.closing-divider-ornament .orn-rose {
+  font-size: 1.2rem;
+}
+
+.closing-signoff-block {
+  margin-bottom: 20px;
+}
+
+.closing-signoff-block .signoff-intro {
+  display: block;
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.35rem;
+  color: #8c6403;
+  margin-bottom: 2px;
+}
+
+.closing-signoff-block .signoff-couple-names {
+  font-family: var(--font-cinzel), serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--royal-red-dark);
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+
+.closing-signoff-block .signoff-date-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--gold-warm);
+  text-transform: uppercase;
+}
+
+.closing-blessing-pill {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid var(--gold-24k);
+  border-radius: 30px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--royal-gold-dark);
+  letter-spacing: 0.5px;
+}
 
 .card-footer {
   text-align: center;
