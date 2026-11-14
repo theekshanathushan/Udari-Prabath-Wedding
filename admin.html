@@ -235,6 +235,34 @@
     }
 
     /* ==========================================================================
+       CLOUD STATUS BANNER
+       ========================================================================== */
+    .cloud-status-banner {
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.88rem;
+      transition: all 0.3s ease;
+    }
+
+    .cloud-status-disconnected {
+      background: rgba(230, 126, 34, 0.15);
+      border: 1.5px solid rgba(230, 126, 34, 0.6);
+      color: #f39c12;
+    }
+
+    .cloud-status-connected {
+      background: rgba(46, 204, 113, 0.15);
+      border: 1.5px solid rgba(46, 204, 113, 0.5);
+      color: #2ecc71;
+    }
+
+    /* ==========================================================================
        STAT CARDS GRID
        ========================================================================== */
     .stats-grid {
@@ -751,6 +779,22 @@
        ========================================================================== -->
   <main class="dashboard-container">
 
+    <!-- Live Cloud Sync Status Banner -->
+    <div id="cloud-status-banner" class="cloud-status-banner cloud-status-disconnected">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span id="cloud-status-icon" style="font-size: 1.4rem;">⚠️</span>
+        <div>
+          <strong id="cloud-status-title">Google Sheets Cloud Sync Not Connected</strong>
+          <div id="cloud-status-desc" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">
+            Submissions made on other phones cannot reach this computer until you connect your Google Sheet URL.
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-action btn-sync" onclick="openSettingsModal()" style="padding: 8px 16px; font-size: 0.84rem;">
+        ⚙️ Connect Google Sheet
+      </button>
+    </div>
+
     <!-- Top Key Metrics Cards -->
     <section class="stats-grid">
       <div class="stat-card">
@@ -907,17 +951,28 @@
         </p>
 
         <div class="code-box" id="apps-script-code">function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
-  sheet.appendRow([
-    data.timestamp || new Date().toLocaleString(),
-    data.name || "Guest",
-    data.attendance || "Joyfully Accept",
-    data.guests || 1,
-    data.message || ""
-  ]);
-  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-    .setMimeType(ContentService.MimeType.JSON);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var contents = e.postData ? e.postData.contents : "";
+    var data = {};
+    if (contents) {
+      data = JSON.parse(contents);
+    } else if (e.parameter) {
+      data = e.parameter;
+    }
+    sheet.appendRow([
+      data.timestamp || new Date().toLocaleString(),
+      data.name || "Guest",
+      data.attendance || "Joyfully Accept",
+      data.guests !== undefined ? data.guests : 1,
+      data.message || ""
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
 function doGet(e) {
@@ -950,12 +1005,44 @@ function doGet(e) {
   <!-- Toast Notification -->
   <div id="admin-toast">Notification Message</div>
 
+  <!-- Load Global Wedding Config & Helpers -->
+  <script src="script.js"></script>
+
   <!-- ==========================================================================
        DASHBOARD SCRIPT
        ========================================================================== -->
   <script>
     const SECRET_PIN = "2026";
     let allRSVPs = [];
+    let autoSyncInterval = null;
+
+    function getEffectiveSheetURL() {
+      if (typeof WEDDING_CONFIG !== "undefined" && WEDDING_CONFIG.googleSheetScriptURL) {
+        return WEDDING_CONFIG.googleSheetScriptURL.trim();
+      }
+      return (localStorage.getItem("wedding_sheet_url") || "").trim();
+    }
+
+    function updateCloudStatusUI(isConnected, detailText) {
+      const banner = document.getElementById("cloud-status-banner");
+      const icon = document.getElementById("cloud-status-icon");
+      const title = document.getElementById("cloud-status-title");
+      const desc = document.getElementById("cloud-status-desc");
+
+      if (!banner) return;
+
+      if (isConnected) {
+        banner.className = "cloud-status-banner cloud-status-connected";
+        if (icon) icon.textContent = "🟢";
+        if (title) title.textContent = "Google Sheets Cloud Sync Active";
+        if (desc) desc.textContent = detailText || "Listening for submissions from all phones. Auto-syncing every 12 seconds.";
+      } else {
+        banner.className = "cloud-status-banner cloud-status-disconnected";
+        if (icon) icon.textContent = "⚠️";
+        if (title) title.textContent = "Google Sheets Cloud Sync Not Connected";
+        if (desc) desc.textContent = detailText || "Submissions from other phones cannot reach this computer until you connect your Google Sheet URL.";
+      }
+    }
 
     // Authentication Check
     function checkAdminPIN() {
@@ -972,6 +1059,7 @@ function doGet(e) {
 
     function lockAdminPortal() {
       sessionStorage.removeItem("wedding_admin_auth");
+      if (autoSyncInterval) clearInterval(autoSyncInterval);
       document.getElementById("admin-pin-input").value = "";
       document.getElementById("pin-error-msg").style.display = "none";
       document.getElementById("pin-gate-screen").style.display = "flex";
@@ -980,11 +1068,28 @@ function doGet(e) {
     // Initialize Dashboard
     function initDashboard() {
       loadRSVPs();
-      const savedUrl = localStorage.getItem("wedding_sheet_url") || "";
-      if (savedUrl) {
-        document.getElementById("sheet-url-input").value = savedUrl;
-        syncFromGoogleSheet(savedUrl, false);
+      const currentUrl = getEffectiveSheetURL();
+      const inputEl = document.getElementById("sheet-url-input");
+      if (inputEl) inputEl.value = currentUrl;
+
+      if (currentUrl) {
+        updateCloudStatusUI(true, "Connecting to Google Sheet... ⏳");
+        syncFromGoogleSheet(currentUrl, false);
+      } else {
+        updateCloudStatusUI(false);
       }
+
+      startAutoSync();
+    }
+
+    function startAutoSync() {
+      if (autoSyncInterval) clearInterval(autoSyncInterval);
+      autoSyncInterval = setInterval(() => {
+        const url = getEffectiveSheetURL();
+        if (url) {
+          syncFromGoogleSheet(url, false);
+        }
+      }, 12000); // Check every 12s
     }
 
     // Load from LocalStorage
@@ -999,7 +1104,6 @@ function doGet(e) {
 
     // Render Stats and Table
     function renderDashboard() {
-      // Calculate Stats
       let totalGuestsAttending = 0;
       let totalAccepted = 0;
       let totalDeclined = 0;
@@ -1028,7 +1132,6 @@ function doGet(e) {
       const filterStatus = document.getElementById("attendance-filter").value;
       const tbody = document.getElementById("guest-table-body");
       const emptyState = document.getElementById("empty-state-box");
-      const table = document.getElementById("guest-table");
 
       tbody.innerHTML = "";
 
@@ -1089,7 +1192,7 @@ function doGet(e) {
         return;
       }
 
-      let csvContent = "\uFEFF"; // UTF-8 BOM so Excel opens it with proper characters
+      let csvContent = "\uFEFF";
       csvContent += "Index,Timestamp,Guest Name,Attendance,Guest Count,Wishes / Message\n";
 
       allRSVPs.forEach((item, index) => {
@@ -1160,13 +1263,12 @@ function doGet(e) {
       allRSVPs.unshift(newEntry);
       localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
 
-      // Also push to Google Sheet if connected
-      const sheetUrl = localStorage.getItem("wedding_sheet_url") || "";
+      const sheetUrl = getEffectiveSheetURL();
       if (sheetUrl) {
         fetch(sheetUrl, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify(newEntry)
         }).catch(e => console.log("Manual entry sheet sync:", e));
       }
@@ -1191,13 +1293,15 @@ function doGet(e) {
       const url = document.getElementById("sheet-url-input").value.trim();
       if (!url) {
         localStorage.removeItem("wedding_sheet_url");
+        updateCloudStatusUI(false);
         showAdminToast("Sheet URL cleared.");
         closeSettingsModal();
         return;
       }
       localStorage.setItem("wedding_sheet_url", url);
-      showAdminToast("Google Sheet URL connected! 🔗");
+      showAdminToast("Google Sheet URL saved! Testing connection... 🔗");
       syncFromGoogleSheet(url, true);
+      startAutoSync();
       closeSettingsModal();
     }
 
@@ -1212,11 +1316,12 @@ function doGet(e) {
 
     function syncData() {
       loadRSVPs();
-      const url = localStorage.getItem("wedding_sheet_url") || "";
+      const url = getEffectiveSheetURL();
       if (url) {
         syncFromGoogleSheet(url, true);
       } else {
-        showAdminToast("Synced with local storage data.");
+        updateCloudStatusUI(false);
+        showAdminToast("No Cloud URL connected. Reading local device data.");
       }
     }
 
@@ -1228,28 +1333,32 @@ function doGet(e) {
         .then(res => res.json())
         .then(res => {
           if (res && res.status === "success" && Array.isArray(res.data)) {
-            // Merge unique entries
             const sheetRows = res.data;
-            const existingMap = new Map();
-            allRSVPs.forEach(item => existingMap.set(item.name.toLowerCase(), item));
-            
-            sheetRows.forEach(row => {
-              if (row.name && !existingMap.has(row.name.toLowerCase())) {
-                allRSVPs.push(row);
-                existingMap.set(row.name.toLowerCase(), row);
+            const manualEntries = allRSVPs.filter(item => item.id && item.id.startsWith("manual_"));
+
+            allRSVPs = [...sheetRows];
+            manualEntries.forEach(m => {
+              if (!allRSVPs.some(s => s.name && s.name.toLowerCase() === m.name.toLowerCase())) {
+                allRSVPs.push(m);
               }
             });
 
             localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
             renderDashboard();
-            if (notify) showAdminToast(`Synced! Loaded ${sheetRows.length} guest records from Google Sheet.`);
+
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            updateCloudStatusUI(true, `Live Cloud Connected • ${sheetRows.length} guest records synced at ${timeStr}`);
+
+            if (notify) showAdminToast(`Synced! Loaded ${sheetRows.length} records from Google Sheet.`);
           } else {
-            if (notify) showAdminToast("Note: Sheet returned no row data yet.");
+            updateCloudStatusUI(true, "Connected to Google Sheet • Waiting for submissions");
+            if (notify) showAdminToast("Sheet connected! Waiting for first submission.");
           }
         })
         .catch(err => {
           console.log("Sheet fetch error:", err);
-          if (notify) showAdminToast("Sheet connection check complete.");
+          updateCloudStatusUI(false, "Could not fetch from Sheet. Check Web App URL & permissions.");
+          if (notify) showAdminToast("Sheet fetch failed. Check URL.");
         });
     }
 

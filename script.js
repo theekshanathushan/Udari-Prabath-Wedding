@@ -684,13 +684,16 @@ window.submitRSVPForm = function () {
   }
 
   // 2. Sync to Private Google Sheet (if configured)
-  const sheetUrl = WEDDING_CONFIG.googleSheetScriptURL || localStorage.getItem("wedding_sheet_url") || "";
+  const sheetUrl = (typeof WEDDING_CONFIG !== 'undefined' && WEDDING_CONFIG.googleSheetScriptURL) 
+    ? WEDDING_CONFIG.googleSheetScriptURL 
+    : (localStorage.getItem("wedding_sheet_url") || "");
+
   if (sheetUrl) {
     try {
       fetch(sheetUrl, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(rsvpData)
       }).catch(err => console.log("Google Sheets post notice:", err));
     } catch (err) {
