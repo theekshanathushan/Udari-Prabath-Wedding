@@ -979,15 +979,25 @@ function doGet(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var rows = sheet.getDataRange().getValues();
   var rsvps = [];
-  for (var i = 1; i < rows.length; i++) {
-    if (rows[i][1]) {
+  if (!rows || rows.length === 0) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "success", data: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  var startIndex = 0;
+  var col0 = String(rows[0][0] || "").toLowerCase().trim();
+  var col1 = String(rows[0][1] || "").toLowerCase().trim();
+  if (col0 === "timestamp" || col0 === "date" || col1 === "name" || col1 === "guest name" || col1 === "guest") {
+    startIndex = 1;
+  }
+  for (var i = startIndex; i < rows.length; i++) {
+    if (rows[i] && rows[i][1]) {
       rsvps.push({
-        id: "sheet_" + i,
-        timestamp: rows[i][0],
-        name: rows[i][1],
-        attendance: rows[i][2],
-        guests: Number(rows[i][3]) || 0,
-        message: rows[i][4] || ""
+        id: "sheet_" + (i + 1),
+        timestamp: rows[i][0] ? String(rows[i][0]) : "-",
+        name: String(rows[i][1]),
+        attendance: String(rows[i][2] || "Joyfully Accept"),
+        guests: Number(rows[i][3]) || 1,
+        message: String(rows[i][4] || "")
       });
     }
   }
@@ -1006,7 +1016,7 @@ function doGet(e) {
   <div id="admin-toast">Notification Message</div>
 
   <!-- Load Global Wedding Config & Helpers -->
-  <script src="script.js"></script>
+  <script src="script.js?v=2.2"></script>
 
   <!-- ==========================================================================
        DASHBOARD SCRIPT
