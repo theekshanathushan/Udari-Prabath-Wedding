@@ -415,10 +415,26 @@ function updateAudioUI(isPlaying) {
 }
 
 if (openCurtainsBtn) {
-  openCurtainsBtn.addEventListener("click", openRoyalCurtains);
+  openCurtainsBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openRoyalCurtains();
+  });
   openCurtainsBtn.addEventListener("touchend", (e) => {
+    e.stopPropagation();
     e.preventDefault();
     openRoyalCurtains();
+  }, { passive: false });
+}
+
+if (curtainOverlay) {
+  curtainOverlay.addEventListener("click", () => {
+    if (!isCurtainOpened) openRoyalCurtains();
+  });
+  curtainOverlay.addEventListener("touchend", (e) => {
+    if (!isCurtainOpened) {
+      e.preventDefault();
+      openRoyalCurtains();
+    }
   }, { passive: false });
 }
 if (audioToggleBtn) {

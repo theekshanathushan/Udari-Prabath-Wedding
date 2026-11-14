@@ -309,75 +309,70 @@ button {
   box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
 }
 
-/* Curtains Left & Right */
+/* Curtains Left & Right — Photorealistic Split Door System */
 .curtain-half {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 50.8%;
+  width: 50.4%; /* Slight center overlap to ensure 100% seamless fit without gaps */
+  height: 100%;
   z-index: 10;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
-  transition: transform 2.2s cubic-bezier(0.22, 1, 0.36, 1), border-radius 2s ease;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+  transition: transform 1.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
   overflow: hidden;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .curtain-left {
   left: 0;
-  background: var(--grad-curtain-left);
-  transform-origin: top left;
+  transform-origin: center left;
 }
 
 .curtain-right {
   right: 0;
-  background: var(--grad-curtain-right);
-  transform-origin: top right;
+  transform-origin: center right;
 }
 
-.curtain-drape-folds {
+/* Photorealistic Seamless Curtain Artwork Split */
+.curtain-door-artwork {
   position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.45) 0px,
-    rgba(0, 0, 0, 0.15) 20px,
-    rgba(255, 255, 255, 0.16) 40px,
-    rgba(255, 255, 255, 0.05) 55px,
-    rgba(0, 0, 0, 0.45) 75px
-  );
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('assets/images/curtain-entrance.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   pointer-events: none;
 }
 
-.curtain-golden-fringe {
+.artwork-left {
+  left: 0;
+}
+
+.artwork-right {
+  right: 0;
+}
+
+.curtain-door-seam {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 4px;
-  background: var(--grad-gold-foil);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+  width: 1.5px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 215, 0, 0.8) 25%, rgba(255, 245, 180, 1) 50%, rgba(255, 215, 0, 0.8) 75%, transparent 100%);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+  z-index: 5;
+  pointer-events: none;
 }
 
-.curtain-left .curtain-golden-fringe { right: 0; }
-.curtain-right .curtain-golden-fringe { left: 0; }
+.seam-left { right: 0; }
+.seam-right { left: 0; }
 
-.curtain-tieback-cord {
-  position: absolute;
-  top: 50%;
-  font-size: 2rem;
-  color: var(--gold-24k);
-  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.7));
-  z-index: 14;
-}
-
-.left-tieback { right: 20px; }
-.right-tieback { left: 20px; }
-
-/* Center Clean Satin Bow */
+/* Center Clean Ribbon Bow & Floating Hearts Wrapper */
 .curtain-center-bow-wrapper {
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
+  inset: 0;
   z-index: 28;
   display: flex;
   flex-direction: column;
@@ -387,45 +382,69 @@ button {
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.horizontal-ribbon-band {
+/* Floating Ambient Hearts Layer */
+.entrance-hearts-layer {
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
-  height: 44px;
-  background: var(--grad-satin-ribbon);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(196, 30, 58, 0.5);
-  border-top: 2px solid var(--gold-24k);
-  border-bottom: 2px solid var(--gold-24k);
-  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 20;
 }
 
-.ribbon-gold-stitching {
+.e-heart-item {
   position: absolute;
-  top: 5px;
-  bottom: 5px;
-  left: 0;
-  right: 0;
-  border-top: 1px dashed rgba(255, 215, 0, 0.7);
-  border-bottom: 1px dashed rgba(255, 215, 0, 0.7);
+  filter: drop-shadow(0 0 10px rgba(255, 105, 180, 0.8));
+  animation: floatEntranceHeart 4s infinite ease-in-out;
+  opacity: 0.85;
 }
 
-.interactive-bow-btn {
+.e-h1 { top: 32%; left: 48%; font-size: 1.6rem; animation-delay: 0s; }
+.e-h2 { top: 34%; left: 36%; font-size: 1.3rem; animation-delay: 0.8s; }
+.e-h3 { top: 30%; right: 36%; font-size: 1.4rem; animation-delay: 1.5s; }
+.e-h4 { top: 40%; right: 32%; font-size: 1.2rem; animation-delay: 2.2s; }
+.e-h5 { top: 38%; left: 32%; font-size: 1.1rem; animation-delay: 2.8s; }
+
+@keyframes floatEntranceHeart {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.7; }
+  50% { transform: translateY(-16px) scale(1.15) rotate(5deg); opacity: 1; filter: drop-shadow(0 0 18px rgba(255, 182, 193, 1)); }
+}
+
+/* Interactive Tap Area sitting over the Ribbon Bow & TAP TO OPEN Button */
+.entrance-bow-tap-area {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 260px;
+  height: 160px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
   pointer-events: auto;
-  position: relative;
-  z-index: 30;
+  z-index: 35;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: transform var(--trans-fast);
-  animation: bowGentlyFloat 3s infinite ease-in-out;
 }
 
-.interactive-bow-btn:hover {
-  transform: scale(1.08);
+.bow-aura-pulse {
+  position: absolute;
+  bottom: 12px;
+  width: 170px;
+  height: 48px;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.4) 0%, rgba(255, 215, 0, 0) 75%);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), inset 0 0 12px rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(255, 215, 0, 0.6);
+  animation: bowAuraGlow 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
+@keyframes bowAuraGlow {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 35px rgba(255, 215, 0, 0.95); }
 }
 
 @keyframes bowGentlyFloat {
@@ -567,56 +586,47 @@ button {
   text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
 }
 
-/* Curtain Open Sweep — Keeps curtains gracefully opened on left & right */
+/* Curtain Open Sweep — Parting Smoothly across Desktop & Mobile */
 .curtain-stage-overlay.curtains-open .curtain-left {
-  transform: translate3d(-62%, 0, 0) scaleX(0.72);
-  border-radius: 0 140px 140px 0 / 0 50% 50% 0;
-  box-shadow: 25px 0 50px rgba(0, 0, 0, 0.9), inset -10px 0 25px rgba(255, 215, 0, 0.4);
+  transform: translate3d(-102%, 0, 0);
   pointer-events: none;
 }
 
 .curtain-stage-overlay.curtains-open .curtain-right {
-  transform: translate3d(62%, 0, 0) scaleX(0.72);
-  border-radius: 140px 0 0 140px / 50% 0 0 50%;
-  box-shadow: -25px 0 50px rgba(0, 0, 0, 0.9), inset 10px 0 25px rgba(255, 215, 0, 0.4);
+  transform: translate3d(102%, 0, 0);
   pointer-events: none;
 }
 
 @media (max-width: 1100px) {
   .curtain-stage-overlay.curtains-open .curtain-left {
-    transform: translate3d(-72%, 0, 0) scaleX(0.65);
+    transform: translate3d(-102%, 0, 0);
   }
   .curtain-stage-overlay.curtains-open .curtain-right {
-    transform: translate3d(72%, 0, 0) scaleX(0.65);
+    transform: translate3d(102%, 0, 0);
   }
 }
 
 @media (max-width: 768px) {
   .curtain-stage-overlay.curtains-open .curtain-left {
-    transform: translate3d(-84%, 0, 0) scaleX(0.55);
+    transform: translate3d(-102%, 0, 0);
   }
   .curtain-stage-overlay.curtains-open .curtain-right {
-    transform: translate3d(84%, 0, 0) scaleX(0.55);
+    transform: translate3d(102%, 0, 0);
   }
 }
 
-.curtain-stage-overlay.curtains-open .horizontal-ribbon-band {
-  transform: translateY(-50%) scaleX(0);
+.curtain-stage-overlay.curtains-open .curtain-center-bow-wrapper {
   opacity: 0;
+  transform: scale(1.15);
   pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.6s ease;
 }
 
-.curtain-stage-overlay.curtains-open .interactive-bow-btn {
-  transform: scale(1.3) rotate(20deg);
-  opacity: 0;
-  transition: transform 0.6s ease, opacity 0.5s ease;
+.curtain-stage-overlay.curtains-open .curtain-top-valance {
+  transform: translateY(-80%);
+  opacity: 0.2;
   pointer-events: none;
-}
-
-.curtain-stage-overlay.curtains-open .bow-gentle-hint {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: transform 1.6s ease, opacity 1.6s ease;
 }
 
 /* ==========================================================================
@@ -928,15 +938,11 @@ button {
 
   /* Curtains Open Positioning on Mobile — Visible, Majestic Parting Sweep */
   .curtain-stage-overlay.curtains-open .curtain-left {
-    transform: translate3d(-78%, 0, 0) scaleX(0.68) rotate(-2.5deg);
-    border-radius: 0 100px 100px 0 / 0 50% 50% 0;
-    box-shadow: 15px 0 35px rgba(0, 0, 0, 0.92), inset -8px 0 20px rgba(255, 215, 0, 0.45);
+    transform: translate3d(-102%, 0, 0);
     pointer-events: none;
   }
   .curtain-stage-overlay.curtains-open .curtain-right {
-    transform: translate3d(78%, 0, 0) scaleX(0.68) rotate(2.5deg);
-    border-radius: 100px 0 0 100px / 50% 0 0 50%;
-    box-shadow: -15px 0 35px rgba(0, 0, 0, 0.92), inset 8px 0 20px rgba(255, 215, 0, 0.45);
+    transform: translate3d(102%, 0, 0);
     pointer-events: none;
   }
   .curtain-stage-overlay.curtains-open .curtain-top-valance {
