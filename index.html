@@ -41,7 +41,7 @@
   </audio>
 
   <!-- =================================================================
-       SECTION 1: THEATER CURTAIN OPENING ENTRANCE (CHIBI COUPLE & RIBBON BOW)
+       SECTION 1: THEATER CURVED CURTAINS & SATIN BOW UNLOCK SCREEN
        ================================================================= -->
   <div class="curtain-stage-overlay" id="curtain-overlay">
     
@@ -53,33 +53,58 @@
       <div class="valance-gold-fringe"></div>
     </div>
 
-    <!-- Left Split Curtain Door -->
+    <!-- Left Curved Royal Velvet Curtain -->
     <div class="curtain-half curtain-left" id="curtain-left">
-      <div class="curtain-door-artwork artwork-left"></div>
-      <div class="curtain-door-seam seam-left"></div>
+      <div class="curtain-drape-folds"></div>
+      <div class="curtain-golden-fringe"></div>
+      <div class="curtain-tieback-cord left-tieback">
+        <span class="gold-tassel">⚜️</span>
+      </div>
     </div>
 
-    <!-- Right Split Curtain Door -->
+    <!-- Right Curved Royal Velvet Curtain -->
     <div class="curtain-half curtain-right" id="curtain-right">
-      <div class="curtain-door-artwork artwork-right"></div>
-      <div class="curtain-door-seam seam-right"></div>
+      <div class="curtain-drape-folds"></div>
+      <div class="curtain-golden-fringe"></div>
+      <div class="curtain-tieback-cord right-tieback">
+        <span class="gold-tassel">⚜️</span>
+      </div>
     </div>
 
-    <!-- Floating Live Hearts & Interactive Bow Tap Trigger -->
+    <!-- Center Clean Ribbon Bow (No Cluttered Text!) -->
     <div class="curtain-center-bow-wrapper" id="curtain-center-bow">
-      <!-- Ambient Floating Hearts -->
-      <div class="entrance-hearts-layer" aria-hidden="true">
-        <span class="e-heart-item e-h1">💖</span>
-        <span class="e-heart-item e-h2">💕</span>
-        <span class="e-heart-item e-h3">✨</span>
-        <span class="e-heart-item e-h4">💗</span>
-        <span class="e-heart-item e-h5">✨</span>
+      
+      <div class="horizontal-ribbon-band" id="horizontal-ribbon">
+        <div class="ribbon-gold-stitching"></div>
       </div>
 
-      <!-- Interactive Tap Area sitting over the Ribbon Bow & TAP TO OPEN Button -->
-      <button class="interactive-bow-btn entrance-bow-tap-area" id="open-curtains-btn" aria-label="Touch ribbon bow to open wedding invitation">
-        <span class="bow-aura-pulse"></span>
+      <!-- Interactive Bow Button -->
+      <button class="interactive-bow-btn" id="open-curtains-btn" aria-label="Untie ribbon bow to open invitation">
+        <div class="bow-glow-ring"></div>
+        
+        <div class="satin-bow-mesh">
+          <div class="bow-loop loop-left">
+            <span class="loop-ribbon-highlight"></span>
+          </div>
+          <div class="bow-loop loop-right">
+            <span class="loop-ribbon-highlight"></span>
+          </div>
+          <div class="bow-knot-jewel">
+            <span class="knot-monogram">U&amp;P</span>
+            <span class="knot-ring-symbol">💍</span>
+          </div>
+          <div class="bow-tail tail-left">
+            <div class="tail-v-cut"></div>
+          </div>
+          <div class="bow-tail tail-right">
+            <div class="tail-v-cut"></div>
+          </div>
+        </div>
+
+        <span class="bow-action-pill">TAP TO UNTIE</span>
       </button>
+
+      <p class="bow-gentle-hint">✨ Touch the Ribbon Bow to Open ✨</p>
     </div>
 
   </div>
