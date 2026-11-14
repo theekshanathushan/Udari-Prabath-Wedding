@@ -153,6 +153,13 @@ function initSnowPetalCanvas() {
 
 function createWhitePetalOrSnow() {
   const isPetal = Math.random() > 0.45;
+  const pastelColors = [
+    "rgba(244, 198, 201, 0.85)", // blush
+    "rgba(217, 136, 149, 0.85)", // dusty rose
+    "rgba(255, 248, 240, 0.95)", // ivory
+    "rgba(157, 181, 160, 0.8)",  // sage
+    "rgba(201, 162, 75, 0.65)"   // gold
+  ];
   return {
     type: isPetal ? "petal" : "snow",
     x: Math.random() * canvasWidth,
@@ -164,12 +171,20 @@ function createWhitePetalOrSnow() {
     swaySpeed: Math.random() * 0.02 + 0.015,
     rotation: Math.random() * 360,
     rotSpeed: (Math.random() - 0.5) * 2,
-    alpha: Math.random() * 0.65 + 0.35
+    alpha: Math.random() * 0.65 + 0.35,
+    color: pastelColors[Math.floor(Math.random() * pastelColors.length)]
   };
 }
 
 function triggerCurtainOpeningShower(originX, originY) {
   const count = 75;
+  const pastelColors = [
+    "rgba(244, 198, 201, 0.9)",
+    "rgba(217, 136, 149, 0.9)",
+    "rgba(255, 248, 240, 0.95)",
+    "rgba(157, 181, 160, 0.85)",
+    "rgba(201, 162, 75, 0.8)"
+  ];
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
     const speed = Math.random() * 7 + 2.5;
@@ -183,7 +198,8 @@ function triggerCurtainOpeningShower(originX, originY) {
       alpha: 1,
       gravity: 0.16,
       rotation: Math.random() * 360,
-      rotSpeed: (Math.random() - 0.5) * 10
+      rotSpeed: (Math.random() - 0.5) * 10,
+      color: pastelColors[Math.floor(Math.random() * pastelColors.length)]
     });
   }
 }
@@ -192,7 +208,7 @@ function renderCanvasLoop() {
   if (!ctx) return;
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-  // 1. Render continuous falling white petals and snow
+  // 1. Render continuous falling soft pastel petals and snow
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.sway += p.swaySpeed;
@@ -219,7 +235,7 @@ function renderCanvasLoop() {
     ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
 
     if (p.type === "petal") {
-      drawWhitePetal(ctx, p.x, p.y, p.size, p.rotation);
+      drawWhitePetal(ctx, p.x, p.y, p.size, p.rotation, p.color);
     } else {
       drawFrostSnowflake(ctx, p.x, p.y, p.size);
     }
@@ -244,7 +260,7 @@ function renderCanvasLoop() {
     ctx.save();
     ctx.globalAlpha = bp.alpha;
     if (bp.type === "petal") {
-      drawWhitePetal(ctx, bp.x, bp.y, bp.size, bp.rotation);
+      drawWhitePetal(ctx, bp.x, bp.y, bp.size, bp.rotation, bp.color);
     } else {
       drawFrostSnowflake(ctx, bp.x, bp.y, bp.size);
     }
@@ -254,12 +270,12 @@ function renderCanvasLoop() {
   requestAnimationFrame(renderCanvasLoop);
 }
 
-function drawWhitePetal(ctx, x, y, size, rotation) {
+function drawWhitePetal(ctx, x, y, size, rotation, color) {
   ctx.translate(x, y);
   ctx.rotate((rotation * Math.PI) / 180);
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-  ctx.shadowColor = "rgba(255, 215, 0, 0.4)";
+  ctx.fillStyle = color || "rgba(244, 198, 201, 0.85)";
+  ctx.shadowColor = "rgba(201, 162, 75, 0.3)";
   ctx.shadowBlur = 4;
 
   ctx.beginPath();
@@ -268,7 +284,7 @@ function drawWhitePetal(ctx, x, y, size, rotation) {
   ctx.bezierCurveTo(-size * 0.9, size * 0.5, -size * 0.8, -size * 0.5, 0, -size);
   ctx.fill();
 
-  ctx.strokeStyle = "rgba(255, 240, 210, 0.6)";
+  ctx.strokeStyle = "rgba(255, 248, 240, 0.5)";
   ctx.lineWidth = 0.8;
   ctx.beginPath();
   ctx.moveTo(0, -size * 0.7);
@@ -405,11 +421,11 @@ function toggleAudio() {
 function updateAudioUI(isPlaying) {
   if (heartIcon) {
     if (isPlaying) {
-      heartIcon.style.color = "#c41e3a";
-      heartIcon.textContent = "♥";
+      heartIcon.style.color = "var(--color-dusty-rose, #D98895)";
+      heartIcon.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     } else {
-      heartIcon.style.color = "#888888";
-      heartIcon.textContent = "♡";
+      heartIcon.style.color = "var(--color-muted, #7E6C68)";
+      heartIcon.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     }
   }
 }
@@ -434,7 +450,7 @@ function initCoupleKissAnimation() {
   if (!kissBox || !coupleImg) return;
 
   function triggerKissBurst(e) {
-    // 1. Trigger instant romantic kiss pulse on the photo
+    // 1. Trigger instant romantic pulse on the illustration
     coupleImg.classList.remove("kiss-quick-pulse");
     void coupleImg.offsetWidth; // Force CSS reflow to re-trigger
     coupleImg.classList.add("kiss-quick-pulse");
@@ -447,8 +463,14 @@ function initCoupleKissAnimation() {
       }
     } catch (_) {}
 
-    // 3. Spawn celebratory burst of floating love emojis from kiss point
-    const loveEmojis = ["💋", "💖", "💕", "✨", "❤️", "🥰", "💍", "🌹"];
+    // 3. Spawn celebratory burst of floating pastel SVG hearts and sparkles
+    const heartSVGs = [
+      `<svg viewBox="0 0 24 24" width="22" height="22" fill="#D98895"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="20" height="20" fill="#F4C6C9"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#C9A24B"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#9DB5A0"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/></svg>`
+    ];
+
     const rect = kissBox.getBoundingClientRect();
     const clickX = e && e.clientX ? e.clientX - rect.left : rect.width / 2;
     const clickY = e && e.clientY ? e.clientY - rect.top : rect.height * 0.42;
@@ -457,7 +479,7 @@ function initCoupleKissAnimation() {
     for (let i = 0; i < count; i++) {
       const heartEl = document.createElement("span");
       heartEl.className = "interactive-burst-heart";
-      heartEl.textContent = loveEmojis[Math.floor(Math.random() * loveEmojis.length)];
+      heartEl.innerHTML = heartSVGs[Math.floor(Math.random() * heartSVGs.length)];
       heartEl.style.left = `${clickX}px`;
       heartEl.style.top = `${clickY}px`;
 
@@ -504,7 +526,7 @@ function initCountdown() {
       minutesEl.textContent = "00";
       secondsEl.textContent = "00";
       const heading = document.querySelector(".countdown-tag");
-      if (heading) heading.textContent = "TODAY IS OUR WEDDING DAY! 💍✨";
+      if (heading) heading.textContent = "Today is our Wedding Day!";
       return;
     }
 
@@ -581,7 +603,7 @@ function setupCalendarButtons() {
       document.body.removeChild(tempLink);
       window.URL.revokeObjectURL(url);
 
-      showToast("Calendar event saved! 📅");
+      showToast("Calendar event saved!");
     });
   }
 }
@@ -657,7 +679,7 @@ window.submitRSVPForm = function () {
   // Visual button loading state
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.innerHTML = `<span>⏳</span> Confirming...`;
+    submitBtn.innerHTML = `<span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="animation: spin 1s linear infinite; display: inline-block; vertical-align: middle;"><circle cx="12" cy="12" r="10" stroke-opacity="0.3"/><path d="M12 2a10 10 0 0 1 10 10"/></svg></span> Confirming...`;
   }
 
   const numericGuests = selectedAttendance === "Joyfully Accept" ? (parseInt(guestCountVal, 10) || 1) : 0;
@@ -740,7 +762,7 @@ window.resetRSVPForm = function () {
   if (successBox) successBox.style.display = "none";
   if (submitBtn) {
     submitBtn.disabled = false;
-    submitBtn.innerHTML = `<span>💌</span> Confirm RSVP`;
+    submitBtn.innerHTML = `<span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="display: inline-block; vertical-align: middle;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span> Confirm RSVP`;
   }
   if (guestCountInput) guestCountInput.value = "2";
   if (guestCountGroup) guestCountGroup.style.opacity = "1";
@@ -761,7 +783,7 @@ window.sendWhatsAppRSVP = window.submitRSVPForm;
 window.copyContact = function (text, btnElement) {
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(() => {
-      showToast(`Copied: ${text} ✨`);
+      showToast(`Copied: ${text}`);
     }).catch(() => {
       fallbackCopy(text);
     });
@@ -780,7 +802,7 @@ function fallbackCopy(text) {
   textArea.select();
   try {
     document.execCommand("copy");
-    showToast(`Copied: ${text} ✨`);
+    showToast(`Copied: ${text}`);
   } catch (err) {
     showToast("Unable to copy to clipboard.");
   }
