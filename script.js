@@ -123,28 +123,26 @@ function initSnowPetalCanvas() {
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas);
 
-  const particleCount = 48; // Capped for optimal mobile performance
+  const particleCount = 85;
   for (let i = 0; i < particleCount; i++) {
     particles.push(createWhitePetalOrSnow());
   }
 
   // Interactive touch trail across full screen
   window.addEventListener("pointermove", (e) => {
-    if (Math.random() > 0.6) {
-      const isRose = Math.random() > 0.45;
+    if (Math.random() > 0.55) {
       particles.push({
-        type: isRose ? "rose" : "sparkle",
+        type: Math.random() > 0.45 ? "petal" : "snow",
         x: e.clientX,
         y: e.clientY,
-        size: isRose ? Math.random() * 5 + 3.5 : Math.random() * 3 + 1.5,
-        speedY: Math.random() * 1.4 + 0.7,
-        speedX: (Math.random() - 0.5) * 1.4,
+        size: Math.random() * 4 + 2.5,
+        speedY: Math.random() * 1.5 + 0.8,
+        speedX: (Math.random() - 0.5) * 1.5,
         sway: Math.random() * Math.PI * 2,
-        swaySpeed: 0.035,
+        swaySpeed: 0.04,
         rotation: Math.random() * 360,
         rotSpeed: (Math.random() - 0.5) * 3,
         alpha: 1,
-        color: isRose ? (Math.random() > 0.3 ? "rgba(194, 24, 91, 0.9)" : "rgba(245, 158, 11, 0.9)") : "rgba(246, 226, 122, 0.95)",
         isInteractive: true
       });
     }
@@ -154,53 +152,54 @@ function initSnowPetalCanvas() {
 }
 
 function createWhitePetalOrSnow() {
-  const isRose = Math.random() > 0.4;
-  const jewelColors = [
-    "rgba(194, 24, 91, 0.88)",  // Magenta-rose
-    "rgba(142, 14, 53, 0.85)",   // Deep royal crimson
-    "rgba(245, 158, 11, 0.88)",  // Marigold golden
-    "rgba(246, 226, 122, 0.92)", // Shimmering light gold
-    "rgba(201, 162, 75, 0.85)"   // Antique gold
+  const isPetal = Math.random() > 0.45;
+  const pastelColors = [
+    "rgba(244, 198, 201, 0.85)", // blush
+    "rgba(217, 136, 149, 0.85)", // dusty rose
+    "rgba(255, 248, 240, 0.95)", // ivory
+    "rgba(157, 181, 160, 0.8)",  // sage
+    "rgba(201, 162, 75, 0.65)"   // gold
   ];
   return {
-    type: isRose ? "rose" : "sparkle",
+    type: isPetal ? "petal" : "snow",
     x: Math.random() * canvasWidth,
     y: Math.random() * canvasHeight,
-    size: isRose ? Math.random() * 5.5 + 3.5 : Math.random() * 3.2 + 1.2,
-    speedY: isRose ? Math.random() * 1.1 + 0.6 : Math.random() * 0.7 + 0.35,
+    size: isPetal ? Math.random() * 5.5 + 4 : Math.random() * 3 + 1.2,
+    speedY: isPetal ? Math.random() * 1.1 + 0.6 : Math.random() * 0.8 + 0.4,
     speedX: (Math.random() - 0.5) * 0.6,
     sway: Math.random() * Math.PI * 2,
     swaySpeed: Math.random() * 0.02 + 0.015,
     rotation: Math.random() * 360,
     rotSpeed: (Math.random() - 0.5) * 2,
     alpha: Math.random() * 0.65 + 0.35,
-    color: jewelColors[Math.floor(Math.random() * jewelColors.length)]
+    color: pastelColors[Math.floor(Math.random() * pastelColors.length)]
   };
 }
 
 function triggerCurtainOpeningShower(originX, originY) {
-  const count = 55;
-  const jewelColors = [
-    "rgba(246, 226, 122, 0.95)",
-    "rgba(194, 24, 91, 0.95)",
-    "rgba(245, 158, 11, 0.95)",
-    "rgba(201, 162, 75, 0.9)"
+  const count = 75;
+  const pastelColors = [
+    "rgba(244, 198, 201, 0.9)",
+    "rgba(217, 136, 149, 0.9)",
+    "rgba(255, 248, 240, 0.95)",
+    "rgba(157, 181, 160, 0.85)",
+    "rgba(201, 162, 75, 0.8)"
   ];
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 6.5 + 2.5;
+    const speed = Math.random() * 7 + 2.5;
     burstParticles.push({
-      type: Math.random() > 0.4 ? "rose" : "sparkle",
+      type: Math.random() > 0.4 ? "petal" : "snow",
       x: originX,
       y: originY,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      size: Math.random() * 5.5 + 2.5,
+      size: Math.random() * 6 + 3,
       alpha: 1,
-      gravity: 0.15,
+      gravity: 0.16,
       rotation: Math.random() * 360,
       rotSpeed: (Math.random() - 0.5) * 10,
-      color: jewelColors[Math.floor(Math.random() * jewelColors.length)]
+      color: pastelColors[Math.floor(Math.random() * pastelColors.length)]
     });
   }
 }
@@ -209,7 +208,7 @@ function renderCanvasLoop() {
   if (!ctx) return;
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-  // 1. Render continuous falling rose petals and gold sparkles
+  // 1. Render continuous falling soft pastel petals and snow
   for (let i = 0; i < particles.length; i++) {
     const p = particles[i];
     p.sway += p.swaySpeed;
@@ -235,10 +234,10 @@ function renderCanvasLoop() {
     ctx.save();
     ctx.globalAlpha = Math.max(0, Math.min(1, p.alpha));
 
-    if (p.type === "rose") {
-      drawRosePetal(ctx, p.x, p.y, p.size, p.rotation, p.color);
+    if (p.type === "petal") {
+      drawWhitePetal(ctx, p.x, p.y, p.size, p.rotation, p.color);
     } else {
-      drawGoldSparkle(ctx, p.x, p.y, p.size, p.rotation, p.color);
+      drawFrostSnowflake(ctx, p.x, p.y, p.size);
     }
     ctx.restore();
   }
@@ -249,7 +248,7 @@ function renderCanvasLoop() {
     bp.x += bp.vx;
     bp.y += bp.vy;
     bp.vy += bp.gravity;
-    bp.alpha -= 0.016;
+    bp.alpha -= 0.015;
     bp.rotation += bp.rotSpeed;
 
     if (bp.alpha <= 0) {
@@ -260,10 +259,10 @@ function renderCanvasLoop() {
 
     ctx.save();
     ctx.globalAlpha = bp.alpha;
-    if (bp.type === "rose") {
-      drawRosePetal(ctx, bp.x, bp.y, bp.size, bp.rotation, bp.color);
+    if (bp.type === "petal") {
+      drawWhitePetal(ctx, bp.x, bp.y, bp.size, bp.rotation, bp.color);
     } else {
-      drawGoldSparkle(ctx, bp.x, bp.y, bp.size, bp.rotation, bp.color);
+      drawFrostSnowflake(ctx, bp.x, bp.y, bp.size);
     }
     ctx.restore();
   }
@@ -271,12 +270,12 @@ function renderCanvasLoop() {
   requestAnimationFrame(renderCanvasLoop);
 }
 
-function drawRosePetal(ctx, x, y, size, rotation, color) {
+function drawWhitePetal(ctx, x, y, size, rotation, color) {
   ctx.translate(x, y);
   ctx.rotate((rotation * Math.PI) / 180);
 
-  ctx.fillStyle = color || "rgba(194, 24, 91, 0.85)";
-  ctx.shadowColor = "rgba(246, 226, 122, 0.35)";
+  ctx.fillStyle = color || "rgba(244, 198, 201, 0.85)";
+  ctx.shadowColor = "rgba(201, 162, 75, 0.3)";
   ctx.shadowBlur = 4;
 
   ctx.beginPath();
@@ -285,38 +284,32 @@ function drawRosePetal(ctx, x, y, size, rotation, color) {
   ctx.bezierCurveTo(-size * 0.9, size * 0.5, -size * 0.8, -size * 0.5, 0, -size);
   ctx.fill();
 
-  ctx.strokeStyle = "rgba(255, 235, 170, 0.4)";
-  ctx.lineWidth = 0.7;
+  ctx.strokeStyle = "rgba(255, 248, 240, 0.5)";
+  ctx.lineWidth = 0.8;
   ctx.beginPath();
-  ctx.moveTo(0, -size * 0.65);
-  ctx.lineTo(0, size * 0.65);
+  ctx.moveTo(0, -size * 0.7);
+  ctx.lineTo(0, size * 0.7);
   ctx.stroke();
 }
 
-function drawGoldSparkle(ctx, x, y, size, rotation, color) {
-  ctx.translate(x, y);
-  ctx.rotate((rotation * Math.PI) / 180);
-
-  ctx.fillStyle = color || "rgba(246, 226, 122, 0.95)";
-  ctx.shadowColor = "rgba(245, 158, 11, 0.6)";
+function drawFrostSnowflake(ctx, x, y, size) {
+  ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+  ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
   ctx.shadowBlur = 5;
 
-  if (size > 2) {
-    // 4-point sparkling star
+  if (size > 2.2) {
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+    ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(0, -size * 1.4);
-    ctx.lineTo(size * 0.35, -size * 0.35);
-    ctx.lineTo(size * 1.4, 0);
-    ctx.lineTo(size * 0.35, size * 0.35);
-    ctx.lineTo(0, size * 1.4);
-    ctx.lineTo(-size * 0.35, size * 0.35);
-    ctx.lineTo(-size * 1.4, 0);
-    ctx.lineTo(-size * 0.35, -size * 0.35);
-    ctx.closePath();
-    ctx.fill();
+    for (let i = 0; i < 3; i++) {
+      const angle = (i * Math.PI) / 3;
+      ctx.moveTo(x + Math.cos(angle) * size, y + Math.sin(angle) * size);
+      ctx.lineTo(x - Math.cos(angle) * size, y - Math.sin(angle) * size);
+    }
+    ctx.stroke();
   } else {
     ctx.beginPath();
-    ctx.arc(0, 0, size, 0, Math.PI * 2);
+    ctx.arc(x, y, size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
@@ -428,10 +421,10 @@ function toggleAudio() {
 function updateAudioUI(isPlaying) {
   if (heartIcon) {
     if (isPlaying) {
-      heartIcon.style.color = "var(--color-magenta-rose, #C2185B)";
+      heartIcon.style.color = "var(--color-dusty-rose, #D98895)";
       heartIcon.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     } else {
-      heartIcon.style.color = "rgba(246, 226, 122, 0.4)";
+      heartIcon.style.color = "var(--color-muted, #7E6C68)";
       heartIcon.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
     }
   }
@@ -470,13 +463,12 @@ function initCoupleKissAnimation() {
       }
     } catch (_) {}
 
-    // 3. Spawn celebratory burst of floating jewel-tone SVG hearts and sparkles
+    // 3. Spawn celebratory burst of floating pastel SVG hearts and sparkles
     const heartSVGs = [
-      `<svg viewBox="0 0 24 24" width="22" height="22" fill="#F6E27A"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
-      `<svg viewBox="0 0 24 24" width="20" height="20" fill="#C2185B"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
-      `<svg viewBox="0 0 24 24" width="20" height="20" fill="#F59E0B"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg>`,
-      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#C9A24B"><path d="M12 2L15 8L22 9L17 14L18 21L12 17.5L6 21L7 14L2 9L9 8L12 2Z"/></svg>`,
-      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#0F766E"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/></svg>`
+      `<svg viewBox="0 0 24 24" width="22" height="22" fill="#D98895"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="20" height="20" fill="#F4C6C9"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#C9A24B"><path d="M12 2L14.4 8.6L21 11L14.4 13.4L12 20L9.6 13.4L3 11L9.6 8.6L12 2Z"/></svg>`,
+      `<svg viewBox="0 0 24 24" width="18" height="18" fill="#9DB5A0"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="19" r="2.5"/><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="12" r="2.5"/></svg>`
     ];
 
     const rect = kissBox.getBoundingClientRect();
