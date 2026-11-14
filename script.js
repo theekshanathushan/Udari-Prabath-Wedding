@@ -25,7 +25,7 @@ const WEDDING_CONFIG = {
   
   // Google Sheets Web App URL for automatic Excel RSVP Logging & Guest Count
   // (Paste your deployed Google Apps Script Web App URL here)
-  googleSheetScriptURL: "",
+  googleSheetScriptURL: "https://script.google.com/macros/s/AKfycbx3h019e1vjlqC2Tdr4clVY5FB-BIEsfNMYy42opVrDfdX_puMKw6-Bisl7GyfqFfBhCw/exec",
   
   contacts: [
     { name: "Theekshana", phone: "077 292 1684", intl: "+94772921684" },
