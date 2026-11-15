@@ -15,7 +15,7 @@ Features an interactive royal envelope with wax seal unlock, live countdown time
    - Royal Maroon (`#520d1c`), Antique Gold (`#d4af37`), and Warm Ivory color palette.
    - Traditional Poruwa motifs, *Jaya Mangalam* blessings, and Kandyan-inspired borders.
 3. **Save The Date & Live Countdown**:
-   - Live Days, Hours, Minutes, and Seconds countdown down to the auspicious Poruwa time (10:00 AM, 10th December 2026).
+   - Live Days, Hours, Minutes, and Seconds countdown down to the wedding celebration (10:00 AM, 10th December 2026; Poruwa Charithra at 11:00 AM).
    - **Save to Calendar (.ics)** button for Apple / Outlook calendar + direct **Add to Google Calendar** link.
 4. **Direct Confirm RSVP (No WhatsApp Requirement)**:
    - Guests enter their name, select attendance (*Joyfully Accept* or *Regretfully Decline*), specify guest count, and optional blessings.
@@ -45,7 +45,7 @@ const WEDDING_CONFIG = {
   groomName: "Prabath",
   weddingDateISO: "2026-12-10T10:00:00+05:30",
   eventTitle: "Udari & Prabath Wedding Celebration",
-  eventDescription: "Udari & Prabath Wedding Celebration at Ramira Reception Hall, Agalawaththa (Poruwa Ceremony: 10:00 AM)",
+  eventDescription: "Udari & Prabath Wedding Celebration at Ramira Reception Hall, Agalawaththa (10:00 AM – 04:15 PM • Poruwa Charithra: 11:00 AM)",
   venueName: "Ramira Reception Hall",
   venueAddress: "No. 148, Yatiyana, Agalawaththa, Sri Lanka",
   venueMapsURL: "https://maps.app.goo.gl/ub2awTQqFTStJXy36",
