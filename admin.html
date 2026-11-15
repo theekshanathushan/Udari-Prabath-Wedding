@@ -551,19 +551,45 @@
       font-style: italic;
     }
 
+    .action-btn-cell {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .btn-edit-row {
+      background: transparent;
+      border: 1px solid rgba(228, 194, 120, 0.3);
+      color: var(--gold-light, #e4c278);
+      font-size: 0.95rem;
+      cursor: pointer;
+      padding: 5px 9px;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+    }
+
+    .btn-edit-row:hover {
+      background: rgba(228, 194, 120, 0.2);
+      border-color: var(--gold-light, #e4c278);
+      transform: scale(1.08);
+    }
+
     .btn-delete-row {
       background: transparent;
-      border: none;
+      border: 1px solid rgba(231, 76, 60, 0.3);
       color: #e74c3c;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
       cursor: pointer;
-      padding: 4px 8px;
+      padding: 5px 9px;
       border-radius: 6px;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
     }
 
     .btn-delete-row:hover {
       background: rgba(231, 76, 60, 0.2);
+      border-color: #e74c3c;
+      transform: scale(1.08);
     }
 
     .empty-state {
@@ -922,6 +948,40 @@
   </div>
 
   <!-- ==========================================================================
+       MODAL: EDIT GUEST RSVP
+       ========================================================================== -->
+  <div class="modal-overlay" id="edit-guest-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">✏️ Edit Guest RSVP</h3>
+        <button type="button" class="btn-close-modal" onclick="closeEditGuestModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id-or-index">
+
+        <label class="field-lbl">Guest Name(s) *</label>
+        <input type="text" id="edit-name" class="field-inp" placeholder="e.g. Mr. & Mrs. Silva">
+
+        <label class="field-lbl">Attendance *</label>
+        <select id="edit-attendance" class="field-inp" onchange="toggleEditGuestCount(this.value)">
+          <option value="Joyfully Accept">Joyfully Accept</option>
+          <option value="Regretfully Decline">Regretfully Decline</option>
+        </select>
+
+        <div id="edit-count-wrapper">
+          <label class="field-lbl">Number of Guests</label>
+          <input type="number" id="edit-count" class="field-inp" value="1" min="1" max="20">
+        </div>
+
+        <label class="field-lbl">Wishes / Note</label>
+        <input type="text" id="edit-message" class="field-inp" placeholder="e.g. Best wishes...">
+
+        <button type="button" class="btn-gold" onclick="saveEditedGuest()">Save Changes 💾</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
        MODAL: GOOGLE SHEETS SETUP & SYNC
        ========================================================================== -->
   <div class="modal-overlay" id="settings-modal">
@@ -960,6 +1020,64 @@
     } else if (e.parameter) {
       data = e.parameter;
     }
+
+    var action = data.action || "add";
+
+    // 1. DELETE ACTION
+    if (action === "delete") {
+      var rows = sheet.getDataRange().getValues();
+      var targetRow = -1;
+      for (var i = rows.length - 1; i >= 1; i--) {
+        var rId = "sheet_" + (i + 1);
+        var rName = String(rows[i][1] || "").trim().toLowerCase();
+        if (data.id && data.id === rId) {
+          targetRow = i + 1;
+          break;
+        } else if (data.name && rName === String(data.name).trim().toLowerCase()) {
+          targetRow = i + 1;
+          break;
+        }
+      }
+      if (targetRow > 0) {
+        sheet.deleteRow(targetRow);
+        return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Deleted row " + targetRow }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "not_found" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 2. EDIT ACTION
+    if (action === "edit") {
+      var rows = sheet.getDataRange().getValues();
+      var targetRow = -1;
+      for (var i = 1; i < rows.length; i++) {
+        var rId = "sheet_" + (i + 1);
+        var rName = String(rows[i][1] || "").trim().toLowerCase();
+        if (data.id && data.id === rId) {
+          targetRow = i + 1;
+          break;
+        } else if (data.oldName && rName === String(data.oldName).trim().toLowerCase()) {
+          targetRow = i + 1;
+          break;
+        } else if (data.name && rName === String(data.name).trim().toLowerCase()) {
+          targetRow = i + 1;
+          break;
+        }
+      }
+      if (targetRow > 0) {
+        if (data.name !== undefined) sheet.getRange(targetRow, 2).setValue(data.name);
+        if (data.attendance !== undefined) sheet.getRange(targetRow, 3).setValue(data.attendance);
+        if (data.guests !== undefined) sheet.getRange(targetRow, 4).setValue(data.guests);
+        if (data.message !== undefined) sheet.getRange(targetRow, 5).setValue(data.message);
+        return ContentService.createTextOutput(JSON.stringify({ status: "success", message: "Updated row " + targetRow }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "not_found" }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 3. DEFAULT: ADD NEW RSVP ROW
     sheet.appendRow([
       data.timestamp || new Date().toLocaleString(),
       data.name || "Guest",
@@ -1178,7 +1296,10 @@ function doGet(e) {
           <td data-label="Count">${guestsCountBadge}</td>
           <td data-label="Wishes / Note" class="msg-preview" title="${escapeHtml(item.message || "")}">${escapeHtml(item.message || "-")}</td>
           <td data-label="Action" style="text-align: right;">
-            <button type="button" class="btn-delete-row" title="Delete entry" onclick="deleteRSVPEntry('${item.id || index}')">🗑️</button>
+            <div class="action-btn-cell">
+              <button type="button" class="btn-edit-row" title="Edit entry" onclick="editRSVPEntry('${item.id || index}')">✏️</button>
+              <button type="button" class="btn-delete-row" title="Delete entry" onclick="deleteRSVPEntry('${item.id || index}')">🗑️</button>
+            </div>
           </td>
         `;
 
@@ -1186,13 +1307,151 @@ function doGet(e) {
       });
     }
 
-    // Delete Entry
+    // Delete Entry (Permanent deletion with blocklist tracking)
     function deleteRSVPEntry(idOrIndex) {
-      if (!confirm("Are you sure you want to remove this RSVP entry?")) return;
-      allRSVPs = allRSVPs.filter((item, idx) => (item.id !== idOrIndex && idx.toString() !== idOrIndex));
+      const target = allRSVPs.find((item, idx) => (item.id === idOrIndex || idx.toString() === idOrIndex));
+      if (!target) return;
+
+      const guestName = target.name || "this guest";
+      if (!confirm(`Are you sure you want to permanently remove "${guestName}" from the RSVP list?`)) return;
+
+      // 1. Add identifiers to deleted blocklist in localStorage so sync NEVER re-adds it
+      let deletedIds = [];
+      try {
+        deletedIds = JSON.parse(localStorage.getItem("wedding_deleted_ids") || "[]");
+      } catch (e) {
+        deletedIds = [];
+      }
+
+      if (target.id) deletedIds.push(target.id);
+      if (target.timestamp && target.name) deletedIds.push(target.timestamp + "___" + target.name);
+      if (target.name) deletedIds.push("name_" + target.name.trim().toLowerCase());
+
+      localStorage.setItem("wedding_deleted_ids", JSON.stringify(deletedIds));
+
+      // 2. Remove from local array & localStorage
+      allRSVPs = allRSVPs.filter((item, idx) => (item.id !== idOrIndex && idx.toString() !== idOrIndex && item !== target));
       localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
       renderDashboard();
-      showAdminToast("Entry removed.");
+
+      // 3. Send delete call to Google Sheet Web App (if configured)
+      const sheetUrl = getEffectiveSheetURL();
+      if (sheetUrl) {
+        try {
+          fetch(sheetUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "delete",
+              id: target.id || "",
+              name: target.name || "",
+              timestamp: target.timestamp || ""
+            })
+          }).catch(err => console.log("Sheet delete sync notice:", err));
+        } catch (e) {}
+      }
+
+      showAdminToast(`Removed "${guestName}" successfully.`);
+    }
+
+    // Edit Entry
+    function editRSVPEntry(idOrIndex) {
+      const target = allRSVPs.find((item, idx) => (item.id === idOrIndex || idx.toString() === idOrIndex));
+      if (!target) return;
+
+      document.getElementById("edit-id-or-index").value = idOrIndex;
+      document.getElementById("edit-name").value = target.name || "";
+      document.getElementById("edit-attendance").value = target.attendance || "Joyfully Accept";
+      document.getElementById("edit-count").value = target.guests || (target.attendance === "Joyfully Accept" ? 1 : 0);
+      document.getElementById("edit-message").value = target.message === "-" ? "" : (target.message || "");
+
+      toggleEditGuestCount(document.getElementById("edit-attendance").value);
+      document.getElementById("edit-guest-modal").style.display = "flex";
+      document.getElementById("edit-name").focus();
+    }
+
+    function closeEditGuestModal() {
+      document.getElementById("edit-guest-modal").style.display = "none";
+    }
+
+    function toggleEditGuestCount(val) {
+      document.getElementById("edit-count-wrapper").style.display = 
+        val === "Joyfully Accept" ? "block" : "none";
+    }
+
+    function saveEditedGuest() {
+      const idOrIndex = document.getElementById("edit-id-or-index").value;
+      const targetIndex = allRSVPs.findIndex((item, idx) => (item.id === idOrIndex || idx.toString() === idOrIndex));
+      if (targetIndex === -1) {
+        closeEditGuestModal();
+        return;
+      }
+
+      const newName = document.getElementById("edit-name").value.trim();
+      if (!newName) {
+        alert("Please enter the guest name.");
+        return;
+      }
+
+      const newAttendance = document.getElementById("edit-attendance").value;
+      const newCount = newAttendance === "Joyfully Accept" 
+        ? (parseInt(document.getElementById("edit-count").value, 10) || 1) 
+        : 0;
+      const newMsg = document.getElementById("edit-message").value.trim() || "-";
+
+      const oldEntry = allRSVPs[targetIndex];
+      const updatedEntry = {
+        ...oldEntry,
+        name: newName,
+        attendance: newAttendance,
+        guests: newCount,
+        message: newMsg
+      };
+
+      allRSVPs[targetIndex] = updatedEntry;
+      localStorage.setItem("wedding_rsvps", JSON.stringify(allRSVPs));
+
+      // Save to edited entries map so autoSync preserves local edits
+      let editedMap = {};
+      try {
+        editedMap = JSON.parse(localStorage.getItem("wedding_edited_entries") || "{}");
+      } catch (e) {
+        editedMap = {};
+      }
+      if (updatedEntry.id) {
+        editedMap[updatedEntry.id] = updatedEntry;
+      }
+      if (oldEntry.name) {
+        editedMap["name_" + oldEntry.name.trim().toLowerCase()] = updatedEntry;
+      }
+      localStorage.setItem("wedding_edited_entries", JSON.stringify(editedMap));
+
+      // Sync edit to Google Sheet
+      const sheetUrl = getEffectiveSheetURL();
+      if (sheetUrl) {
+        try {
+          fetch(sheetUrl, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "edit",
+              id: updatedEntry.id || "",
+              oldName: oldEntry.name || "",
+              name: newName,
+              attendance: newAttendance,
+              guests: newCount,
+              message: newMsg,
+              timestamp: updatedEntry.timestamp || ""
+            })
+          }).catch(err => console.log("Sheet edit sync notice:", err));
+        } catch (e) {}
+      }
+
+      closeEditGuestModal();
+      renderDashboard();
+      showAdminToast(`Updated "${newName}" successfully!`);
     }
 
     // Export to Excel / CSV with UTF-8 BOM
@@ -1343,7 +1602,40 @@ function doGet(e) {
         .then(res => res.json())
         .then(res => {
           if (res && res.status === "success" && Array.isArray(res.data)) {
-            const sheetRows = res.data;
+            // Read deleted blocklist and edited entries from localStorage
+            let deletedIds = [];
+            try {
+              deletedIds = JSON.parse(localStorage.getItem("wedding_deleted_ids") || "[]");
+            } catch (e) {
+              deletedIds = [];
+            }
+
+            let editedMap = {};
+            try {
+              editedMap = JSON.parse(localStorage.getItem("wedding_edited_entries") || "{}");
+            } catch (e) {
+              editedMap = {};
+            }
+
+            // 1. Filter out all entries that were removed by admin
+            let sheetRows = res.data.filter(row => {
+              if (row.id && deletedIds.includes(row.id)) return false;
+              if (row.timestamp && row.name && deletedIds.includes(row.timestamp + "___" + row.name)) return false;
+              if (row.name && deletedIds.includes("name_" + row.name.trim().toLowerCase())) return false;
+              return true;
+            });
+
+            // 2. Apply any admin edits to matching rows
+            sheetRows = sheetRows.map(row => {
+              if (row.id && editedMap[row.id]) {
+                return { ...row, ...editedMap[row.id] };
+              }
+              if (row.name && editedMap["name_" + row.name.trim().toLowerCase()]) {
+                return { ...row, ...editedMap["name_" + row.name.trim().toLowerCase()] };
+              }
+              return row;
+            });
+
             const manualEntries = allRSVPs.filter(item => item.id && item.id.startsWith("manual_"));
 
             allRSVPs = [...sheetRows];
@@ -1357,9 +1649,9 @@ function doGet(e) {
             renderDashboard();
 
             const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            updateCloudStatusUI(true, `Live Cloud Connected • ${sheetRows.length} guest records synced at ${timeStr}`);
+            updateCloudStatusUI(true, `Live Cloud Connected • ${allRSVPs.length} guest records synced at ${timeStr}`);
 
-            if (notify) showAdminToast(`Synced! Loaded ${sheetRows.length} records from Google Sheet.`);
+            if (notify) showAdminToast(`Synced! Loaded ${allRSVPs.length} records.`);
           } else {
             updateCloudStatusUI(true, "Connected to Google Sheet • Waiting for submissions");
             if (notify) showAdminToast("Sheet connected! Waiting for first submission.");
