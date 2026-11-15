@@ -988,43 +988,80 @@ button, a {
   box-shadow: var(--shadow-card);
 }
 
-.v-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
+.venue-header-banner {
+  background: linear-gradient(180deg, rgba(244, 198, 201, 0.22) 0%, rgba(255, 248, 240, 0.55) 100%);
+  padding: 28px 20px 20px;
+  text-align: center;
+  border-bottom: 1px dashed rgba(201, 162, 75, 0.28);
 }
 
-.v-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--trans-slow);
+.venue-icon-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(217, 136, 149, 0.14);
+  color: var(--color-dusty-rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 4px 12px rgba(217, 136, 149, 0.15);
 }
 
-.compact-venue-card:hover .v-img {
-  transform: scale(1.03);
-}
-
-.v-badge {
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: rgba(90, 42, 58, 0.88);
-  color: #ffffff;
+.venue-badge-pill {
+  display: inline-block;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 1.5px;
-  padding: 6px 14px;
+  color: var(--color-dusty-rose);
+  background: rgba(244, 198, 201, 0.45);
+  padding: 4px 14px;
   border-radius: var(--radius-pill);
-  backdrop-filter: blur(4px);
-  display: flex;
+  margin-bottom: 10px;
+}
+
+.v-hotel {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-deep-plum);
+  margin-bottom: 3px;
+  letter-spacing: -0.2px;
+}
+
+.v-hall {
+  font-size: 0.92rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-dusty-rose);
+  margin-bottom: 6px;
+}
+
+.v-street {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin-bottom: 14px;
+}
+
+.venue-timing-chip {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-deep-plum);
+  background: rgba(157, 181, 160, 0.2);
+  border: 1px solid rgba(157, 181, 160, 0.4);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+}
+
+.venue-timing-chip svg {
+  color: var(--color-sage);
 }
 
 .v-body {
-  padding: 24px 20px;
+  padding: 20px 20px 24px;
 }
 
 .v-hotel {
